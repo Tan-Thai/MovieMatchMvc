@@ -11,9 +11,9 @@ namespace MovieMatchMvc.Models
 {
     public class MovieService
     {
-        public async Task<List<WatchList>> FetchMovies(string query)
+        public async Task<List<SearchList>> FetchMovies(string query)
         {
-            List<WatchList> movies = new List<WatchList>();
+            List<SearchList> movies = new List<SearchList>();
 
             using (HttpClient httpClient = new HttpClient())
             {
@@ -28,10 +28,12 @@ namespace MovieMatchMvc.Models
                     JObject jsonResponse = JObject.Parse(content);
                     JArray items = (JArray)jsonResponse["results"];
 
-                    movies = items.Take(6).Select(i => new WatchList
+                    movies = items.Take(100).Select(i => new SearchList
                     {
                         Title = (string)i["title"],
-                        Poster = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"]
+                        Poster = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"],
+                        ReleaseDate = (string)i["release_date"],
+                        Rating = (double)i["vote_average"]
                     }).ToList();
                 }
             }

@@ -19,7 +19,7 @@ namespace MovieMatchMvc.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            List<WatchList> movies = await _movieService.FetchMovies("harry");
+            List<SearchList> movies = await _movieService.FetchMovies("harry");
             return View(movies);
         }
 
@@ -31,8 +31,8 @@ namespace MovieMatchMvc.Controllers
                 return View("Index");
             }
 
-            List<WatchList> movies = await _movieService.FetchMovies(query);
-            return View("Index", movies);
+            List<SearchList> movies = await _movieService.FetchMovies(query);
+            return View("Search", movies);
         }
 
     }
