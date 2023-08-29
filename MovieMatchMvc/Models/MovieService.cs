@@ -11,14 +11,17 @@ namespace MovieMatchMvc.Models
 {
     public class MovieService
     {
-        public async Task<List<WatchList>> FetchMovies(string query)
+
+
+
+        public async Task<List<IndexVM>> FetchTopMovies()
         {
-            List<WatchList> movies = new List<WatchList>();
+            List<IndexVM> movies = new List<IndexVM>();
 
             using (HttpClient httpClient = new HttpClient())
             {
                 string apiKey = "9484edbd5be7b021216db9b56a4f92b0";
-                string apiUrl = $"https://api.themoviedb.org/3/search/movie?api_key={apiKey}&query={query}";
+                string apiUrl = $"https://api.themoviedb.org/3/movie/popular?api_key={apiKey}";
 
                 HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
@@ -28,10 +31,11 @@ namespace MovieMatchMvc.Models
                     JObject jsonResponse = JObject.Parse(content);
                     JArray items = (JArray)jsonResponse["results"];
 
-                    movies = items.Take(6).Select(i => new WatchList
+                    movies = items.Take(6).Select(i => new IndexVM
                     {
                         Title = (string)i["title"],
-                        Poster = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"]
+                        Description = (string)i["overview"],
+                        ImageUrl = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"]
                     }).ToList();
                 }
             }
@@ -39,8 +43,8 @@ namespace MovieMatchMvc.Models
             return movies;
         }
 
-    
-		public IndexVM[] GetWatchlist()
+
+        public IndexVM[] GetWatchlist()
 		{
             return null; //Temp
 			//return movies
