@@ -4,20 +4,59 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-    <!-- Bootstrap JS CDN -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <nav>
+        
+        <a asp-controller="Movie" asp-action="Index">Home</a>
+        <a asp-controller="Account" asp-action="Register">Signup</a>
+        <a asp-controller="Account" asp-action="Login">Login</a>
+        
+        <form asp-action="Search" asp-controller="Movie" method="get">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- Links and buttons container -->
+            <div class="d-flex justify-content-between w-100">
+                <!-- Signup and Login Links -->
+                <div>
+                    <a asp-controller="Account" asp-action="Register" class="nav-link">Signup</a>
+                    <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                </div>
+
+                <!-- Search Form -->
+                <form asp-action="Search" asp-controller="Movie" method="get" class="form-inline">
+                    <div class="form-group">
+                        <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
+                    </div>
+                    <button type="submit" class="btn btn-primary ml-2">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <br />
     <div>
         @RenderBody()
     </div>
+    <footer>
+            <div class="container">
+                <div class="row">
+                 <div class="col-md-12">
+                    <hr />
+                    <p class="text-center">© 2020 - MovieApp. <br /> Data fetched from <a href="https://www.themoviedb.org/">TMDB</a></p>
+                </div>
+            </div>
+            </div>
+    </footer>
 </body>
 </html>

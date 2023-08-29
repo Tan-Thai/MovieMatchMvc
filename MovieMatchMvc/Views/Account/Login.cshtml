@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    ViewBag.Title = "Login";
+
+}
+@model LoginVM
+<style>
+    /* Center the container vertically and horizontally */
+    .container-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust this if needed */
+    }
+
+    .short-input {
+        width: 200px;
+    }
+</style>
+
+@*<h3>Register</h3>*@
+<main>
+    <div class="container-center">
+        <div class="container">
+            <h3>Login</h3>
+            <form asp-controller="Account" asp-action="Login" class="form">
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+                    <input asp-for="Username" class="form-control short-input" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control short-input" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <br />
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </form>
+            <div asp-validation-summary="All"></div>
+        </div>
+    </div>
+</main>
