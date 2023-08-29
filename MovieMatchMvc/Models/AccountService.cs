@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MovieMatchMvc.Views.Account;
-using MovieMatchMvc.Views.Movie;
 
 namespace MovieMatchMvc.Models
 {
