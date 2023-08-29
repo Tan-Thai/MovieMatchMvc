@@ -62,12 +62,12 @@ namespace MovieMatchMvc.Controllers
             // Redirect user
             return RedirectToAction(nameof(Index));
         }
-    
-		[HttpGet("/Watchlist")]
-		public IActionResult Watchlist(AccountService accountService)
-		{
-			var model = accountService.GetWatchlist();
-			return View(model);
-		}
-	}
+
+        [HttpGet("/Watchlist")]
+        public IActionResult Watchlist(AccountService accountService)
+        {
+            var model = accountService.GetWatchlist();
+            return View(model);
+        }
+    }
 }
