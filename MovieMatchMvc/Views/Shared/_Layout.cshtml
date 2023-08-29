@@ -11,35 +11,22 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <nav>
         
-        <a asp-controller="Movie" asp-action="Index">Home</a>
-        <a asp-controller="Account" asp-action="Register">Signup</a>
-        <a asp-controller="Account" asp-action="Login">Login</a>
-        
-        <form asp-action="Search" asp-controller="Movie" method="get">
-            <div class="form-group">
-                <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <!-- Links and buttons container -->
+        <div class=" container-fluid">
             <div class="d-flex justify-content-between w-100">
-                <!-- Signup and Login Links -->
-                <div>
-                    <a asp-controller="Account" asp-action="Register" class="nav-link">Signup</a>
-                    <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
-                </div>
-
-                <!-- Search Form -->
+                      <a asp-controller="Movie" asp-action="Index">Home</a>
                 <form asp-action="Search" asp-controller="Movie" method="get" class="form-inline">
                     <div class="form-group">
                         <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
                     </div>
                     <button type="submit" class="btn btn-primary ml-2">Search</button>
                 </form>
+                <span class="d-flex flex-row">
+                    <a asp-controller="Account" asp-action="Register" class="nav-link">Signup</a>
+                    <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                </span>
             </div>
         </div>
     </nav>
