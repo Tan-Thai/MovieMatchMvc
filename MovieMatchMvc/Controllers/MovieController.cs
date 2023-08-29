@@ -7,6 +7,13 @@ namespace MovieMatchMvc.Controllers
 {
     public class MovieController : Controller
     {
+		[HttpGet("/Watchlist")]
+		public IActionResult Watchlist()
+		{
+			var model = MovieService.GetWatchlist();
+			return View(model);
+		}
+	}
         private readonly MovieService _movieService = new MovieService();
 
         [HttpGet("")]

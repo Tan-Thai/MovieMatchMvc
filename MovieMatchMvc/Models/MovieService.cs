@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using MovieMatchMvc.Views.Movie;
+using static System.Reflection.Metadata.BlobBuilder;
+
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -32,4 +35,17 @@ namespace MovieMatchMvc.Models
             return movies;
         }
     }
+		public IndexVM[] GetWatchlist()
+		{
+			return movies
+				.OrderBy(p => p.Name)
+				.Select(p => new IndexVM
+				{
+					Title = p.Title,
+					Poster = p.Poster,
+					 
+				})
+				.ToArray();
+		}
+	}
 }
