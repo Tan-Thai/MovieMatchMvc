@@ -1,5 +1,29 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+	ViewBag.Title = "Search";
 }
+
+@model List<MovieMatchMvc.Models.SearchList>
+
+<h1>Search "Query"</h1>
+<h2>Titles</h2>
+
+<div>
+	<ul style="display: flex; flex-direction: column ;align-items: flex-start;">
+
+		@foreach (var movie in Model)
+		{
+			<li style="display:flex">
+				<div><img style="height:200px; width: 150px; color: thistle;" src="@movie.Poster" class="card-img-left" alt="..." /></div>
+				<div style="display: flex;flex-direction: column; justify-content: space-between; flex-wrap: nowrap; align-items: flex-start;">
+					<ul><a style="font-weight: bold">@movie.Title</a></ul>
+					<ul>@movie.ReleaseDate</ul>
+					<ul>Average score: @movie.Rating</ul>
+				</div>
+				<div>
+					<a>@*Link to add or remove movie from list*@</a>
+				</div>
+			</li>
+		}
+
+	</ul>
+</div>

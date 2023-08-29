@@ -25,6 +25,9 @@ namespace MovieMatchMvc.Controllers
         }
 
 
+            List<SearchList> movies = await _movieService.FetchMovies(query);
+            return View("Search", movies);
+        }
 
     }
 }
