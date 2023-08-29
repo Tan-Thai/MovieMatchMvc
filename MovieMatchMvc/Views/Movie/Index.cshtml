@@ -1,28 +1,43 @@
-﻿
-    @{
+﻿@model List<string>
+
+@{
     string longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac lacinia enim, sit amet consequat quam. Vivamus sodales efficitur elit eu pulvinar. Maecenas faucibus risus nec augue interdum sodales. In maximus est eros, nec tristique lacus mollis quis.";
     string shortText = longText.Length > 50 ? longText.Substring(0, 50) + "..." : longText;
 }
-
+    <form asp-action="Search" asp-controller="Movie" method="get">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
 <h1 class="text-center">Top Movies Right now!</h1>
-<div style="width:80%; "class="container p-2 mx-auto">
+<div style="width:80%;" class="container p-2 mx-auto">
     <div class="row">
-        @for (int i = 0; i < 6; i++)
+        @if (Model != null && Model.Count > 0)
         {
-            if (i == 3)
+            int count = 0;
+            foreach (var movie in Model)
             {
-                @:</div><div class="row">
-            }
-            <div class="col-md-4">
-                <div class="card m-2 p-2" style="width: 18rem;">
-                    <img style="height:200px; width: 200px; color: thistle;"src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card[@i]</h5>
-                        <p class="card-text">@shortText</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                if (count == 3)
+                {
+                    @:</div><div class="row">
+                }
+                <div class="col-md-4">
+                    <div class="card m-2 p-2" style="width: 18rem;">
+                        <img style="height:200px; width: 200px; color: thistle;" src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie</h5>
+                            <p class="card-text">@shortText</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+                count++;
+            }
+        }
+        else
+        {
+            <p>No movies found.</p>
         }
     </div>
 </div>
