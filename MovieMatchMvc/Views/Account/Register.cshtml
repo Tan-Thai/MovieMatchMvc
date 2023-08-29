@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
     ViewBag.Title = "Sign Up";
 
 }
@@ -11,32 +12,36 @@
         align-items: center;
         height: 100vh; /* Adjust this if needed */
     }
+
+    .short-input {
+        width: 200px; 
+    }
 </style>
 
 @*<h3>Register</h3>*@
 <main>
     <div class="container-center">
         <div class="container">
-            <h3 class="text-center">Sign Up</h3>
+            <h3>Sign Up</h3>
             <form asp-controller="Account" asp-action="Register" class="form">
                 <div class="form-group">
                 <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" />
+                    <input asp-for="Username" class="form-control short-input" />
                 <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                 <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
+                    <input asp-for="Email" class="form-control short-input" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                 <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
+                    <input asp-for="Password" class="form-control short-input" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                 <label asp-for="PasswordRepeat"></label>
-                    <input asp-for="PasswordRepeat" class="form-control" />
+                    <input asp-for="PasswordRepeat" class="form-control short-input" />
                     <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
                 </div>
                 <br />

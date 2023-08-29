@@ -13,13 +13,6 @@ namespace MovieMatchMvc.Controllers
             this.accountService = accountService;
         }
 
-        [Authorize]
-        [HttpGet("home")]
-        public IActionResult Home()
-        {
-            return View();
-        }
-
         [HttpGet("register")]
 
         public IActionResult Register()
@@ -67,7 +60,7 @@ namespace MovieMatchMvc.Controllers
             }
 
             // Redirect user
-            return RedirectToAction(nameof(Home));
+            return RedirectToAction(nameof(Index));
         }
     }
 }
