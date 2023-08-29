@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieMatchMvc.Models;
 
 namespace MovieMatchMvc.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-    }
+		[HttpGet("/Watchlist")]
+		public IActionResult Watchlist(AccountService accountService)
+		{
+			var model = accountService.GetWatchlist();
+			return View(model);
+		}
+	}
 }
