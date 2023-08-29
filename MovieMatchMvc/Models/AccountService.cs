@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MovieMatchMvc.Views.Account;
+using MovieMatchMvc.Views.Movie;
 
 namespace MovieMatchMvc.Models
 {
@@ -46,7 +47,7 @@ namespace MovieMatchMvc.Models
 
             return result.Succeeded ? null : "Login failed";
         }
-    }
+    
 		List<WatchList> movies = new List<WatchList>();
 		public WatchlistVM[] GetWatchlist()
 		{
