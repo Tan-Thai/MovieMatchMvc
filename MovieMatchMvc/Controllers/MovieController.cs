@@ -25,9 +25,17 @@ namespace MovieMatchMvc.Controllers
         }
 
 
-            List<SearchList> movies = await _movieService.FetchMovies(query);
-            return View("Search", movies);
-        }
+		[HttpGet("search")]
+		public async Task<IActionResult> Search(string query)
+		{
+			if (string.IsNullOrEmpty(query))
+			{
+				return View("Index");
+			}
 
-    }
+			List<SearchList> movies = await _movieService.FetchMovies(query);
+			return View("Search", movies);
+		}
+
+	}
 }
