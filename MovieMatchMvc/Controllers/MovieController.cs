@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieMatchMvc.Models;
 
 namespace MovieMatchMvc.Controllers
 {
     public class MovieController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
     }
 }

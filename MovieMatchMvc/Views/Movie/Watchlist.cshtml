@@ -1,0 +1,25 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model MovieMatchMvc.Views.Movie.WatchlistVM[]
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+</head>
+<body>
+	<h1 align="Center">Your watchlist:</h1>
+	<p>Filter:</p>
+	<input type="text" value="Enter title" />
+
+	<ul>
+
+		@foreach (var item in Model)
+		{
+			@item.
+		}
+	</ul>
+
+</body>
+</html>
