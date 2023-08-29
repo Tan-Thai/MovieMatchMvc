@@ -12,7 +12,7 @@ namespace MovieMatchMvc.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            List<string> movies = await _movieService.FetchMovies("harry");
+            List<WatchList> movies = await _movieService.FetchMovies("harry");
             return View(movies);
         }
 
@@ -21,11 +21,12 @@ namespace MovieMatchMvc.Controllers
         {
             if (string.IsNullOrEmpty(query))
             {
-                return View("Index"); // Redirect back to Index if query is empty
+                return View("Index");
             }
 
-            List<string> movies = await _movieService.FetchMovies(query);
+            List<WatchList> movies = await _movieService.FetchMovies(query);
             return View("Index", movies);
         }
+
     }
 }

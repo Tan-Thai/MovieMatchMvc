@@ -12,7 +12,12 @@
 </head>
 <body>
     <nav>
-    
+        <form asp-action="Search" asp-controller="Movie" method="get">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
     </nav>
     <div>
         @RenderBody()
