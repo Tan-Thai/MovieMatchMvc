@@ -1,0 +1,32 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model MovieMatchMvc.Views.Movie.WatchlistVM[]
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Bootstrap JS CDN -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<meta charset="utf-8" />
+	<title></title>
+</head>
+<body>
+	<h1 align="Center">Your watchlist:</h1>
+	<p>Filter:</p>
+	<input type="text" value="Enter title" />
+
+	<ul>
+
+		@foreach (var item in Model)
+		{
+			@item
+		}
+	</ul>
+
+</body>
+</html>

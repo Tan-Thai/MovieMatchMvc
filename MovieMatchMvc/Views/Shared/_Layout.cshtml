@@ -12,6 +12,10 @@
 </head>
 <body>
     <nav>
+        
+        <a asp-controller="Account" asp-action="Register">Signup</a>
+        <a asp-controller="Account" asp-action="Login">Login</a>
+        
         <form asp-action="Search" asp-controller="Movie" method="get">
             <div class="form-group">
                 <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
@@ -19,6 +23,7 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </nav>
+    <br />
     <div>
         @RenderBody()
     </div>
