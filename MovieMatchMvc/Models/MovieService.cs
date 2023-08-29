@@ -39,18 +39,19 @@ namespace MovieMatchMvc.Models
             return movies;
         }
 
-    }
+    
 		public IndexVM[] GetWatchlist()
 		{
-			return movies
-				.OrderBy(p => p.Name)
-				.Select(p => new IndexVM
-				{
-					Title = p.Title,
-					Poster = p.Poster,
+            return null; //Temp
+			//return movies
+			//	.OrderBy(p => p.Name)
+			//	.Select(p => new IndexVM
+			//	{
+			//		Title = p.Title,
+			//		Poster = p.Poster,
 					 
-				})
-				.ToArray();
+			//	})
+			//	.ToArray();
 		}
 	}
 }

@@ -10,10 +10,10 @@ namespace MovieMatchMvc.Controllers
 		[HttpGet("/Watchlist")]
 		public IActionResult Watchlist()
 		{
-			var model = MovieService.GetWatchlist();
-			return View(model);
+			//var model = MovieService.GetWatchlist();
+			return View();
 		}
-	}
+	
         private readonly MovieService _movieService = new MovieService();
 
         [HttpGet("")]
