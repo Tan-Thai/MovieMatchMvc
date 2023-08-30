@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MovieMatchMvc.Views.Account;
+using MovieMatchMvc.Views.Movie;
 
 namespace MovieMatchMvc.Models
 {
@@ -68,6 +69,16 @@ namespace MovieMatchMvc.Models
 
 				})
 				.ToArray();
+		}
+
+        public void AddToList(SearchVM movie)
+        {
+            movies.Add(
+            new WatchList
+            {
+                Title = movie.Title,
+                Poster = movie.Poster
+            });
 		}
 	}
 }

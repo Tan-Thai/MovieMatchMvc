@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieMatchMvc.Models;
 using MovieMatchMvc.Views.Account;
+using MovieMatchMvc.Views.Movie;
+
 namespace MovieMatchMvc.Controllers
 {
     public class AccountController : Controller
@@ -78,10 +80,11 @@ namespace MovieMatchMvc.Controllers
             return View("Watchlist", model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddMovieToList()
+        [HttpPost("/search")]
+        public async Task<IActionResult> AddMovieToList(SearchVM movie)
         {
-            return null;
+            accountService.AddToList(movie);
+            return View();
         }
     }
 }
