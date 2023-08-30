@@ -60,16 +60,47 @@ namespace MovieMatchMvc.Controllers
 
 
 		[HttpPost]
-		[Route("Account/AddMovieToList")]
+		[Route("AddMovieToList")]
 		public async Task<IActionResult> AddMovieToList(int movieId)
 		{
-			// Add the movie to the watchlist
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // Add the movie to the watchlist
+            Console.WriteLine($"Received Movie ID: {movieId}");
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			await _movieService.AddMovieToWatchlistById(movieId, userId);
-			return RedirectToAction("Watchlist");
+			return RedirectToAction("Search");
+		}
+
+		[HttpGet("MatchWatchLists")]
+		public IActionResult MatchWatchLists()
+		{
+			return View();
 		}
 
 
+		//[HttpGet("MatchWatchlists")]
+		//public IActionResult MatchWatchLists()
+		//{
+		//	return RedirectToAction("CompareWatchlistsForm");
+		//}
+		[HttpPost("MatchWatchLists")]
+		public IActionResult MatchWatchLists(string username)
+		{
 
+			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the current user ID
+            string otherUserId = _movieService.GetUserIdByUsername(username); // Get the current user ID
+            if (string.IsNullOrEmpty(otherUserId))
+            {
+                // Handle case when the username doesn't match any user
+                return View("Error"); // or any other appropriate action
+            }
+            var myWatchlist = _movieService.GetWatchlist(currentUserId);
+			var otherWatchlist = _movieService.GetWatchlist(otherUserId);
+
+            ViewBag.OtherUsername = username;
+            // Find common movies
+            var commonMovies = myWatchlist.Intersect(otherWatchlist).ToList();
+
+			return View("MatchWatchLists", commonMovies);
+		}
 	}
 }

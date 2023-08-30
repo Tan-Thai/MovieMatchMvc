@@ -1,0 +1,39 @@
+﻿@model List<MovieMatchMvc.Views.Movie.WatchlistVM>
+<h2>Compare Watchlists</h2>
+
+<form asp-action="MatchWatchLists" asp-controller="Movie" method="post">
+    <div class="form-group">
+        <label for="username">Enter username:</label>
+        <input type="text" class="form-control" id="username" name="username" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Compare</button>
+</form>
+
+
+<h2>Common Movies</h2>
+<h2>Comparing with @ViewBag.OtherUsername</h2>
+@* @if (Model == null || !Model.Any()) *@
+@if (Model == null)
+{
+    <p>No common movies found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Poster</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+                <tr>
+                    <td>@movie.Title</td>
+                    <td><img src="@movie.Poster" alt="@movie.Title" width="100"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

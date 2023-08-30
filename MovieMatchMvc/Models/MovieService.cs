@@ -127,7 +127,8 @@ namespace MovieMatchMvc.Models
 				context.watchLists.Add(
 					new WatchList
 					{
-						Title = movie.Title,
+                        MovieId = movie.Id,
+                        Title = movie.Title,
 						Poster = movie.Poster,
 						UserId = userId  // set current user ID
 					}
@@ -142,15 +143,24 @@ namespace MovieMatchMvc.Models
 			var movie = await FetchMovieById(movieId);
 			await AddMovieToWatchlist(movie, userId);
 		}
-		private async Task AddMovieToWatchlist(SearchVM movie, string userId)
+		public async Task AddMovieToWatchlist(SearchVM movie, string userId)
 		{
 			context.watchLists.Add(new WatchList
 			{
+				MovieId = movie.Id,
 				Title = movie.Title,
 				Poster = movie.Poster,
 				UserId = userId
 			});
 			await context.SaveChangesAsync();
 		}
-	}
+
+        public string GetUserIdByUsername(string username)
+        {
+            return context.accountUsers
+                .Where(u => u.UserName == username)
+                .Select(u => u.Id)
+                .FirstOrDefault();
+        }
+    }
 }

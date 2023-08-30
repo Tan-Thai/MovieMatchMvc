@@ -61,49 +61,5 @@ namespace MovieMatchMvc.Models
         }
 
 
-        //List<WatchList> movies = new List<WatchList>()
-        //{
-        //    new WatchList { Id = 1, Title = "Star Wars", Poster = "https://image.tmdb.org/t/p/w500/gq5Wi7i4SF3lo4HHkJasDV95xI9.jpg" , Url = "temp"}
-        //};
-
-  //      public WatchlistVM[] GetWatchlist(string userId)
-  //      {
-  //          return context.watchLists.Where(w => w.UserId == userId)
-  //              .OrderBy(p => p.Title)
-  //              .Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster })
-  //              .ToArray();
-  //      }
-
-  //      public async Task AddToListAsync(SearchVM movie, string userId)
-  //      {
-  //          {
-  //              context.watchLists.Add(
-  //                  new WatchList
-  //                  {
-  //                      Title = movie.Title,
-  //                      Poster = movie.Poster,
-  //                      UserId = userId  // set current user ID
-  //                  }
-  //              );
-  //              await context.SaveChangesAsync();
-  //          }
-
-
-  //      }
-		//public async Task AddMovieToWatchlistById(int movieId, string userId)
-		//{
-		//	var movie = await _movieService.FetchMovieById(movieId);
-		//	await AddMovieToWatchlist(movie, userId);
-		//}
-		//private async Task AddMovieToWatchlist(SearchVM movie, string userId)
-		//{
-		//	context.watchLists.Add(new WatchList
-		//	{
-		//		Title = movie.Title,
-		//		Poster = movie.Poster,
-		//		UserId = userId
-		//	});
-		//	await context.SaveChangesAsync();
-		//}
 	}
 }
