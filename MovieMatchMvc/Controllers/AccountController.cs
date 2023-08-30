@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieMatchMvc.Models;
 using MovieMatchMvc.Views.Account;
 using MovieMatchMvc.Views.Movie;
+using Newtonsoft.Json;
 
 namespace MovieMatchMvc.Controllers
 {
@@ -80,11 +81,12 @@ namespace MovieMatchMvc.Controllers
             return View("Watchlist", model);
         }
 
-        [HttpPost("/search")]
-        public async Task<IActionResult> AddMovieToList(SearchVM movie)
+        [HttpPost]
+		[Route("Account/AddMovieToList")]
+		public async Task<IActionResult> AddMovieToList(SearchVM movie)
         {
-            accountService.AddToList(movie);
-            return View();
+			accountService.AddToList(movie);
+            return RedirectToAction("Search");
         }
     }
 }

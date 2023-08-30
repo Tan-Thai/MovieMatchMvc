@@ -20,7 +20,10 @@
 					<ul>Average score: @movie.Rating</ul>
 				</div>
 				<div>
-					<a asp-controller="Account" asp-action="AddMovieToList">Add to watch list</a>
+					<form asp-controller="Account" asp-action="AddMovieToList" method="post">
+						<input type="hidden" value="@movie" />
+						<input type="submit" value="Add to watchlist">
+					</form>
 				</div>
 			</li>
 		}
