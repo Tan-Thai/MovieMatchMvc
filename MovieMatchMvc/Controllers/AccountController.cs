@@ -13,11 +13,11 @@ namespace MovieMatchMvc.Controllers
         }
 
         [HttpGet("register")]
-
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterVM viewModel)
         {

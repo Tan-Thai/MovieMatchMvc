@@ -8,5 +8,6 @@
         public string Poster { get; set; }
         public double Rating { get; set; }
         public string? Url { get; set;}
+        public AccountUser AccountUser { get; set; }
     }
 }
