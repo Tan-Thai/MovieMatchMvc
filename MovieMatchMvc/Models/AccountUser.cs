@@ -4,6 +4,6 @@ namespace MovieMatchMvc.Models
 {
     public class AccountUser : IdentityUser
     {
-
+        
     }
 }
