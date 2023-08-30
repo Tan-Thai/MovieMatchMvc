@@ -33,7 +33,7 @@ namespace MovieMatchMvc.Controllers
 				return View("Index");
 			}
 
-			List<SearchList> movies = await _movieService.FetchMovies(query);
+			List<SearchVM> movies = await _movieService.FetchMovies(query);
 			return View("Search", movies);
 		}
 
