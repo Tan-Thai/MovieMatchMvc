@@ -6,22 +6,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using TMDbLib.Client;
 
 namespace MovieMatchMvc.Models
 {
     public class MovieService
     {
 
+		string ApiKey = "9484edbd5be7b021216db9b56a4f92b0";
+		TMDbClient Client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
 
-
-        public async Task<List<IndexVM>> FetchTopMovies()
+		public async Task<List<IndexVM>> FetchTopMovies()
         {
             List<IndexVM> movies = new List<IndexVM>();
 
             using (HttpClient httpClient = new HttpClient())
             {
-                string apiKey = "9484edbd5be7b021216db9b56a4f92b0";
-                string apiUrl = $"https://api.themoviedb.org/3/movie/popular?api_key={apiKey}";
+
+                string apiUrl = $"https://api.themoviedb.org/3/movie/popular?api_key={ApiKey}";
 
                 HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
@@ -49,8 +51,7 @@ namespace MovieMatchMvc.Models
 
 			using (HttpClient httpClient = new HttpClient())
 			{
-				string apiKey = "9484edbd5be7b021216db9b56a4f92b0";
-				string apiUrl = $"https://api.themoviedb.org/3/search/movie?api_key={apiKey}&query={query}";
+				string apiUrl = $"https://api.themoviedb.org/3/search/movie?api_key={ApiKey}&query={query}";
 
 				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
