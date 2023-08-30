@@ -46,6 +46,10 @@ namespace MovieMatchMvc.Models
 
             return result.Succeeded ? null : "Login failed";
         }
+        public async Task TryLogoutAsync()
+        {
+            await signInManager.SignOutAsync();
+        }
     
 		List<WatchList> movies = new List<WatchList>();
 		public WatchlistVM[] GetWatchlist()
