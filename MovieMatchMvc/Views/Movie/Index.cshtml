@@ -1,5 +1,10 @@
 ﻿@model List<MovieMatchMvc.Views.Movie.IndexVM>
 
+@if (User.Identity.IsAuthenticated)
+{
+    <h5 class="text-center">Welcome @User.Identity.Name</h5>
+                                                    
+}
 <h1 class="text-center">Top Movies Right now!</h1>
 <div style="width:80%;" class="container p-2 mx-auto">
     <div class="row">
