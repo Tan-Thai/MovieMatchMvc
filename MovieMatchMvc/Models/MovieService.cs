@@ -43,9 +43,9 @@ namespace MovieMatchMvc.Models
             return movies;
         }
 
-		public async Task<List<SearchList>> FetchMovies(string query)
+		public async Task<List<SearchVM>> FetchMovies(string query)
 		{
-			List<SearchList> movies = new List<SearchList>();
+			List<SearchVM> movies = new List<SearchVM>();
 
 			using (HttpClient httpClient = new HttpClient())
 			{
@@ -60,7 +60,7 @@ namespace MovieMatchMvc.Models
 					JObject jsonResponse = JObject.Parse(content);
 					JArray items = (JArray)jsonResponse["results"];
 
-					movies = items.Take(100).Select(i => new SearchList
+					movies = items.Take(100).Select(i => new SearchVM
 					{
 						Title = (string)i["title"],
 						Poster = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"],

@@ -62,6 +62,13 @@ namespace MovieMatchMvc.Controllers
             return RedirectToAction("Index", "Movie");
         }
 
+        [HttpGet("/logout")]
+        public async Task<IActionResult> LogOutAsync()
+        {
+            await accountService.TryLogoutAsync();
+            return RedirectToAction(nameof(Login));
+        }
+
         [HttpGet("/Watchlist")]
         public IActionResult Watchlist(AccountService accountService)
         {
