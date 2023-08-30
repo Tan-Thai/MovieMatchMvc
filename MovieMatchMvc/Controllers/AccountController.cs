@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieMatchMvc.Models;
 using MovieMatchMvc.Views.Account;
-
 namespace MovieMatchMvc.Controllers
 {
     public class AccountController : Controller
@@ -60,7 +59,7 @@ namespace MovieMatchMvc.Controllers
             }
 
             // Redirect user
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Movie");
         }
 
         [HttpGet("/Watchlist")]
