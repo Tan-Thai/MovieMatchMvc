@@ -95,10 +95,10 @@ namespace MovieMatchMvc.Controllers
             }
             var myWatchlist = _movieService.GetWatchlist(currentUserId);
 			var otherWatchlist = _movieService.GetWatchlist(otherUserId);
-
+            var commonMovieIds = myWatchlist.Select(m => m.Id).Intersect(otherWatchlist.Select(m => m.Id)).ToList();
+            var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.Id)).ToList();
             ViewBag.OtherUsername = username;
-            // Find common movies
-            var commonMovies = myWatchlist.Intersect(otherWatchlist).ToList();
+            
 
 			return View("MatchWatchLists", commonMovies);
 		}
