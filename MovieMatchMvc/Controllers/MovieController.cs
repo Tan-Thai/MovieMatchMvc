@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +12,13 @@ namespace MovieMatchMvc.Controllers
 {
     public class MovieController : Controller
     {
-	
-        private readonly MovieService _movieService = new MovieService();
+
+		private readonly MovieService _movieService;
+
+		public MovieController(MovieService movieService)
+		{
+			this._movieService = movieService;
+		}
 
         
         [HttpGet("")]
@@ -43,6 +49,24 @@ namespace MovieMatchMvc.Controllers
 
 			Console.WriteLine($"Movie name: {movie.Title}");
 			return RedirectToAction(nameof(Search));
+		}
+		[HttpGet("/Watchlist")]
+		public IActionResult Watchlist()
+		{
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the user ID
+			var model = _movieService.GetWatchlist(userId);
+			return View("Watchlist", model);
+		}
+
+
+		[HttpPost]
+		[Route("Account/AddMovieToList")]
+		public async Task<IActionResult> AddMovieToList(int movieId)
+		{
+			// Add the movie to the watchlist
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			await _movieService.AddMovieToWatchlistById(movieId, userId);
+			return RedirectToAction("Watchlist");
 		}
 
 

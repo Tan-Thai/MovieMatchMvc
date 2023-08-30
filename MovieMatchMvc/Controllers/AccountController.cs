@@ -75,24 +75,24 @@ namespace MovieMatchMvc.Controllers
 
 
 		//hårdkodad lista, tar just nu inte ut användarens lista. TODO
-		[HttpGet("/Watchlist")]
-		public IActionResult Watchlist()
-		{
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the user ID
-			var model = accountService.GetWatchlist(userId);
-			return View("Watchlist", model);
-		}
+		//[HttpGet("/Watchlist")]
+		//public IActionResult Watchlist()
+		//{
+		//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the user ID
+		//	var model = accountService.GetWatchlist(userId);
+		//	return View("Watchlist", model);
+		//}
 
 	
-		[HttpPost]
-		[Route("Account/AddMovieToList")]
-		public async Task<IActionResult> AddMovieToList(int movieId)
-		{
-			// Add the movie to the watchlist
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			await accountService.AddMovieToWatchlistById(movieId, userId);
-			return RedirectToAction("Watchlist");
-		}
+		//[HttpPost]
+		//[Route("Account/AddMovieToList")]
+		//public async Task<IActionResult> AddMovieToList(int movieId)
+		//{
+		//	// Add the movie to the watchlist
+		//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+		//	await accountService.AddMovieToWatchlistById(movieId, userId);
+		//	return RedirectToAction("Watchlist");
+		//}
 
 
 	}

@@ -20,7 +20,7 @@
 					<ul>Average score: @movie.Rating</ul>
 				</div>
 				<div>
-					<form asp-controller="Account" asp-action="AddMovieToList" method="post">
+					<form asp-controller="Movie" asp-action="AddMovieToList" method="post">
 						<!-- Send unique movie ID to identify the movie server-side -->
 						<input type="hidden" name="movieId" value="@movie.Id" />
 						<input type="submit" value="Add to watchlist">

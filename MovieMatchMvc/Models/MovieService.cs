@@ -15,6 +15,14 @@ namespace MovieMatchMvc.Models
 
 		string ApiKey = "9484edbd5be7b021216db9b56a4f92b0";
 		TMDbClient Client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
+		ApplicationContext context;
+
+		public MovieService(ApplicationContext context)
+		{
+			this.context = context;
+	
+		}
+
 
 		public async Task<List<IndexVM>> FetchTopMovies()
         {
@@ -105,18 +113,44 @@ namespace MovieMatchMvc.Models
 			}
 		}
 
-		public IndexVM[] GetWatchlist()
+		public WatchlistVM[] GetWatchlist(string userId)
 		{
-            return null; //Temp
-			//return movies
-			//	.OrderBy(p => p.Name)
-			//	.Select(p => new IndexVM
-			//	{
-			//		Title = p.Title,
-			//		Poster = p.Poster,
-					 
-			//	})
-			//	.ToArray();
+			return context.watchLists.Where(w => w.UserId == userId)
+				.OrderBy(p => p.Title)
+				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster })
+				.ToArray();
+		}
+
+		public async Task AddToListAsync(SearchVM movie, string userId)
+		{
+			{
+				context.watchLists.Add(
+					new WatchList
+					{
+						Title = movie.Title,
+						Poster = movie.Poster,
+						UserId = userId  // set current user ID
+					}
+				);
+				await context.SaveChangesAsync();
+			}
+
+
+		}
+		public async Task AddMovieToWatchlistById(int movieId, string userId)
+		{
+			var movie = await FetchMovieById(movieId);
+			await AddMovieToWatchlist(movie, userId);
+		}
+		private async Task AddMovieToWatchlist(SearchVM movie, string userId)
+		{
+			context.watchLists.Add(new WatchList
+			{
+				Title = movie.Title,
+				Poster = movie.Poster,
+				UserId = userId
+			});
+			await context.SaveChangesAsync();
 		}
 	}
 }

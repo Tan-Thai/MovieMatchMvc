@@ -1,4 +1,4 @@
-﻿namespace MovieMatchMvc.Views.Account
+﻿namespace MovieMatchMvc.Views.Movie
 {
     public class WatchlistVM
     {
