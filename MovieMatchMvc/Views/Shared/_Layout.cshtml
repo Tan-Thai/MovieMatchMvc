@@ -26,6 +26,7 @@
                  <span class="d-flex flex-row">
                     @if (User.Identity.IsAuthenticated)
                     {
+                            <a asp-controller="Account" asp-action="Watchlist" class="nav-link">Watch List</a>
                             @User.Identity.Name
                             <a asp-controller="Account" asp-action="LogOut" class="nav-link">Sign Out</a>
                     }

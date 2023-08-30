@@ -68,12 +68,20 @@ namespace MovieMatchMvc.Controllers
             await accountService.TryLogoutAsync();
             return RedirectToAction(nameof(Login));
         }
+        
 
+        //hårdkodad lista, tar just nu inte ut användarens lista. TODO
         [HttpGet("/Watchlist")]
-        public IActionResult Watchlist(AccountService accountService)
+        public IActionResult Watchlist()
         {
             var model = accountService.GetWatchlist();
-            return View(model);
+            return View("Watchlist", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMovieToList()
+        {
+            return null;
         }
     }
 }
