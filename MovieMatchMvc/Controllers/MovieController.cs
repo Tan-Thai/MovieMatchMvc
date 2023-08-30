@@ -18,7 +18,7 @@ namespace MovieMatchMvc.Controllers
 	
         private readonly MovieService _movieService = new MovieService();
 
-        [Authorize]
+        
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
