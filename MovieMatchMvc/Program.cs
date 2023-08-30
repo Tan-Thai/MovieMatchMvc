@@ -11,9 +11,10 @@ namespace MovieMatchMvc
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<AccountService>();
+            builder.Services.AddTransient<MovieService>();
 
-            // Hämta connection-strängen från AppSettings.json
-            var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+			// Hämta connection-strängen från AppSettings.json
+			var connString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             //// Registrera Context-klassen för dependency injection
             builder.Services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connString));

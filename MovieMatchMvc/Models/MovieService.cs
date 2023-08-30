@@ -74,7 +74,35 @@ namespace MovieMatchMvc.Models
 			return movies;
 		}
 
-		
+		public async Task<SearchVM> FetchMovieById(int movieId)
+		{
+			using (HttpClient httpClient = new HttpClient())
+			{
+				string apiKey = "9484edbd5be7b021216db9b56a4f92b0";
+				string apiUrl = $"https://api.themoviedb.org/3/movie/{movieId}?api_key={apiKey}";
+				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+				if (response.IsSuccessStatusCode)
+				{
+					string content = await response.Content.ReadAsStringAsync();
+					JObject jsonResponse = JObject.Parse(content);
+
+					return new SearchVM
+					{
+						Id = movieId,
+						Title = (string)jsonResponse["title"],
+						Poster = "https://image.tmdb.org/t/p/w500" + (string)jsonResponse["poster_path"],
+						ReleaseDate = (string)jsonResponse["release_date"],
+						Rating = (double)jsonResponse["vote_average"]
+					};
+				}
+				else
+				{
+					// Handle error
+					return null;
+				}
+			}
+		}
 
 		public IndexVM[] GetWatchlist()
 		{

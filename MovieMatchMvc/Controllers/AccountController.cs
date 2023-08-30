@@ -4,6 +4,7 @@ using MovieMatchMvc.Models;
 using MovieMatchMvc.Views.Account;
 using MovieMatchMvc.Views.Movie;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace MovieMatchMvc.Controllers
 {
@@ -71,22 +72,28 @@ namespace MovieMatchMvc.Controllers
             await accountService.TryLogoutAsync();
             return RedirectToAction(nameof(Login));
         }
-        
 
-        //hårdkodad lista, tar just nu inte ut användarens lista. TODO
-        [HttpGet("/Watchlist")]
-        public IActionResult Watchlist()
-        {
-            var model = accountService.GetWatchlist();
-            return View("Watchlist", model);
-        }
 
-        [HttpPost]
+		//hårdkodad lista, tar just nu inte ut användarens lista. TODO
+		[HttpGet("/Watchlist")]
+		public IActionResult Watchlist()
+		{
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the user ID
+			var model = accountService.GetWatchlist(userId);
+			return View("Watchlist", model);
+		}
+
+	
+		[HttpPost]
 		[Route("Account/AddMovieToList")]
-		public async Task<IActionResult> AddMovieToList(SearchVM movie)
-        {
-			accountService.AddToList(movie);
-            return RedirectToAction("Search");
-        }
-    }
+		public async Task<IActionResult> AddMovieToList(int movieId)
+		{
+			// Add the movie to the watchlist
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			await accountService.AddMovieToWatchlistById(movieId, userId);
+			return RedirectToAction("Watchlist");
+		}
+
+
+	}
 }
