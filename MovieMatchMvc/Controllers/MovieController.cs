@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieMatchMvc.Models;
 using MovieMatchMvc.Views.Movie;
@@ -17,6 +18,7 @@ namespace MovieMatchMvc.Controllers
 	
         private readonly MovieService _movieService = new MovieService();
 
+        [Authorize]
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {

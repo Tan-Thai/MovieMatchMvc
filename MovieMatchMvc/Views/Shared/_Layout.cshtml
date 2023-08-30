@@ -26,6 +26,10 @@
                 <span class="d-flex flex-row">
                     <a asp-controller="Account" asp-action="Register" class="nav-link">Signup</a>
                     <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Account" asp-action="LogOut" class="nav-link">Logout</a>
+                    }
                 </span>
             </div>
         </div>
