@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieMatchMvc.Models;
 using MovieMatchMvc.Views.Movie;
+using TMDbLib.Client;
+using TMDbLib.Objects.Movies;
 
 namespace MovieMatchMvc.Controllers
 {
@@ -33,5 +35,14 @@ namespace MovieMatchMvc.Controllers
 			return View("Search", movies);
 		}
 
+		[HttpPost("search")]
+		public IActionResult TestButton()
+		{
+			TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
+			Movie movie = client.GetMovieAsync(47964).Result;
+
+			Console.WriteLine($"Movie name: {movie.Title}");
+			return RedirectToAction(nameof(Search));
+		}
 	}
 }

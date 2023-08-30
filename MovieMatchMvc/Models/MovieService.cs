@@ -62,6 +62,7 @@ namespace MovieMatchMvc.Models
 
 					movies = items.Take(100).Select(i => new SearchVM
 					{
+						Id = (int)i["id"],
 						Title = (string)i["title"],
 						Poster = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"],
 						ReleaseDate = (string)i["release_date"],
@@ -72,6 +73,8 @@ namespace MovieMatchMvc.Models
 
 			return movies;
 		}
+
+		
 
 		public IndexVM[] GetWatchlist()
 		{

@@ -24,6 +24,10 @@
 						<input type="hidden" value="@movie" />
 						<input type="submit" value="Add to watchlist">
 					</form>
+					<form asp-controller="Movie" asp-action="TestButton" method="post">
+						@* <input type="hidden" value="@movie.Id"/> *@
+						<input type="submit" value="test">
+					</form>
 				</div>
 			</li>
 		}
