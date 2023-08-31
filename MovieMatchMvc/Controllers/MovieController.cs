@@ -86,6 +86,7 @@ namespace MovieMatchMvc.Controllers
 		public IActionResult MatchWatchLists(string username)
 		{
 
+			string testId = User.FindFirstValue(username); // Get the current user ID
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the current user ID
             string otherUserId = _movieService.GetUserIdByUsername(username); // Get the current user ID
             if (string.IsNullOrEmpty(otherUserId))
@@ -95,8 +96,8 @@ namespace MovieMatchMvc.Controllers
             }
             var myWatchlist = _movieService.GetWatchlist(currentUserId);
 			var otherWatchlist = _movieService.GetWatchlist(otherUserId);
-            var commonMovieIds = myWatchlist.Select(m => m.Id).Intersect(otherWatchlist.Select(m => m.Id)).ToList();
-            var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.Id)).ToList();
+            var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(otherWatchlist.Select(m => m.MovieId)).ToList();
+            var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
             ViewBag.OtherUsername = username;
             
 

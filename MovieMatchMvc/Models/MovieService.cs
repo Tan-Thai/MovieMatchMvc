@@ -117,7 +117,7 @@ namespace MovieMatchMvc.Models
 		{
 			return context.watchLists.Where(w => w.UserId == userId)
 				.OrderBy(p => p.Title)
-				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster })
+				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId})
 				.ToArray();
 		}
 
