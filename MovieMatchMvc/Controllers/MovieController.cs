@@ -104,5 +104,15 @@ namespace MovieMatchMvc.Controllers
             
 			return View("MatchWatchLists", commonMovies);
 		}
+
+		[HttpPost]
+		[Route("RemoveFromWatchList")]
+		public async Task<IActionResult> RemoveFromWatchList(int movieId)
+		{
+			Console.WriteLine($"Received Movie ID: {movieId} to be removed");
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			await _movieService.RemoveFromWatchListAsync(movieId, userId);
+			return RedirectToAction("search");
+		}
 	}
 }

@@ -28,6 +28,12 @@
 				<img style="height:100px;"width="100:px;" src="@item.Poster"> @item.Title
 			<p>@item.MovieId</p>
 			</div>
+			<div>
+				<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
+					<input type="hidden" name="movieId" value="@item.MovieId" />
+					<input type="submit" value="Remove from watchlist">
+				</form>
+			</div>
 			
 		}
 	</ul>

@@ -22,8 +22,7 @@
 				<div>
 					@if (movie.InWatchList == true)
 					{
-						<form asp-controller="Movie" asp-action="RemoveFromList" method="post">
-							<!-- Send unique movie ID to identify the movie server-side -->
+						<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
 							<input type="hidden" name="movieId" value="@movie.Id" />
 							<input type="submit" value="Remove from watchlist">
 						</form>

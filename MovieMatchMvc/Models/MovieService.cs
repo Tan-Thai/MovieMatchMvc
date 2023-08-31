@@ -10,6 +10,7 @@ using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
 using TMDbLib.Objects.Movies;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieMatchMvc.Models
 {
@@ -163,9 +164,20 @@ namespace MovieMatchMvc.Models
                 .Where(u => u.UserName == username)
                 .Select(u => u.Id)
                 .FirstOrDefault();
-        }
+		}
+
+		public async Task RemoveFromWatchListAsync(int movieId, string userId)
+		{
+			var moveToBeRemoved = await context.watchLists
+				.SingleOrDefaultAsync(m => m.UserId == userId && m.MovieId == movieId);
+
+			if (moveToBeRemoved != null)
+			{
+				context.Remove(moveToBeRemoved);
+				await context.SaveChangesAsync(); // Use 'await' for async operations
+			}
+		}
 
 
-
-    }
+	}
 }
