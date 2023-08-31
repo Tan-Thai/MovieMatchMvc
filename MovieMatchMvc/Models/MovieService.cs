@@ -139,28 +139,12 @@ namespace MovieMatchMvc.Models
 				.ToArray();
 		}
 
-		public async Task AddToListAsync(SearchVM movie, string userId)
-		{
-			{
-				context.watchLists.Add(
-					new WatchList
-					{
-                        MovieId = movie.Id,
-                        Title = movie.Title,
-						Poster = movie.Poster,
-						UserId = userId  // set current user ID
-					}
-				);
-				await context.SaveChangesAsync();
-			}
-
-
-		}
 		public async Task AddMovieToWatchlistById(int movieId, string userId)
 		{
 			var movie = await FetchMovieById(movieId);
 			await AddMovieToWatchlist(movie, userId);
 		}
+
 		public async Task AddMovieToWatchlist(SearchVM movie, string userId)
 		{
 			context.watchLists.Add(new WatchList
