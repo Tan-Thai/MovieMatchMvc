@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Search";
+	ViewBag.Title = "Search";
 }
 
 @model List<MovieMatchMvc.Views.Movie.SearchVM>
@@ -8,54 +8,57 @@
 <h2>Titles</h2>
 
 <div>
-    <ul style="display: flex; flex-direction: column; align-items: flex-start;">
+	<ul style="display: flex; flex-direction: column; align-items: flex-start;">
 
-        @foreach (var movie in Model)
-        {
-            <li style="display:flex">
-                <div><img style="height:200px; width: 150px;" src="@movie.Poster" alt="..." /></div>
-                <div style="display: flex;flex-direction: column; justify-content: space-between; align-items: flex-start;">
-                    <ul><a style="font-weight: bold">@movie.Title</a></ul>
-                    <ul>@movie.ReleaseDate</ul>
-                    <ul>Average score: @movie.Rating</ul>
-                </div>
-                <div>
-                    <button class="watchlist-button" data-movie-id="@movie.Id">
-                        @(movie.InWatchList ? "Remove from watchlist" : "Add to watchlist")
-                    </button>
-                </div>
-            </li>
-        }
-    </ul>
+		@foreach (var movie in Model)
+		{
+			<li style="display:flex">
+				<div><img style="height:200px; width: 150px;" src="@movie.Poster" alt="..." /></div>
+				<div style="display: flex;flex-direction: column; justify-content: space-between; align-items: flex-start;">
+					<ul><a style="font-weight: bold">@movie.Title</a></ul>
+					<ul>@movie.ReleaseDate</ul>
+					<ul>Average score: @movie.Rating</ul>
+				</div>
+				<div>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<button class="watchlist-button" data-movie-id="@movie.Id">
+							@(movie.InWatchList ? "Remove from watchlist" : "Add to watchlist")
+						</button>
+					}
+				</div>
+			</li>
+		}
+	</ul>
 </div>
 
 @section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll('.watchlist-button').forEach(button => {
-                button.addEventListener('click', function (e) {
-                    const movieId = e.target.getAttribute('data-movie-id');
-                    const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
-                    const url = isInWatchlist ? `/RemoveFromWatchListSearch?movieId=${movieId}` : `/AddMovieToList?movieId=${movieId}`;
-                    console.log(movieId)
-                    console.log(url)
-                    console.log(isInWatchlist)
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ movieId })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
-                            }
-                        })
-                        .catch(error => console.log('Error:', error));
-                });
-            });
-        });
-    </script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			document.querySelectorAll('.watchlist-button').forEach(button => {
+				button.addEventListener('click', function (e) {
+					const movieId = e.target.getAttribute('data-movie-id');
+					const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
+					const url = isInWatchlist ? `/RemoveFromWatchListSearch?movieId=${movieId}` : `/AddMovieToList?movieId=${movieId}`;
+					console.log(movieId)
+					console.log(url)
+					console.log(isInWatchlist)
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ movieId })
+					})
+						.then(response => response.json())
+						.then(data => {
+							if (data.success) {
+								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+							}
+						})
+						.catch(error => console.log('Error:', error));
+				});
+			});
+		});
+	</script>
 }
