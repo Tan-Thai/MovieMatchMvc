@@ -7,6 +7,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TMDbLib.Client;
+using TMDbLib.Objects.General;
+using TMDbLib.Objects.Search;
+using TMDbLib.Objects.Movies;
 
 namespace MovieMatchMvc.Models
 {
@@ -53,9 +56,11 @@ namespace MovieMatchMvc.Models
             return movies;
         }
 
-		public async Task<List<SearchVM>> FetchMovies(string query)
+		public async Task<List<SearchVM>> FetchMovies(string query, string userId)
 		{
+
 			List<SearchVM> movies = new List<SearchVM>();
+			var myWatchlist = GetWatchlist(userId);
 
 			using (HttpClient httpClient = new HttpClient())
 			{
@@ -71,12 +76,25 @@ namespace MovieMatchMvc.Models
 
 					movies = items.Take(100).Select(i => new SearchVM
 					{
+						InWatchList = false,
 						Id = (int)i["id"],
 						Title = (string)i["title"],
 						Poster = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"],
 						ReleaseDate = (string)i["release_date"],
 						Rating = (double)i["vote_average"]
 					}).ToList();
+				}
+			}
+
+			foreach (var movie in myWatchlist)
+			{
+				foreach (var x in movies)
+				{
+					if (movie.MovieId == x.Id)
+					{
+						Console.WriteLine(x.Title);
+						x.InWatchList = true;
+					}
 				}
 			}
 
@@ -87,10 +105,10 @@ namespace MovieMatchMvc.Models
 		{
 			using (HttpClient httpClient = new HttpClient())
 			{
-				string apiKey = "9484edbd5be7b021216db9b56a4f92b0";
-				string apiUrl = $"https://api.themoviedb.org/3/movie/{movieId}?api_key={apiKey}";
-				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
+				string apiUrl = $"https://api.themoviedb.org/3/movie/{movieId}?api_key={ApiKey}";
+				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+				
 				if (response.IsSuccessStatusCode)
 				{
 					string content = await response.Content.ReadAsStringAsync();
@@ -162,5 +180,8 @@ namespace MovieMatchMvc.Models
                 .Select(u => u.Id)
                 .FirstOrDefault();
         }
+
+
+
     }
 }
