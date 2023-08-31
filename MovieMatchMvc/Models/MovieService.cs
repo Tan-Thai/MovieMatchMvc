@@ -1,21 +1,12 @@
-﻿using MovieMatchMvc.Views.Movie;
-using static System.Reflection.Metadata.BlobBuilder;
-
+﻿using Microsoft.EntityFrameworkCore;
+using MovieMatchMvc.Views.Movie;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using TMDbLib.Client;
-using TMDbLib.Objects.General;
-using TMDbLib.Objects.Search;
-using TMDbLib.Objects.Movies;
-using Microsoft.EntityFrameworkCore;
 
 namespace MovieMatchMvc.Models
 {
-    public class MovieService
-    {
+	public class MovieService
+	{
 
 		string ApiKey = "9484edbd5be7b021216db9b56a4f92b0";
 		TMDbClient Client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
@@ -28,33 +19,33 @@ namespace MovieMatchMvc.Models
 
 
 		public async Task<List<IndexVM>> FetchTopMovies()
-        {
-            List<IndexVM> movies = new List<IndexVM>();
+		{
+			List<IndexVM> movies = new List<IndexVM>();
 
-            using (HttpClient httpClient = new HttpClient())
-            {
+			using (HttpClient httpClient = new HttpClient())
+			{
 
-                string apiUrl = $"https://api.themoviedb.org/3/movie/popular?api_key={ApiKey}";
+				string apiUrl = $"https://api.themoviedb.org/3/movie/popular?api_key={ApiKey}";
 
-                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    JObject jsonResponse = JObject.Parse(content);
-                    JArray items = (JArray)jsonResponse["results"];
+				if (response.IsSuccessStatusCode)
+				{
+					string content = await response.Content.ReadAsStringAsync();
+					JObject jsonResponse = JObject.Parse(content);
+					JArray items = (JArray)jsonResponse["results"];
 
-                    movies = items.Take(6).Select(i => new IndexVM
-                    {
-                        Title = (string)i["title"],
-                        Description = (string)i["overview"],
-                        ImageUrl = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"]
-                    }).ToList();
-                }
-            }
+					movies = items.Take(6).Select(i => new IndexVM
+					{
+						Title = (string)i["title"],
+						Description = (string)i["overview"],
+						ImageUrl = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"]
+					}).ToList();
+				}
+			}
 
-            return movies;
-        }
+			return movies;
+		}
 
 		public async Task<List<SearchVM>> FetchMovies(string query, string userId)
 		{
@@ -108,7 +99,7 @@ namespace MovieMatchMvc.Models
 
 				string apiUrl = $"https://api.themoviedb.org/3/movie/{movieId}?api_key={ApiKey}";
 				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
-				
+
 				if (response.IsSuccessStatusCode)
 				{
 					string content = await response.Content.ReadAsStringAsync();
@@ -134,7 +125,7 @@ namespace MovieMatchMvc.Models
 		{
 			return context.watchLists.Where(w => w.UserId == userId)
 				.OrderBy(p => p.Title)
-				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId})
+				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId })
 				.ToArray();
 		}
 
@@ -156,27 +147,27 @@ namespace MovieMatchMvc.Models
 			await context.SaveChangesAsync();
 		}
 
-        public string GetUserIdByUsername(string username)
-        {
-            return context.accountUsers
-                .Where(u => u.UserName == username)
-                .Select(u => u.Id)
-                .FirstOrDefault();
+		public string GetUserIdByUsername(string username)
+		{
+			return context.accountUsers
+				.Where(u => u.UserName == username)
+				.Select(u => u.Id)
+				.FirstOrDefault();
 		}
 
-        
 
-        public async Task RemoveFromWatchListAsync(int movieId, string userId)
-        {
-            var moveToBeRemoved = await context.watchLists
-                .SingleOrDefaultAsync(m => m.UserId == userId && m.MovieId == movieId);
 
-            if (moveToBeRemoved != null)
-            {
-                context.Remove(moveToBeRemoved);
-                await context.SaveChangesAsync();
-            }
-        }
+		public async Task RemoveFromWatchListAsync(int movieId, string userId)
+		{
+			var moveToBeRemoved = await context.watchLists
+				.SingleOrDefaultAsync(m => m.UserId == userId && m.MovieId == movieId);
 
-    }
+			if (moveToBeRemoved != null)
+			{
+				context.Remove(moveToBeRemoved);
+				await context.SaveChangesAsync();
+			}
+		}
+
+	}
 }

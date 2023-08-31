@@ -39,7 +39,6 @@ namespace MovieMatchMvc.Controllers
                 return View();
             }
             return RedirectToAction(nameof(Login));
-
         }
 
         [HttpGet("login")]
@@ -54,16 +53,13 @@ namespace MovieMatchMvc.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            // Check if credentials is valid (and set auth cookie)
             var errorMessage = await accountService.TryLoginAsync(viewModel);
             if (errorMessage != null)
             {
-                // Show error
                 ModelState.AddModelError(string.Empty, errorMessage);
                 return View();
             }
 
-            // Redirect user
             return RedirectToAction("Index", "Movie");
         }
 
@@ -73,7 +69,6 @@ namespace MovieMatchMvc.Controllers
             await accountService.TryLogoutAsync();
             return RedirectToAction(nameof(Login));
         }
-
 
 		//hårdkodad lista, tar just nu inte ut användarens lista. TODO
 		//[HttpGet("/Watchlist")]
