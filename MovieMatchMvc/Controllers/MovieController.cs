@@ -77,16 +77,10 @@ namespace MovieMatchMvc.Controllers
 		}
 
 
-		//[HttpGet("MatchWatchlists")]
-		//public IActionResult MatchWatchLists()
-		//{
-		//	return RedirectToAction("CompareWatchlistsForm");
-		//}
 		[HttpPost("MatchWatchLists")]
 		public IActionResult MatchWatchLists(string username)
 		{
 
-			string testId = User.FindFirstValue(username); // Get the current user ID
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the current user ID
             string otherUserId = _movieService.GetUserIdByUsername(username); // Get the current user ID
             if (string.IsNullOrEmpty(otherUserId))
