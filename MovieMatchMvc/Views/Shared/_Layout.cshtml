@@ -27,7 +27,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                             <a asp-controller="Movie" asp-action="Watchlist" class="nav-link">Watch List</a>
-                        <a asp-controller ="Movie" asp-action ="MatchWatchLists" > Match with friend </a>
+                            <a asp-controller ="Movie" asp-action ="MatchWatchLists" class="nav-link"> Match with friend </a>
                             @*@User.Identity.Name *@
                             <a asp-controller="Account" asp-action="LogOut" class="nav-link">Sign Out</a>
                     }
@@ -55,5 +55,6 @@
             </div>
             </div>
     </footer>
+    @RenderSection("scripts",false)
 </body>
 </html>

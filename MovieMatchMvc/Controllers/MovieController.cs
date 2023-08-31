@@ -60,8 +60,8 @@ namespace MovieMatchMvc.Controllers
             Console.WriteLine($"Received Movie ID: {movieId}");
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			await _movieService.AddMovieToWatchlistById(movieId, userId);
-			return RedirectToAction("search");
-		}
+            return Json(new { success = true });
+        }
 
 		[HttpGet("MatchWatchLists")]
 		public IActionResult MatchWatchLists()
@@ -96,7 +96,7 @@ namespace MovieMatchMvc.Controllers
 			Console.WriteLine($"Received Movie ID: {movieId} to be removed");
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			await _movieService.RemoveFromWatchListAsync(movieId, userId);
-			return RedirectToAction(nameof(Watchlist));
-		}
+            return Json(new { success = true });
+        }
 	}
 }
