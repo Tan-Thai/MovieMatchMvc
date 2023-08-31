@@ -98,5 +98,7 @@ namespace MovieMatchMvc.Controllers
 			await _movieService.RemoveFromWatchListAsync(movieId, userId);
             return Json(new { success = true });
         }
-	}
+
+        
+    }
 }
