@@ -22,16 +22,13 @@ namespace MovieMatchMvc.Models
 			this.context = context;
 		}
 
-
 		public async Task<List<IndexVM>> FetchTopMovies()
 		{
 			List<IndexVM> movieList = new List<IndexVM>();
 
 			using (client)
 			{
-
 				SearchContainer<SearchMovie> searchResults = client.GetMoviePopularListAsync().Result;
-				
 
 				if (searchResults != null)
 				{
@@ -48,7 +45,6 @@ namespace MovieMatchMvc.Models
 					}
 				}
 			}
-
 			return movieList;
 		}
 
@@ -64,17 +60,7 @@ namespace MovieMatchMvc.Models
 
 				foreach (SearchMovie m in searchResults.Results.Take(100))
 				{
-					SearchVM movie = new SearchVM()
-					{
-						InWatchList = false,
-						Id = m.Id,
-						Title = m.Title,
-						Poster = "https://image.tmdb.org/t/p/w500" + m.PosterPath,
-						ReleaseDate = m.ReleaseDate,
-						Rating = m.VoteAverage,
-						Description = m.Overview
-					};
-
+					SearchVM movie = CreateSearchVM(m, myWatchlist);
 					movieResults.Add(movie);
 				}
 			}
@@ -90,7 +76,6 @@ namespace MovieMatchMvc.Models
 					}
 				}
 			}
-
 			return movieResults;
 		}
 
@@ -98,30 +83,19 @@ namespace MovieMatchMvc.Models
 		{
 			using (client)
 			{
-
-				Movie movie = client.GetMovieAsync(movieId).Result;
+				var movie = client.GetMovieAsync(movieId).Result;
 
 				if (movie != null)
-				{
-					return new SearchVM
-					{
-						Id = movie.Id,
-						Title = movie.Title,
-						Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
-						ReleaseDate = movie.ReleaseDate, 
-						Rating = movie.VoteAverage		
-					};
-				}
+					return CreateSearchVM(movie);
 				else
-				{
 					return null;
-				}
 			}
 		}
 
 		public WatchlistVM[] GetWatchlist(string userId)
 		{
-			return context.watchLists.Where(w => w.UserId == userId)
+			return context.watchLists
+				.Where(w => w.UserId == userId)
 				.OrderBy(p => p.Title)
 				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId })
 				.ToArray();
@@ -166,19 +140,44 @@ namespace MovieMatchMvc.Models
 			}
 		}
 
-        public DetailsVM? GetById(int movieId)
-        {
-            return context.watchLists
-                .Where(m => m.Id == movieId)
-                .Select(m => new DetailsVM
-                {
-                    Title = m.Title,
-                    Poster = m.Poster,
-                    Url = m.Url
-                })
-                .SingleOrDefault();
+		public DetailsVM? GetById(int movieId)
+		{
+			return context.watchLists
+				.Where(m => m.Id == movieId)
+				.Select(m => new DetailsVM
+				{
+					Title = m.Title,
+					Poster = m.Poster,
+					Url = m.Url
+				})
+				.SingleOrDefault();
+		}
+		private SearchVM CreateSearchVM(Movie movie)
+		{
+			return new SearchVM
+			{
+				Id = movie.Id,
+				Title = movie.Title,
+				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
+				ReleaseDate = movie.ReleaseDate,
+				Rating = movie.VoteAverage,
+				Description = movie.Overview
+			};
+		}
+		private SearchVM CreateSearchVM(SearchMovie movie, IEnumerable<WatchlistVM> myWatchlist)
+		{
+			bool inWatchList = myWatchlist?.Any(m => m.MovieId == movie.Id) ?? false;
 
-        }
-
-    }
+			return new SearchVM
+			{
+				InWatchList = inWatchList,
+				Id = movie.Id,
+				Title = movie.Title,
+				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
+				ReleaseDate = movie.ReleaseDate,
+				Rating = movie.VoteAverage,
+				Description = movie.Overview
+			};
+		}
+	}
 }
