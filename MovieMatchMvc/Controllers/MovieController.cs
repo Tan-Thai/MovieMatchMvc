@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MovieMatchMvc.Models;
 using MovieMatchMvc.Views.Movie;
@@ -36,20 +37,21 @@ namespace MovieMatchMvc.Controllers
 			{
 				return View("Index");
 			}
-
-			List<SearchVM> movies = await _movieService.FetchMovies(query);
+			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			List<SearchVM> movies = await _movieService.FetchMovies(query, currentUserId);
 			return View("Search", movies);
 		}
 
-		[HttpPost("search")]
-		public IActionResult TestButton()
-		{
-			TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
-			Movie movie = client.GetMovieAsync(47964).Result;
+		//[HttpPost("search")]
+		//public IActionResult TestButton()
+		//{
+		//	TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
+		//	Movie movie = client.GetMovieAsync(47964).Result;
 
-			Console.WriteLine($"Movie name: {movie.Title}");
-			return RedirectToAction(nameof(Search));
-		}
+		//	Console.WriteLine($"Movie name: {movie.Title}");
+		//	return RedirectToAction(nameof(Search));
+		//}
+
 		[HttpGet("/Watchlist")]
 		public IActionResult Watchlist()
 		{
@@ -67,7 +69,7 @@ namespace MovieMatchMvc.Controllers
             Console.WriteLine($"Received Movie ID: {movieId}");
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			await _movieService.AddMovieToWatchlistById(movieId, userId);
-			return RedirectToAction("Search");
+			return RedirectToAction("search");
 		}
 
 		[HttpGet("MatchWatchLists")]
@@ -86,7 +88,6 @@ namespace MovieMatchMvc.Controllers
 		public IActionResult MatchWatchLists(string username)
 		{
 
-			string testId = User.FindFirstValue(username); // Get the current user ID
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the current user ID
             string otherUserId = _movieService.GetUserIdByUsername(username); // Get the current user ID
             if (string.IsNullOrEmpty(otherUserId))

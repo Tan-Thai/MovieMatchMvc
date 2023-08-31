@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MovieMatchMvc.Models;
 using MovieMatchMvc.Views.Account;
@@ -16,7 +17,7 @@ namespace MovieMatchMvc.Controllers
             this.accountService = accountService;
         }
 
-        [HttpGet("register")]
+		[HttpGet("register")]
         public IActionResult Register()
         {
             return View();
