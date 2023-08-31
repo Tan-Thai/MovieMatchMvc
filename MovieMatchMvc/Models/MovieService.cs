@@ -24,7 +24,6 @@ namespace MovieMatchMvc.Models
 		public MovieService(ApplicationContext context)
 		{
 			this.context = context;
-	
 		}
 
 
@@ -126,7 +125,6 @@ namespace MovieMatchMvc.Models
 				}
 				else
 				{
-					// Handle error
 					return null;
 				}
 			}
@@ -174,7 +172,7 @@ namespace MovieMatchMvc.Models
 			if (moveToBeRemoved != null)
 			{
 				context.Remove(moveToBeRemoved);
-				await context.SaveChangesAsync(); // Use 'await' for async operations
+				await context.SaveChangesAsync(); 
 			}
 		}
 

@@ -43,16 +43,6 @@ namespace MovieMatchMvc.Controllers
 			return View("Search", movies);
 		}
 
-		//[HttpPost("search")]
-		//public IActionResult TestButton()
-		//{
-		//	TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
-		//	Movie movie = client.GetMovieAsync(47964).Result;
-
-		//	Console.WriteLine($"Movie name: {movie.Title}");
-		//	return RedirectToAction(nameof(Search));
-		//}
-
 		[HttpGet("/Watchlist")]
 		public IActionResult Watchlist()
 		{
@@ -79,12 +69,6 @@ namespace MovieMatchMvc.Controllers
 			return View();
 		}
 
-
-		//[HttpGet("MatchWatchlists")]
-		//public IActionResult MatchWatchLists()
-		//{
-		//	return RedirectToAction("CompareWatchlistsForm");
-		//}
 		[HttpPost("MatchWatchLists")]
 		public IActionResult MatchWatchLists(string username)
 		{
