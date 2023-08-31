@@ -39,11 +39,11 @@
 				button.addEventListener('click', function (e) {
 					const movieId = e.target.getAttribute('data-movie-id');
 					const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
-					const url = isInWatchlist ? `/RemoveFromWatchListSearch?movieId=${movieId}` : `/AddMovieToList?movieId=${movieId}`;
+					// const url = isInWatchlist ? `/RemoveFromWatchListSearch?movieId=${movieId}` : `/AddMovieToList?movieId=${movieId}`;
 					console.log(movieId)
-					console.log(url)
+					// console.log(url)
 					console.log(isInWatchlist)
-					fetch(url, {
+					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
