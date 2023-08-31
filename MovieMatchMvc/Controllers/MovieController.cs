@@ -88,17 +88,8 @@ namespace MovieMatchMvc.Controllers
 
 			return RedirectToAction(nameof(Watchlist));
 		}
-		[HttpPost]
-		[Route("RemoveFromWatchListSearch")]
-		public async Task<IActionResult> RemoveFromWatchListSearch(int movieId)
-		{
-			Console.WriteLine($"Received Movie ID: {movieId} to be removed");
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			await _movieService.RemoveFromWatchListAsync(movieId, userId);
-			return Json(new { success = true });
-		}
 
-		[HttpGet("/Details/{Id}")]
+		[HttpGet("/Details/{Id}")] // fix get id to work with multiple views, passing movie id properly
 		public IActionResult Details(int movieId)
 		{
 			var details = _movieService.GetById(movieId);
