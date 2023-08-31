@@ -26,9 +26,10 @@
                  <span class="d-flex flex-row">
                     @if (User.Identity.IsAuthenticated)
                     {
+                            @User.Identity.Name
+
                             <a asp-controller="Movie" asp-action="Watchlist" class="nav-link">Watch List</a>
                             <a asp-controller ="Movie" asp-action ="MatchWatchLists" class="nav-link"> Match with friend </a>
-                            @*@User.Identity.Name *@
                             <a asp-controller="Account" asp-action="LogOut" class="nav-link">Sign Out</a>
                     }
                     else

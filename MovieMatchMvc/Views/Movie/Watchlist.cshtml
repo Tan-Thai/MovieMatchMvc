@@ -20,23 +20,45 @@
 	<p>Filter:</p>
 	<input type="text" value="Enter title" />
 
-	<ul>
+	@* <ul>
 
 		@foreach (var item in Model)
 		{
-			<div>
-				<img style="height:100px;"width="100:px;" src="@item.Poster"> @item.Title
-			<p>@item.MovieId</p>
+			<div >
+				<img style="height:100px;" width="100:px;" src="@item.Poster"> @item.Title 
+				<p>
+				@item.MovieId
+				</p>
+			
 			</div>
-			<div>
+			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
 					<input type="hidden" name="movieId" value="@item.MovieId" />
-					<input type="submit" value="Remove from watchlist">
+					<input type="submit" class="btn btn-danger" class="align-middle" value="Remove from watchlist">
 				</form>
 			</div>
 			
 		}
+	</ul> *@
+	<ul>
+		@foreach (var item in Model)
+		{
+			<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;">
+				<div>
+					<img style="height: 100px;" width="100px;" src="@item.Poster"> @item.Title 
+					
+				</div>
+				
+				<div style ="margin-right: 100px;">
+					<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
+						<input type="hidden" name="movieId" value="@item.MovieId" />
+						<input type="submit" class="btn btn-danger" value="Remove from watchlist">
+					</form>
+				</div>
+			</div> <br/>
+		}
 	</ul>
+
 
 </body>
 </html>
