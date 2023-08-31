@@ -70,8 +70,8 @@ namespace MovieMatchMvc.Controllers
             Console.WriteLine($"Received Movie ID: {movieId}");
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			await _movieService.AddMovieToWatchlistById(movieId, userId);
-			return RedirectToAction("search");
-		}
+            return Json(new { success = true });
+        }
 
 		[HttpGet("MatchWatchLists")]
 		public IActionResult MatchWatchLists()
