@@ -2,7 +2,10 @@
 using MovieMatchMvc.Views.Movie;
 using Newtonsoft.Json.Linq;
 using TMDbLib.Client;
+using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
+using TMDbLib.Objects.Search;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 namespace MovieMatchMvc.Models
@@ -11,7 +14,7 @@ namespace MovieMatchMvc.Models
 	{
 
 		string ApiKey = "9484edbd5be7b021216db9b56a4f92b0";
-		TMDbClient Client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
+		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
 		ApplicationContext context;
 
 		public MovieService(ApplicationContext context)
@@ -22,68 +25,65 @@ namespace MovieMatchMvc.Models
 
 		public async Task<List<IndexVM>> FetchTopMovies()
 		{
-			List<IndexVM> movies = new List<IndexVM>();
+			List<IndexVM> movieList = new List<IndexVM>();
 
-			using (HttpClient httpClient = new HttpClient())
+			using (client)
 			{
 
-				string apiUrl = $"https://api.themoviedb.org/3/movie/popular?api_key={ApiKey}";
+				SearchContainer<SearchMovie> searchResults = client.GetMoviePopularListAsync().Result;
+				
 
-				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
-
-				if (response.IsSuccessStatusCode)
+				if (searchResults != null)
 				{
-					string content = await response.Content.ReadAsStringAsync();
-					JObject jsonResponse = JObject.Parse(content);
-					JArray items = (JArray)jsonResponse["results"];
-
-					movies = items.Take(6).Select(i => new IndexVM
+					foreach (SearchMovie m in searchResults.Results.Take(6))
 					{
-						Title = (string)i["title"],
-						Description = (string)i["overview"],
-						ImageUrl = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"]
-					}).ToList();
+						IndexVM movie = new IndexVM()
+						{
+							Title = m.Title,
+							Description = m.Overview,
+							ImageUrl = "https://image.tmdb.org/t/p/w500" + m.PosterPath
+						};
+
+						movieList.Add(movie);
+					}
 				}
 			}
 
-			return movies;
+			return movieList;
 		}
 
 		public async Task<List<SearchVM>> FetchMovies(string query, string userId)
 		{
 
-			List<SearchVM> movies = new List<SearchVM>();
+			List<SearchVM> movieResults = new List<SearchVM>();
 			var myWatchlist = GetWatchlist(userId);
 
-			using (HttpClient httpClient = new HttpClient())
+			using (client)
 			{
-				string apiUrl = $"https://api.themoviedb.org/3/search/movie?api_key={ApiKey}&query={query}";
+				SearchContainer<SearchMovie> searchResults = await client.SearchMovieAsync(query);
 
-				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
-
-				if (response.IsSuccessStatusCode)
+				foreach (SearchMovie m in searchResults.Results.Take(100))
 				{
-					string content = await response.Content.ReadAsStringAsync();
-					JObject jsonResponse = JObject.Parse(content);
-					JArray items = (JArray)jsonResponse["results"];
-
-					movies = items.Take(100).Select(i => new SearchVM
+					SearchVM movie = new SearchVM()
 					{
 						InWatchList = false,
-						Id = (int)i["id"],
-						Title = (string)i["title"],
-						Poster = "https://image.tmdb.org/t/p/w500" + (string)i["poster_path"],
-						ReleaseDate = (string)i["release_date"],
-						Rating = (double)i["vote_average"]
-					}).ToList();
+						Id = m.Id,
+						Title = m.Title,
+						Poster = "https://image.tmdb.org/t/p/w500" + m.PosterPath,
+						ReleaseDate = m.ReleaseDate,
+						Rating = m.VoteAverage,
+						Description = m.Overview
+					};
+
+					movieResults.Add(movie);
 				}
 			}
 
-			foreach (var movie in myWatchlist)
+			foreach (var m in myWatchlist)
 			{
-				foreach (var x in movies)
+				foreach (var x in movieResults)
 				{
-					if (movie.MovieId == x.Id)
+					if (m.MovieId == x.Id)
 					{
 						Console.WriteLine(x.Title);
 						x.InWatchList = true;
@@ -91,29 +91,25 @@ namespace MovieMatchMvc.Models
 				}
 			}
 
-			return movies;
+			return movieResults;
 		}
 
 		public async Task<SearchVM> FetchMovieById(int movieId)
 		{
-			using (HttpClient httpClient = new HttpClient())
+			using (client)
 			{
 
-				string apiUrl = $"https://api.themoviedb.org/3/movie/{movieId}?api_key={ApiKey}";
-				HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+				Movie movie = client.GetMovieAsync(movieId).Result;
 
-				if (response.IsSuccessStatusCode)
+				if (movie != null)
 				{
-					string content = await response.Content.ReadAsStringAsync();
-					JObject jsonResponse = JObject.Parse(content);
-
 					return new SearchVM
 					{
-						Id = movieId,
-						Title = (string)jsonResponse["title"],
-						Poster = "https://image.tmdb.org/t/p/w500" + (string)jsonResponse["poster_path"],
-						ReleaseDate = (string)jsonResponse["release_date"],
-						Rating = (double)jsonResponse["vote_average"]
+						Id = movie.Id,
+						Title = movie.Title,
+						Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
+						ReleaseDate = movie.ReleaseDate, 
+						Rating = movie.VoteAverage		
 					};
 				}
 				else
@@ -139,7 +135,7 @@ namespace MovieMatchMvc.Models
 
 		public async Task AddMovieToWatchlist(SearchVM movie, string userId)
 		{
-			context.watchLists.Add(new WatchList
+			context.watchLists.Add(new WatchList //potentially add more props to fill out watchlist
 			{
 				MovieId = movie.Id,
 				Title = movie.Title,
@@ -156,7 +152,6 @@ namespace MovieMatchMvc.Models
 				.Select(u => u.Id)
 				.FirstOrDefault();
 		}
-
 
 
 		public async Task RemoveFromWatchListAsync(int movieId, string userId)
