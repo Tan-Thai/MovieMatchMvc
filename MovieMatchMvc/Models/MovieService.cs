@@ -164,18 +164,19 @@ namespace MovieMatchMvc.Models
                 .FirstOrDefault();
 		}
 
-		public async Task RemoveFromWatchListAsync(int movieId, string userId)
-		{
-			var moveToBeRemoved = await context.watchLists
-				.SingleOrDefaultAsync(m => m.UserId == userId && m.MovieId == movieId);
+        
 
-			if (moveToBeRemoved != null)
-			{
-				context.Remove(moveToBeRemoved);
-				await context.SaveChangesAsync(); 
-			}
-		}
+        public async Task RemoveFromWatchListAsync(int movieId, string userId)
+        {
+            var moveToBeRemoved = await context.watchLists
+                .SingleOrDefaultAsync(m => m.UserId == userId && m.MovieId == movieId);
 
+            if (moveToBeRemoved != null)
+            {
+                context.Remove(moveToBeRemoved);
+                await context.SaveChangesAsync();
+            }
+        }
 
-	}
+    }
 }
