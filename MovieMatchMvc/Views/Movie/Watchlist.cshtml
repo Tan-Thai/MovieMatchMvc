@@ -29,7 +29,7 @@
 			<p>@item.MovieId</p>
 			</div>
 			<div>
-				<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
+				<form asp-controller="Movie" asp-action="ManageWatchList" method="post">
 					<input type="hidden" name="movieId" value="@item.MovieId" />
 					<input type="submit" value="Remove from watchlist">
 				</form>
