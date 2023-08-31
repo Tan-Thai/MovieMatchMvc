@@ -2,6 +2,8 @@
 using MovieMatchMvc.Views.Movie;
 using Newtonsoft.Json.Linq;
 using TMDbLib.Client;
+using TMDbLib.Objects.Movies;
+
 
 namespace MovieMatchMvc.Models
 {
@@ -169,5 +171,19 @@ namespace MovieMatchMvc.Models
 			}
 		}
 
-	}
+        public DetailsVM? GetById(int movieId)
+        {
+            return context.watchLists
+                .Where(m => m.Id == movieId)
+                .Select(m => new DetailsVM
+                {
+                    Title = m.Title,
+                    Poster = m.Poster,
+                    Url = m.Url
+                })
+                .SingleOrDefault();
+
+        }
+
+    }
 }

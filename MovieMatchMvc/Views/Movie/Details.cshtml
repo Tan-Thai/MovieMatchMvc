@@ -1,0 +1,12 @@
+﻿
+@model DetailsVM
+
+
+<h2>About @Model.Title:</h2>
+<main>
+    <form asp-controller="Movie" asp-action="Details">
+        @Model.Title
+    </form>
+</main>
+
+

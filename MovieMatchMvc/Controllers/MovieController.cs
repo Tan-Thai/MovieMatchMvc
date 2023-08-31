@@ -97,5 +97,18 @@ namespace MovieMatchMvc.Controllers
 			return Json(new { success = true });
 		}
 
+		[HttpGet("/Details/{Id}")]
+		public IActionResult Details(int movieId)
+		{
+			var details = _movieService.GetById(movieId);
+			var movie = new DetailsVM
+			{
+				Title = details.Title,
+				Poster = details.Poster,
+				Url = details.Url
+			};
+			return View(movie);
+
+		}
 	}
 }
