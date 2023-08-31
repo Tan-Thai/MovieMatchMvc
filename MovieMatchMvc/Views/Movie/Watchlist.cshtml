@@ -45,12 +45,12 @@
 		{
 			<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;">
 				<div>
-					<img style="height: 100px;" width="100px;" src="@item.Poster"> @item.Title 
+					<img style="height: 100px; width: 100px;" src="@item.Poster"> @item.Title 
 					
 				</div>
 				
 				<div style ="margin-right: 100px;">
-					<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
+					<form asp-controller="Movie" asp-action="ManageWatchList" method="post">
 						<input type="hidden" name="movieId" value="@item.MovieId" />
 						<input type="submit" class="btn btn-danger" value="Remove from watchlist">
 					</form>
