@@ -21,6 +21,10 @@
                     <ul>Average score: @movie.Rating</ul>
                 </div>
                 <div>
+                   @*  <form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
+                        <input type="hidden" name="movieId" value="@movie.Id" />
+                        <input type="submit" value="Remove from watchlist">
+                    </form> *@
                     <button class="watchlist-button" data-movie-id="@movie.Id">
                         @(movie.InWatchList ? "Remove from watchlist" : "Add to watchlist")
                     </button>
@@ -38,22 +42,57 @@
                     const movieId = e.target.getAttribute('data-movie-id');
                     const isInWatchlist = e.target.textContent === 'Remove from watchlist';
 
-                    fetch(`/AddMovieToList?movieId=${movieId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ movieId })
-                    })
-                        .then(response => response.json())  
-                        .then(data => {
-                            if (data.success) {
-                                e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
-                            }
+                    let url = isInWatchlist ? '/RemoveFromWatchList?movieId=${movieId}' : '/AddMovieToList?movieId=${movieId}';
+                   
+                    
+                   
+                        fetch(`${url}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ movieId })
                         })
-                        .catch(error => console.log('Error:', error));
-                });
-            });
-        });
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+                                    }
+                                })
+                                .catch(error => console.log('Error:', error));
+
+                        }
+                    });
+
+
+            //                 .then(response => response.json())
+            //                 .then(data => {
+            //                     if (data.success) {
+            //                         e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+            //                     }
+            //                 })
+            //                 .catch(error => console.log('Error:', error)    )
+            //         }
+                    
+                     
+                        
+                    
+                    
+            //         fetch(`/AddMovieToList?movieId=${movieId}`, {
+            //             method: 'POST',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //             body: JSON.stringify({ movieId })
+            //         })
+            //             .then(response => response.json())  
+            //             .then(data => {
+            //                 if (data.success) {
+            //                     e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+            //                 }
+            //             })
+            //             .catch(error => console.log('Error:', error));
+            //     });
+            // });
     </script>
 }
