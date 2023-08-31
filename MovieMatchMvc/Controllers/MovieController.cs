@@ -39,6 +39,7 @@ namespace MovieMatchMvc.Controllers
 			}
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			List<SearchVM> movies = await _movieService.FetchMovies(query, currentUserId);
+			ViewBag.Query = query;
 			return View("Search", movies);
 		}
 
@@ -101,7 +102,6 @@ namespace MovieMatchMvc.Controllers
             var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
             ViewBag.OtherUsername = username;
             
-
 			return View("MatchWatchLists", commonMovies);
 		}
 	}
