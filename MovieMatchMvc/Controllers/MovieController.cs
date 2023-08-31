@@ -113,8 +113,7 @@ namespace MovieMatchMvc.Controllers
 		}
 	}
 }
-	}
-}
+	
 		//[HttpPost]
 		//[Route("AddMovieToList")]
 		//public async Task<IActionResult> AddMovieToList(int movieId)
