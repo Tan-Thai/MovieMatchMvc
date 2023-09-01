@@ -12,7 +12,6 @@ namespace MovieMatchMvc.Models
 {
 	public class MovieService
 	{
-
 		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0"); 
 		ApplicationContext context;
 
@@ -46,7 +45,6 @@ namespace MovieMatchMvc.Models
 			}
 			return movieList;
 		}
-
 		public async Task<List<SearchVM>> FetchMovies(string query, string userId)
 		{
 
@@ -77,7 +75,6 @@ namespace MovieMatchMvc.Models
 			}
 			return movieResults;
 		}
-
 		public async Task<SearchVM> FetchMovieById(int movieId)
 		{
 			using (client)
@@ -99,13 +96,18 @@ namespace MovieMatchMvc.Models
 				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId })
 				.ToArray();
 		}
-
+		public string GetUserIdByUsername(string username)
+		{
+			return context.accountUsers
+				.Where(u => u.UserName == username)
+				.Select(u => u.Id)
+				.FirstOrDefault();
+		}
 		public async Task AddMovieToWatchlistById(int movieId, string userId)
 		{
 			var movie = await FetchMovieById(movieId);
 			await AddMovieToWatchlist(movie, userId);
 		}
-
 		public async Task AddMovieToWatchlist(SearchVM movie, string userId)
 		{
 			context.watchLists.Add(new WatchList //potentially add more props to fill out watchlist
@@ -117,15 +119,6 @@ namespace MovieMatchMvc.Models
 			});
 			await context.SaveChangesAsync();
 		}
-
-		public string GetUserIdByUsername(string username)
-		{
-			return context.accountUsers
-				.Where(u => u.UserName == username)
-				.Select(u => u.Id)
-				.FirstOrDefault();
-		}
-
 		public async Task RemoveFromWatchListAsync(int movieId, string userId)
 		{
 			var moveToBeRemoved = await context.watchLists
@@ -136,6 +129,14 @@ namespace MovieMatchMvc.Models
 				context.Remove(moveToBeRemoved);
 				await context.SaveChangesAsync();
 			}
+		}
+		internal object GetMatchedMovies(string? currentUserId, string otherUserId)
+		{
+			var myWatchlist = GetWatchlist(currentUserId);
+			var searchedWatchlist = GetWatchlist(otherUserId);
+			var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(searchedWatchlist.Select(m => m.MovieId)).ToList();
+			var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
+			return commonMovies;
 		}
 
 		public DetailsVM? GetById(int movieId)
@@ -176,15 +177,6 @@ namespace MovieMatchMvc.Models
 				Rating = movie.VoteAverage,
 				Description = movie.Overview
 			};
-		}
-
-		internal object GetMatchedMovies(string? currentUserId, string otherUserId)
-		{
-			var myWatchlist = GetWatchlist(currentUserId);
-			var searchedWatchlist = GetWatchlist(otherUserId);
-			var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(searchedWatchlist.Select(m => m.MovieId)).ToList();
-			var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
-			return commonMovies;
 		}
 	}
 }
