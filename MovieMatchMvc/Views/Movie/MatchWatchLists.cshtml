@@ -10,8 +10,8 @@
 </form>
 
 
-<h2>Common Movies</h2>
-<h2>Comparing with @ViewBag.OtherUsername</h2>
+<h2 style="color: antiquewhite">Common Movies with: @ViewBag.OtherUsername</h2>
+
 @if (Model == null)
 {
     <p>No common movies found.</p>
@@ -29,8 +29,8 @@ else
             @foreach (var movie in Model)
             {
                 <tr>
-                    <td>@movie.Title</td>
-                    <td><img src="@movie.Poster" alt="@movie.Title" width="100"></td>
+                    <td style="color: antiquewhite">@movie.Title</td>
+                    <td style="color: antiquewhite"><img src="@movie.Poster" alt="@movie.Title" width="100"></td>
                 </tr>
             }
         </tbody>
