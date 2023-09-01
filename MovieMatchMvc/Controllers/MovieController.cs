@@ -54,7 +54,7 @@ namespace MovieMatchMvc.Controllers
 			else
 				await _movieService.AddMovieToWatchlistById(movieId, userId);
 
-			if (Request.Headers["Referer"].ToString().Contains("search"))
+			if (Request.Headers["Referer"].ToString().Contains("search")) //look to send a parameter rather than request.
 				return Json(new { success = true });
 
 			return RedirectToAction(nameof(Watchlist));
@@ -87,17 +87,10 @@ namespace MovieMatchMvc.Controllers
 		}
 
 		[HttpGet("/Details/{Id}")] // fix get id to work with multiple views, passing movie id properly
-		public IActionResult Details(int movieId)
+		public async Task<IActionResult> DetailsAsync(int id)
 		{
-			var details = _movieService.GetById(movieId);
-			var movie = new DetailsVM
-			{
-				Title = details.Title,
-				Poster = details.Poster,
-				Url = details.Url
-			};
+			var movie = await _movieService.GetMovieById(id);
 			return View(movie);
-
 		}
 	}
 }

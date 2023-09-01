@@ -139,17 +139,29 @@ namespace MovieMatchMvc.Models
 			return commonMovies;
 		}
 
-		public DetailsVM? GetById(int movieId)
+		public async Task<DetailsVM> GetMovieById(int movieId)
 		{
-			return context.watchLists
-				.Where(m => m.Id == movieId)
-				.Select(m => new DetailsVM
-				{
-					Title = m.Title,
-					Poster = m.Poster,
-					Url = m.Url
-				})
-				.SingleOrDefault();
+			using (client)
+			{
+				var movie = client.GetMovieAsync(movieId).Result;
+
+				if (movie != null)
+					return CreateDetailsVM(movie);
+				else
+					return null;
+			}
+		}
+		private DetailsVM CreateDetailsVM(Movie movie)
+		{
+			return new DetailsVM
+			{
+				Id = movie.Id,
+				Title = movie.Title,
+				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
+				ReleaseDate = movie.ReleaseDate,
+				Rating = movie.VoteAverage,
+				Description = movie.Overview
+			};
 		}
 		private SearchVM CreateSearchVM(Movie movie)
 		{
