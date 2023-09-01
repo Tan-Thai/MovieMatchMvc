@@ -132,3 +132,25 @@ transform: scale(1.1);
     height: 20px;
     margin-top: -30px;
 }
+
+#search-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: solid 5px white;
+    margin-top: 20px;
+}
+
+#search-result {
+    width: 200px;
+    border: solid 5px white;
+    display: flex;
+    margin: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+ img {
+    width: 200px;
+    height: 250px;
+}
