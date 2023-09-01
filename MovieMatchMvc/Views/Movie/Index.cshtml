@@ -31,7 +31,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="carousel-caption">
-                                                <h3>@movie.Title</h3>
+                                                <a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId"><h3>@movie.Title</h3></a>
                                                 <p>@TruncateDescription(movie.Description, 150)</p>
                                             </div>
                                         </div>

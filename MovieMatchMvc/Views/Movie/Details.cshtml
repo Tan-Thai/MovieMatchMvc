@@ -1,19 +1,60 @@
-﻿
-@model DetailsVM
+﻿@model DetailsVM
 
 
 <h2>About @Model.Title:</h2>
 <main>
-    <form asp-controller="Movie" asp-action="Details">
-        <div>
-        @Model.Title
-        @Model.Description
-        </div>
-        <div>
-        @Model.Poster
-        </div>
-
-    </form>
+	<div id="content">
+		<table class="table" border="0" cellpadding="0" cellspacing="0" width="100%" *@>
+			<tbody>
+				<tr>
+					<td class="borderClass" width="225" style="border-width: 0 1px 0 0" valign="top">
+						<div class="leftside" style="width: 225px">
+							<div style="text-align: center;"></div>
+							<img class="lazyloaded" src="@Model.Poster" alt="Poster image for @Model.Title" />
+						</div>
+						<div>
+							@if (User.Identity.IsAuthenticated)
+							{
+								<button class="watchlist-button" data-movie-id="@Model.Id">
+									@(Model.InWatchList ? "Remove from watchlist" : "Add to watchlist")
+								</button>
+							}
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </main>
 
 
+@section Scripts {
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			document.querySelectorAll('.watchlist-button').forEach(button => {
+				button.addEventListener('click', function (e) {
+					const movieId = e.target.getAttribute('data-movie-id');
+					const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
+					// const url = isInWatchlist ? `/RemoveFromWatchListSearch?movieId=${movieId}` : `/AddMovieToList?movieId=${movieId}`;
+					console.log(movieId)
+					// console.log(url)
+					console.log(isInWatchlist)
+					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJavaCall=true`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ movieId })
+					})
+						.then(response => response.json())
+						.then(data => {
+							if (data.success) {
+								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+							}
+						})
+						.catch(error => console.log('Error:', error));
+				});
+			});
+		});
+	</script>
+	}

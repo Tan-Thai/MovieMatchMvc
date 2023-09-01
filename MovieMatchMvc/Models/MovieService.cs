@@ -34,6 +34,7 @@ namespace MovieMatchMvc.Models
 					{
 						IndexVM movie = new IndexVM()
 						{
+							MovieId = m.Id,
 							Title = m.Title,
 							Description = m.Overview,
 							ImageUrl = "https://image.tmdb.org/t/p/w500" + m.PosterPath
@@ -139,14 +140,26 @@ namespace MovieMatchMvc.Models
 			return commonMovies;
 		}
 
-		public async Task<DetailsVM> GetMovieById(int movieId)
+		public async Task<DetailsVM> GetMovieById(int movieId, string currentUserId)
 		{
+			var myWatchlist = GetWatchlist(currentUserId);
+
 			using (client)
 			{
 				var movie = client.GetMovieAsync(movieId).Result;
 
 				if (movie != null)
-					return CreateDetailsVM(movie);
+				{
+					var movieDetails = CreateDetailsVM(movie);
+					foreach (var m in myWatchlist)
+					{
+						if (m.MovieId == movieDetails.Id)
+						{
+							movieDetails.InWatchList = true;
+						}
+					}
+					return movieDetails;
+				}
 				else
 					return null;
 			}
