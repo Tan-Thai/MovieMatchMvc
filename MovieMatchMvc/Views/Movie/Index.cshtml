@@ -8,11 +8,12 @@
 <h1 class="text-center">Top Movies Right now!</h1>
 
 <div style="width:80%; " class="container p-2 mx-auto" >
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                @if (Model != null && Model.Count > 0)
-                {
+   <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (Model != null && Model.Count > 0)
+            {
+                <div class="carousel-box">
                     <div id="movieCarousel" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             @for (int i = 0; i < Model.Count; i++)
@@ -27,14 +28,12 @@
                                 <div class="carousel-item @(i == 0 ? "active" : "")">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">
-                                                <img class="d-block w-100" src="@movie.ImageUrl" alt="@movie.Title">
-                                            </a>
+                                            <img class="d-block w-100" src="@movie.ImageUrl" alt="@movie.Title">
                                         </div>
                                         <div class="col-md-6">
                                             <div class="carousel-caption">
                                                 <h3>@movie.Title</h3>
-                                                <p>@TruncateDescription(movie.Description, 150)</p>
+                                                <p>@TruncateDescription(movie.Description, 100)</p>
                                             </div>
                                         </div>
                                     </div>
@@ -50,18 +49,21 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
-                }
-                else
-                {
-                    <p>No movies found.</p>
-                }
-            </div>
+                </div>
+            }
+            else
+            {
+                <p>No movies found.</p>
+            }
         </div>
+    </div>
+</div>
+
     </div>
 
     <style>
         .carousel-caption h3, .carousel-caption p {
-            color: blue;
+            color: antiquewhite;
         }
     </style>
 

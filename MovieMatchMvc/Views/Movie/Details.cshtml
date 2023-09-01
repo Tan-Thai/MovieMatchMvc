@@ -3,22 +3,31 @@
 
 <h2>About @Model.Title:</h2>
 <main>
-	<div id="content">
-		<table class="table" border="0" cellpadding="0" cellspacing="0" width="100%" *@>
+	<div class="container my-5">
+		<table class="table" >
 			<tbody>
 				<tr>
-					<td class="borderClass" width="225" style="border-width: 0 1px 0 0" valign="top">
-						<div class="leftside" style="width: 225px">
-							<div style="text-align: center;"></div>
-							<img class="lazyloaded" src="@Model.Poster" alt="Poster image for @Model.Title" />
+					<td scope="row">
+						<div class="col-md-4">
+							<div class="row" style="text-align: center;"></div>
+							<img style="width: 300px; height: auto;" src="@Model.Poster" alt="Poster image for @Model.Title" />
 						</div>
-						<div>
+						<div class="col-md-4">
 							@if (User.Identity.IsAuthenticated)
 							{
 								<button class="watchlist-button" data-movie-id="@Model.Id">
 									@(Model.InWatchList ? "Remove from watchlist" : "Add to watchlist")
 								</button>
 							}
+						</div>
+						<div>
+							@Model.Rating <br/>
+							@Model.ReleaseDate
+						</div>
+					</td>
+					<td scope="row">
+						<div>
+							@Model.Description
 						</div>
 					</td>
 				</tr>
@@ -39,7 +48,7 @@
 					console.log(movieId)
 					// console.log(url)
 					console.log(isInWatchlist)
-					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJavaCall=true`, {
+					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJsonCall=true`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
