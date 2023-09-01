@@ -35,6 +35,7 @@ namespace MovieMatchMvc.Controllers
 			return View("Search", movies);
 		}
 
+
 		[HttpGet("/Watchlist")]
 		public IActionResult Watchlist()
 		{
@@ -42,34 +43,6 @@ namespace MovieMatchMvc.Controllers
 			var model = _movieService.GetWatchlist(userId);
 			return View("Watchlist", model);
 		}
-
-
-		[HttpGet("MatchWatchLists")]
-		public IActionResult MatchWatchLists()
-		{
-			return View();
-		}
-
-		[HttpPost("MatchWatchLists")]
-		public IActionResult MatchWatchLists(string username)
-		{
-
-			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			string otherUserId = _movieService.GetUserIdByUsername(username);
-			if (string.IsNullOrEmpty(otherUserId))
-			{
-
-				return View("Error");
-			}
-			var myWatchlist = _movieService.GetWatchlist(currentUserId);
-			var otherWatchlist = _movieService.GetWatchlist(otherUserId);
-			var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(otherWatchlist.Select(m => m.MovieId)).ToList();
-			var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
-			ViewBag.OtherUsername = username;
-
-			return View("MatchWatchLists", commonMovies);
-		}
-
 		[HttpPost]
 		[Route("ManageWatchList")]
 		public async Task<IActionResult> ManageWatchList(int movieId, bool remove = true)
@@ -81,25 +54,43 @@ namespace MovieMatchMvc.Controllers
 			else
 				await _movieService.AddMovieToWatchlistById(movieId, userId);
 
-			if (Request.Headers["Referer"].ToString().Contains("search"))
+			if (Request.Headers["Referer"].ToString().Contains("search")) //look to send a parameter rather than request.
 				return Json(new { success = true });
-
 
 			return RedirectToAction(nameof(Watchlist));
 		}
 
-		[HttpGet("/Details/{Id}")] // fix get id to work with multiple views, passing movie id properly
-		public IActionResult Details(int movieId)
+		[HttpGet("MatchWatchLists")]
+		public IActionResult MatchWatchLists(string username)
 		{
-			var details = _movieService.GetById(movieId);
-			var movie = new DetailsVM
-			{
-				Title = details.Title,
-				Poster = details.Poster,
-				Url = details.Url
-			};
-			return View(movie);
 
+			if (!string.IsNullOrEmpty(username))
+			{
+				string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				string otherUserId = _movieService.GetUserIdByUsername(username);
+				if (string.IsNullOrEmpty(otherUserId))
+				{
+					return View("Error");
+				}
+				var commonMovies = _movieService.GetMatchedMovies(currentUserId, otherUserId);
+				ViewBag.OtherUsername = username;
+
+				return View("MatchWatchLists", commonMovies);
+			}
+			return View();
+		}
+		[HttpPost("MatchWatchLists")]
+		public IActionResult MatchWatchListsPost(string username)
+		{
+			TempData["LastSearchedUsername"] = username;
+			return RedirectToAction("MatchWatchLists", new { username });
+		}
+
+		[HttpGet("/Details/{Id}")] // fix get id to work with multiple views, passing movie id properly
+		public async Task<IActionResult> DetailsAsync(int id)
+		{
+			var movie = await _movieService.GetMovieById(id);
+			return View(movie);
 		}
 	}
 }

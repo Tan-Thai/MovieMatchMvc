@@ -5,7 +5,14 @@
 <h2>About @Model.Title:</h2>
 <main>
     <form asp-controller="Movie" asp-action="Details">
+        <div>
         @Model.Title
+        @Model.Description
+        </div>
+        <div>
+        @Model.Poster
+        </div>
+
     </form>
 </main>
 
