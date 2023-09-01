@@ -45,24 +45,31 @@ namespace MovieMatchMvc.Controllers
 
 
 		[HttpGet("MatchWatchLists")]
-		public IActionResult MatchWatchLists()
+		public IActionResult MatchWatchLists(string username)
 		{
+
+			if (!string.IsNullOrEmpty(username))
+			{
+				string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				string otherUserId = _movieService.GetUserIdByUsername(username);
+				if (string.IsNullOrEmpty(otherUserId))
+				{
+					return View("Error");
+				}
+				var commonMovies = _movieService.GetMatchedMovies(currentUserId, otherUserId);
+				ViewBag.OtherUsername = username;
+
+				return View("MatchWatchLists", commonMovies);
+
+			}
 			return View();
 		}
 
 		[HttpPost("MatchWatchLists")]
-		public IActionResult MatchWatchLists(string username)
+		public IActionResult MatchWatchListsPost(string username)
 		{
-			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			string otherUserId = _movieService.GetUserIdByUsername(username);
-			if (string.IsNullOrEmpty(otherUserId))
-			{
-				return View("Error");
-			}
-			var commonMovies = _movieService.GetMatchedMovies(currentUserId, otherUserId);
-			ViewBag.OtherUsername = username;
-
-			return View("MatchWatchLists", commonMovies);
+			TempData["LastSearchedUsername"] = username;
+			return RedirectToAction("MatchWatchLists", new { username });
 		}
 
 		[HttpPost]
