@@ -45,7 +45,7 @@ namespace MovieMatchMvc.Controllers
 		}
 		[HttpPost]
 		[Route("ManageWatchList")]
-		public async Task<IActionResult> ManageWatchList(int movieId, bool remove = true, bool isJavaCall = false)
+		public async Task<IActionResult> ManageWatchList(int movieId, bool remove = true, bool isJsonCall = false)
 		{
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -54,7 +54,7 @@ namespace MovieMatchMvc.Controllers
 			else
 				await _movieService.AddMovieToWatchlistById(movieId, userId);
 
-			if (isJavaCall) //look to send a parameter rather than request.
+			if (isJsonCall) //look to send a parameter rather than request.
 			{
 				return Json(new { success = true });
 			}
