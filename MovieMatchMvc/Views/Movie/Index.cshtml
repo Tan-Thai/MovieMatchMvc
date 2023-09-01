@@ -2,10 +2,10 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-	<h5 class="text-center">Welcome @User.Identity.Name</h5>
+    <h5 class="text-center" style="color: antiquewhite" ;>Welcome @User.Identity.Name</h5>
 
 }
-<h1 class="text-center">Top Movies Right now!</h1>
+<h1 class="text-center" style="color: antiquewhite";>Top Movies Right now!</h1>
 
 <div style="width:80%; " class="container p-2 mx-auto" >
    <div class="container">
@@ -28,12 +28,12 @@
                                 <div class="carousel-item @(i == 0 ? "active" : "")">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <img class="d-block w-100" src="@movie.ImageUrl" alt="@movie.Title">
+                                                <img class="d-block w-100 badge-light shadow" src="@movie.ImageUrl" alt="@movie.Title">
                                         </div>
                                         <div class="col-md-6">
                                             <div class="carousel-caption">
                                                 <h3>@movie.Title</h3>
-                                                <p>@TruncateDescription(movie.Description, 100)</p>
+                                                <p>@TruncateDescription(movie.Description, 170)</p>
                                             </div>
                                         </div>
                                     </div>
@@ -65,6 +65,22 @@
         .carousel-caption h3, .carousel-caption p {
             color: antiquewhite;
         }
+    </style>
+    
+    <style>
+        .col-md-8  {
+            background-color: darkslategrey;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            border-radius: 25px;
+            opasity: 10%;   
+        }
+    </style>
+    <style>
+        .d-block {
+            border-radius: 35px;
+        }
+
     </style>
 
     @functions {
