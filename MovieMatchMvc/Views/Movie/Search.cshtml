@@ -43,7 +43,7 @@
 					console.log(movieId)
 					// console.log(url)
 					console.log(isInWatchlist)
-					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&inWatchList=false`, {
+					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJavaCall=true`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
