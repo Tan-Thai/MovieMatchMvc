@@ -93,7 +93,8 @@ namespace MovieMatchMvc.Controllers
 		[HttpGet("/Details/{id}")] // fix get id to work with multiple views, passing movie id properly
 		public async Task<IActionResult> DetailsAsync(int id)
 		{
-			var movie = await _movieService.GetMovieById(id);
+			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var movie = await _movieService.GetMovieById(id, currentUserId);
 			return View(movie);
 		}
 	}
