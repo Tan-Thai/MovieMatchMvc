@@ -14,7 +14,9 @@ namespace MovieMatchMvc.Models
 	{
 
 		string ApiKey = "9484edbd5be7b021216db9b56a4f92b0";
-		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
+		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0"); 
+		//vi bör antingen använda apikey här och använda "using (client)" brackets i varje instans den används på
+		//eller så skapar vi en client inuti movieservice och gör en dispose metod för att "dispose" clientens upptagna minne
 		ApplicationContext context;
 
 		public MovieService(ApplicationContext context)
@@ -126,7 +128,6 @@ namespace MovieMatchMvc.Models
 				.Select(u => u.Id)
 				.FirstOrDefault();
 		}
-
 
 		public async Task RemoveFromWatchListAsync(int movieId, string userId)
 		{
