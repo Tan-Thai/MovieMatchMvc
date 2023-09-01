@@ -15,7 +15,10 @@
 			<li style="display:flex">
 				<div><img style="height:200px; width: 150px;" src="@movie.Poster" alt="..." /></div>
 				<div style="display: flex;flex-direction: column; justify-content: space-between; align-items: flex-start;">
-					<ul><a style="font-weight: bold">@movie.Title</a></ul>
+					<ul>
+						<a style="font-weight: bold" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+						@movie.Title</a>
+						</ul>
 					<ul>@movie.ReleaseDate</ul>
 					<ul>Average score: @movie.Rating</ul>
 				</div>

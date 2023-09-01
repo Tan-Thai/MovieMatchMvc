@@ -90,11 +90,11 @@ namespace MovieMatchMvc.Controllers
 			return RedirectToAction("MatchWatchLists", new { username });
 		}
 
-		[HttpGet("/Details/{id}")] // fix get id to work with multiple views, passing movie id properly
-		public async Task<IActionResult> DetailsAsync(int id)
+		[HttpGet("Details/{id}")] // fix get id to work with multiple views, passing movie id properly
+		public IActionResult Details(int id)
 		{
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var movie = await _movieService.GetMovieById(id, currentUserId);
+			var movie =  _movieService.GetMovieById(id, currentUserId);
 			return View(movie);
 		}
 	}

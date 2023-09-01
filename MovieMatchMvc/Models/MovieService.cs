@@ -140,7 +140,7 @@ namespace MovieMatchMvc.Models
 			return commonMovies;
 		}
 
-		public async Task<DetailsVM> GetMovieById(int movieId, string currentUserId)
+		public DetailsVM GetMovieById(int movieId, string currentUserId)
 		{
 			var myWatchlist = GetWatchlist(currentUserId);
 
