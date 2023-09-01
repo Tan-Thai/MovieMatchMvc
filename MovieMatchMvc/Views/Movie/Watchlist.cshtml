@@ -45,7 +45,10 @@
 		{
 			<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;">
 				<div>
-					<img style="height: 200px; width: 150px;" src="@item.Poster"> @item.Title 
+					<img style="height: 200px; width: 150px;" src="@item.Poster">
+					<a style="font-weight: bold" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
+						@item.Title
+					</a>
 					
 				</div>
 				
