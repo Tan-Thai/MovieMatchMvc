@@ -14,9 +14,7 @@
         <link rel="stylesheet" href="~/Styles/Styles.css" />"
 </head>
 <body>
-        
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav id="navbar-reset" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class=" container-fluid">
             <div class="d-flex justify-content-between w-100">
                       <a asp-controller="Movie" asp-action="Index">Home</a>
@@ -29,13 +27,13 @@
                  <span class="d-flex flex-row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <div class="d-flex align-items-center">
-                            Signed in as: @User.Identity.Name
-                        </div>
-
+                       @*  <div class="d-flex align-items-center">
+                            <p>Signed in as: @User.Identity.Name</p>
+                        </div> *@
+                            
                             <a asp-controller="Movie" asp-action="Watchlist" class="nav-link">Watch List</a>
                             <a asp-controller ="Movie" asp-action ="MatchWatchLists" class="nav-link"> Match with friend </a>
-                            <a asp-controller="Account" asp-action="LogOut" class="nav-link">Sign Out</a>
+                            <a asp-controller="Account" asp-action="LogOut" class="nav-link">Sign Out @User.Identity.Name</a>
                     }
                     else
                     {
