@@ -35,6 +35,7 @@ namespace MovieMatchMvc.Controllers
 			return View("Search", movies);
 		}
 
+
 		[HttpGet("/Watchlist")]
 		public IActionResult Watchlist()
 		{
@@ -42,7 +43,22 @@ namespace MovieMatchMvc.Controllers
 			var model = _movieService.GetWatchlist(userId);
 			return View("Watchlist", model);
 		}
+		[HttpPost]
+		[Route("ManageWatchList")]
+		public async Task<IActionResult> ManageWatchList(int movieId, bool remove = true)
+		{
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+			if (remove)
+				await _movieService.RemoveFromWatchListAsync(movieId, userId);
+			else
+				await _movieService.AddMovieToWatchlistById(movieId, userId);
+
+			if (Request.Headers["Referer"].ToString().Contains("search"))
+				return Json(new { success = true });
+
+			return RedirectToAction(nameof(Watchlist));
+		}
 
 		[HttpGet("MatchWatchLists")]
 		public IActionResult MatchWatchLists(string username)
@@ -60,34 +76,14 @@ namespace MovieMatchMvc.Controllers
 				ViewBag.OtherUsername = username;
 
 				return View("MatchWatchLists", commonMovies);
-
 			}
 			return View();
 		}
-
 		[HttpPost("MatchWatchLists")]
 		public IActionResult MatchWatchListsPost(string username)
 		{
 			TempData["LastSearchedUsername"] = username;
 			return RedirectToAction("MatchWatchLists", new { username });
-		}
-
-		[HttpPost]
-		[Route("ManageWatchList")]
-		public async Task<IActionResult> ManageWatchList(int movieId, bool remove = true)
-		{
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-			if (remove)
-				await _movieService.RemoveFromWatchListAsync(movieId, userId);
-			else
-				await _movieService.AddMovieToWatchlistById(movieId, userId);
-
-
-			if (Request.Headers["Referer"].ToString().Contains("search"))
-				return Json(new { success = true });
-
-			return RedirectToAction(nameof(Watchlist));
 		}
 
 		[HttpGet("/Details/{Id}")] // fix get id to work with multiple views, passing movie id properly
