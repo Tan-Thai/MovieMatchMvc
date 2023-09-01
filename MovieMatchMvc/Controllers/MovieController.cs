@@ -45,7 +45,7 @@ namespace MovieMatchMvc.Controllers
 		}
 		[HttpPost]
 		[Route("ManageWatchList")]
-		public async Task<IActionResult> ManageWatchList(int movieId, bool remove = true)
+		public async Task<IActionResult> ManageWatchList(int movieId, bool remove = true, bool inWatchList = true)
 		{
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -54,10 +54,10 @@ namespace MovieMatchMvc.Controllers
 			else
 				await _movieService.AddMovieToWatchlistById(movieId, userId);
 
-			if (Request.Headers["Referer"].ToString().Contains("search")) //look to send a parameter rather than request.
-				return Json(new { success = true });
+			if (inWatchList = true) //look to send a parameter rather than request.
+				return RedirectToAction(nameof(Watchlist));
 
-			return RedirectToAction(nameof(Watchlist));
+			return Json(new { success = true });
 		}
 
 		[HttpGet("MatchWatchLists")]
@@ -94,32 +94,32 @@ namespace MovieMatchMvc.Controllers
 		}
 	}
 }
-	
-		//[HttpPost]
-		//[Route("AddMovieToList")]
-		//public async Task<IActionResult> AddMovieToList(int movieId)
-		//{
-		//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-		//	await _movieService.AddMovieToWatchlistById(movieId, userId);
-		//	return Json(new { success = true });
-		//}
-		//------------
-		//[HttpPost]
-		//[Route("RemoveFromWatchListSearch")]
-		//public async Task<IActionResult> RemoveFromWatchListSearch(int movieId)
-		//{
-		//	Console.WriteLine($"Received Movie ID: {movieId} to be removed");
-		//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-		//	await _movieService.RemoveFromWatchListAsync(movieId, userId);
-		//	return Json(new { success = true });
-		//}
-		//------
-		//[HttpPost]
-		//[Route("RemoveFromWatchList")]
-		//public async Task<IActionResult> RemoveFromWatchList(int movieId)
-		//{
-		//	Console.WriteLine($"Received Movie ID: {movieId} to be removed");
-		//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-		//	await _movieService.RemoveFromWatchListAsync(movieId, userId);
-		//	return RedirectToAction(nameof(Watchlist));
-		//}
+
+//[HttpPost]
+//[Route("AddMovieToList")]
+//public async Task<IActionResult> AddMovieToList(int movieId)
+//{
+//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+//	await _movieService.AddMovieToWatchlistById(movieId, userId);
+//	return Json(new { success = true });
+//}
+//------------
+//[HttpPost]
+//[Route("RemoveFromWatchListSearch")]
+//public async Task<IActionResult> RemoveFromWatchListSearch(int movieId)
+//{
+//	Console.WriteLine($"Received Movie ID: {movieId} to be removed");
+//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+//	await _movieService.RemoveFromWatchListAsync(movieId, userId);
+//	return Json(new { success = true });
+//}
+//------
+//[HttpPost]
+//[Route("RemoveFromWatchList")]
+//public async Task<IActionResult> RemoveFromWatchList(int movieId)
+//{
+//	Console.WriteLine($"Received Movie ID: {movieId} to be removed");
+//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+//	await _movieService.RemoveFromWatchListAsync(movieId, userId);
+//	return RedirectToAction(nameof(Watchlist));
+//}
