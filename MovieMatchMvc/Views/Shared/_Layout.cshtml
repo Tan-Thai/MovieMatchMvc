@@ -14,10 +14,11 @@
         <link rel="stylesheet" href="~/Styles/Styles.css" />"
 </head>
 <body>
+    <span id="space-filler"/>
     <nav id="navbar-reset" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class=" container-fluid">
             <div class="d-flex justify-content-between w-100">
-                      <a asp-controller="Movie" asp-action="Index">Home</a>
+                  <a  class="nav-link asp-controller="Movie" asp-action="Index">Home</a>
                 <form asp-action="Search" asp-controller="Movie" method="get" class="form-inline">
                     <div class="form-group">
                         <input type="text" name="query" class="form-control" placeholder="Search for a movie" />

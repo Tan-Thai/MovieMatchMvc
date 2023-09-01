@@ -89,18 +89,20 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-nav {
-    background-color: rgba(0, 0, 0, 0.4);
-    color: rgb(128, 128, 128);
-    padding: 0;
-    margin: 0;
-}
 
 #navbar-reset {
     margin: 0;
     padding: 0;
-    margin-top: -30px;
-    border-top: 20px solid rgba(0, 0, 0, 0.6);
+    margin-top: -20px;
+    /*border-top: 40px solid rgb(90 90 90)*/
+}
+
+nav {
+    background: linear-gradient(to bottom, grey, black);
+    color: rgb(128, 128, 128);
+    padding: 0;
+    margin: 20px;
+    padding: 30px;
 }
 
 #text {
@@ -118,3 +120,15 @@ display: none;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+.nav-link {
+   color: black;
+}
+a:hover {
+transform: scale(1.1);
+}
+
+#space-filler {
+    background: linear-gradient(to bottom, rgb(0, 0, 0),rgb(226, 226, 226);
+    height: 20px;
+    margin-top: -30px;
+}
