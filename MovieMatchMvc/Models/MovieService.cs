@@ -12,11 +12,7 @@ namespace MovieMatchMvc.Models
 {
 	public class MovieService
 	{
-
-		string ApiKey = "9484edbd5be7b021216db9b56a4f92b0";
 		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0"); 
-		//vi bör antingen använda apikey här och använda "using (client)" brackets i varje instans den används på
-		//eller så skapar vi en client inuti movieservice och gör en dispose metod för att "dispose" clientens upptagna minne
 		ApplicationContext context;
 
 		public MovieService(ApplicationContext context)
@@ -49,7 +45,6 @@ namespace MovieMatchMvc.Models
 			}
 			return movieList;
 		}
-
 		public async Task<List<SearchVM>> FetchMovies(string query, string userId)
 		{
 
@@ -80,7 +75,6 @@ namespace MovieMatchMvc.Models
 			}
 			return movieResults;
 		}
-
 		public async Task<SearchVM> FetchMovieById(int movieId)
 		{
 			using (client)
@@ -102,13 +96,18 @@ namespace MovieMatchMvc.Models
 				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId })
 				.ToArray();
 		}
-
+		public string GetUserIdByUsername(string username)
+		{
+			return context.accountUsers
+				.Where(u => u.UserName == username)
+				.Select(u => u.Id)
+				.FirstOrDefault();
+		}
 		public async Task AddMovieToWatchlistById(int movieId, string userId)
 		{
 			var movie = await FetchMovieById(movieId);
 			await AddMovieToWatchlist(movie, userId);
 		}
-
 		public async Task AddMovieToWatchlist(SearchVM movie, string userId)
 		{
 			context.watchLists.Add(new WatchList //potentially add more props to fill out watchlist
@@ -120,15 +119,6 @@ namespace MovieMatchMvc.Models
 			});
 			await context.SaveChangesAsync();
 		}
-
-		public string GetUserIdByUsername(string username)
-		{
-			return context.accountUsers
-				.Where(u => u.UserName == username)
-				.Select(u => u.Id)
-				.FirstOrDefault();
-		}
-
 		public async Task RemoveFromWatchListAsync(int movieId, string userId)
 		{
 			var moveToBeRemoved = await context.watchLists
@@ -140,18 +130,38 @@ namespace MovieMatchMvc.Models
 				await context.SaveChangesAsync();
 			}
 		}
-
-		public DetailsVM? GetById(int movieId)
+		internal object GetMatchedMovies(string? currentUserId, string otherUserId)
 		{
-			return context.watchLists
-				.Where(m => m.Id == movieId)
-				.Select(m => new DetailsVM
-				{
-					Title = m.Title,
-					Poster = m.Poster,
-					Url = m.Url
-				})
-				.SingleOrDefault();
+			var myWatchlist = GetWatchlist(currentUserId);
+			var searchedWatchlist = GetWatchlist(otherUserId);
+			var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(searchedWatchlist.Select(m => m.MovieId)).ToList();
+			var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
+			return commonMovies;
+		}
+
+		public async Task<DetailsVM> GetMovieById(int movieId)
+		{
+			using (client)
+			{
+				var movie = client.GetMovieAsync(movieId).Result;
+
+				if (movie != null)
+					return CreateDetailsVM(movie);
+				else
+					return null;
+			}
+		}
+		private DetailsVM CreateDetailsVM(Movie movie)
+		{
+			return new DetailsVM
+			{
+				Id = movie.Id,
+				Title = movie.Title,
+				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
+				ReleaseDate = movie.ReleaseDate,
+				Rating = movie.VoteAverage,
+				Description = movie.Overview
+			};
 		}
 		private SearchVM CreateSearchVM(Movie movie)
 		{
