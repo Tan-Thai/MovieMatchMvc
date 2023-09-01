@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -9,9 +10,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        
+        .navbar a {
+            color: #fff; 
+        }
+
+        nav {
+            background-color: rgba(0, 0, 0, 0.4); 
+            color: #fff; 
+        }
+
+        .navbar-color{
+
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg ">
         <div class=" container-fluid">
             <div class="d-flex justify-content-between w-100">
                 <a asp-controller="Movie" asp-action="Index">Home</a>
@@ -26,16 +43,18 @@
     <div>
         @RenderBody()
     </div>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <hr />
-                    <p class="text-center">© 2020 - MovieApp. <br /> Data fetched from <a href="https://www.themoviedb.org/">TMDB</a></p>
+    <nav>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr />
+                        <p class="text-center">© 2020 - MovieApp. <br /> Data fetched from <a href="https://www.themoviedb.org/">TMDB</a></p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </nav>
         @RenderSection("scripts", false)
 </body>
 </html>
