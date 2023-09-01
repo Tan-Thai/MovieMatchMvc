@@ -76,9 +76,9 @@ namespace MovieMatchMvc.Controllers
 			else
 				await _movieService.AddMovieToWatchlistById(movieId, userId);
 
+
 			if (Request.Headers["Referer"].ToString().Contains("search"))
 				return Json(new { success = true });
-
 
 			return RedirectToAction(nameof(Watchlist));
 		}
