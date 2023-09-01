@@ -27,11 +27,13 @@
                                 <div class="carousel-item @(i == 0 ? "active" : "")">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <img class="d-block w-100" src="@movie.ImageUrl" alt="@movie.Title">
+                                            <a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">
+                                                <img class="d-block w-100" src="@movie.ImageUrl" alt="@movie.Title">
+                                            </a>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="carousel-caption">
-                                                <a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId"><h3>@movie.Title</h3></a>
+                                                <h3>@movie.Title</h3>
                                                 <p>@TruncateDescription(movie.Description, 150)</p>
                                             </div>
                                         </div>
