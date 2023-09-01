@@ -86,7 +86,7 @@ namespace MovieMatchMvc.Controllers
 			return RedirectToAction("MatchWatchLists", new { username });
 		}
 
-		[HttpGet("/Details/{Id}")] // fix get id to work with multiple views, passing movie id properly
+		[HttpGet("/Details/{id}")] // fix get id to work with multiple views, passing movie id properly
 		public async Task<IActionResult> DetailsAsync(int id)
 		{
 			var movie = await _movieService.GetMovieById(id);

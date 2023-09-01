@@ -34,6 +34,7 @@ namespace MovieMatchMvc.Models
 					{
 						IndexVM movie = new IndexVM()
 						{
+							MovieId = m.Id,
 							Title = m.Title,
 							Description = m.Overview,
 							ImageUrl = "https://image.tmdb.org/t/p/w500" + m.PosterPath
