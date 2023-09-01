@@ -53,18 +53,13 @@ namespace MovieMatchMvc.Controllers
 		[HttpPost("MatchWatchLists")]
 		public IActionResult MatchWatchLists(string username)
 		{
-
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			string otherUserId = _movieService.GetUserIdByUsername(username);
 			if (string.IsNullOrEmpty(otherUserId))
 			{
-
 				return View("Error");
 			}
-			var myWatchlist = _movieService.GetWatchlist(currentUserId);
-			var otherWatchlist = _movieService.GetWatchlist(otherUserId);
-			var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(otherWatchlist.Select(m => m.MovieId)).ToList();
-			var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
+			var commonMovies = _movieService.GetMatchedMovies(currentUserId, otherUserId);
 			ViewBag.OtherUsername = username;
 
 			return View("MatchWatchLists", commonMovies);

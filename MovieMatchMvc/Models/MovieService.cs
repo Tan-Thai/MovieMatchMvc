@@ -180,5 +180,14 @@ namespace MovieMatchMvc.Models
 				Description = movie.Overview
 			};
 		}
+
+		internal object GetMatchedMovies(string? currentUserId, string otherUserId)
+		{
+			var myWatchlist = GetWatchlist(currentUserId);
+			var searchedWatchlist = GetWatchlist(otherUserId);
+			var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(searchedWatchlist.Select(m => m.MovieId)).ToList();
+			var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
+			return commonMovies;
+		}
 	}
 }
