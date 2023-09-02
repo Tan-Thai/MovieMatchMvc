@@ -12,11 +12,13 @@
 	<!-- Bootstrap JS CDN -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+	<link rel="stylesheet" href="~/Styles/Styles.css" />"
+
 	<meta charset="utf-8" />
 	<title></title>
 </head>
 <body>
-	<h1 align="Center">Your watchlist:</h1>
+	<h1 align="Center" style="color: antiquewhite;">Your watchlist:</h1>
 	<p>Filter:</p>
 	<input type="text" value="Enter title" />
 
@@ -46,7 +48,7 @@
 			<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;">
 				<div>
 					<img style="height: 200px; width: 150px;" src="@item.Poster">
-					<a style="font-weight: bold" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
+					<a style="font-weight: bold" style="color: antiquewhite;" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
 						@item.Title
 					</a>
 					
