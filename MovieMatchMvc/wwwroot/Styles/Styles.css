@@ -5,7 +5,9 @@
             padding: 0;
         }
 
-
+h1, h2, h3, h4, p {
+    color: whitesmoke;
+}
      
   .navbar a {
             color: #fff; 
@@ -134,9 +136,7 @@ transform: scale(1.1);
 }
 
 
-h1, h2, h3, h4, p {
-    color: whitesmoke;
-}
+
 .search-container {
     display: flex;
     flex-direction: column;
