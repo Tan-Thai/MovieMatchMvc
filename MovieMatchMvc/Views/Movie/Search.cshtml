@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Search";
+	ViewBag.Title = "Search";
 }
 
 @model List<MovieMatchMvc.Views.Movie.SearchVM>
@@ -8,57 +8,64 @@
 <h2>Titles</h2>
 
 <div class="search-container">
-    @foreach (var movie in Model)
-    {
-            @* <div style="display: flex;flex-direction: column; justify-content: space-between; align-items: flex-start;"> *@
-        <div class="search-result">
-            <img src="@movie.Poster" alt="..." />
-            <div class="search-card">
-            <div class="top-column"> 
-                <h5><a class="detail-link" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
-                <p>@movie.ReleaseDate</p>
-                <p>Average score: @movie.Rating</p>
-            </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-            <div class="bottom-right">
-                <button class="watchlist-button btn-primary btn" data-movie-id="@movie.Id">
-                    @(movie.InWatchList ? "Remove from watchlist" : "Add to watchlist")
-                </button>
-            </div>
-            }
-            </div>
-        </div>
-    }
+	@foreach (var movie in Model)
+	{
+		@* <div style="display: flex;flex-direction: column; justify-content: space-between; align-items: flex-start;"> *@
+		<div class="search-result">
+			<img src="@movie.Poster" alt="..." />
+			<div class="search-card">
+				<div class="top-column">
+					<h5><a class="detail-link" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+					<p>@movie.ReleaseDate</p>
+					<p>Average score: @movie.Rating</p>
+				</div>
+				@if (User.Identity.IsAuthenticated)
+				{
+					<div class="bottom-right">
+						<button class="watchlist-button btn-primary btn" data-movie-id="@movie.Id">
+							@(movie.InWatchList ? "Remove from watchlist" : "Add to watchlist")
+						</button>
+					</div>
+				}
+			</div>
+		</div>
+	}
+	<div class="pagination">
+		@if (ViewBag.PageNumber > 1)
+		{
+			<a href="?query=@ViewBag.Query&PageNumber=@(ViewBag.PageNumber - 1)" class="btn btn-primary">Previous Page</a>
+		}
+
+		@if (ViewBag.PageNumber < 50)
+		{
+			<a href="?query=@ViewBag.Query&PageNumber=@(ViewBag.PageNumber + 1)" class="btn btn-primary">Next Page</a>
+		}
+	</div>
 </div>
 
 @section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll('.watchlist-button').forEach(button => {
-                button.addEventListener('click', function (e) {
-                    const movieId = e.target.getAttribute('data-movie-id');
-                    const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
-                    // const url = isInWatchlist ? `/RemoveFromWatchListSearch?movieId=${movieId}` : `/AddMovieToList?movieId=${movieId}`;
-                    console.log(movieId)
-                    // console.log(url)
-                    console.log(isInWatchlist)
-                    fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJsonCall=true`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ movieId })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
-                            }
-                        })
-                        .catch(error => console.log('Error:', error));
-                });
-            });
-        });
-    </script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			document.querySelectorAll('.watchlist-button').forEach(button => {
+				button.addEventListener('click', function (e) {
+					const movieId = e.target.getAttribute('data-movie-id');
+					const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
+					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJsonCall=true`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ movieId })
+					})
+						.then(response => response.json())
+						.then(data => {
+							if (data.success) {
+								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+							}
+						})
+						.catch(error => console.log('Error:', error));
+				});
+			});
+		});
+	</script>
 }

@@ -15,7 +15,7 @@
 						<div class="col-md-4">
 							@if (User.Identity.IsAuthenticated)
 							{
-								<button class="btn btn-success" data-movie-id="@Model.Id">
+								<button class="btn @((Model.InWatchList ? "btn-danger" : "btn-success")) watchlist-button" data-movie-id="@Model.Id">
 									@(Model.InWatchList ? "Remove from watchlist" : "Add to watchlist")
 								</button>
 							}
@@ -45,10 +45,7 @@
 				button.addEventListener('click', function (e) {
 					const movieId = e.target.getAttribute('data-movie-id');
 					const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
-					// const url = isInWatchlist ? `/RemoveFromWatchListSearch?movieId=${movieId}` : `/AddMovieToList?movieId=${movieId}`;
-					console.log(movieId)
-					// console.log(url)
-					console.log(isInWatchlist)
+
 					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJsonCall=true`, {
 						method: 'POST',
 						headers: {
@@ -59,6 +56,8 @@
 						.then(response => response.json())
 						.then(data => {
 							if (data.success) {
+								e.target.classList.toggle('btn-danger');
+								e.target.classList.toggle('btn-success');
 								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
 							}
 						})
