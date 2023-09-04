@@ -29,6 +29,5 @@
 		public string? Url { get; set; }
 		public DateTime? ReleaseDate { get; set; }
 		public bool InWatchList { get; set; }
-
 	}
 }

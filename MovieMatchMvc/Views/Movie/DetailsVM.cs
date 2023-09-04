@@ -1,4 +1,6 @@
-﻿namespace MovieMatchMvc.Views.Movie
+﻿using TMDbLib.Objects.Movies;
+
+namespace MovieMatchMvc.Views.Movie
 {
     public class DetailsVM
     {
@@ -10,5 +12,7 @@
         public string? Url { get; set; }
 		public DateTime? ReleaseDate { get; set; }
 		public bool InWatchList { get; set; }
+		public string BackDropPoster { get; internal set; }
+		public List<Cast> Actors { get; internal set; }
 	}
 }
