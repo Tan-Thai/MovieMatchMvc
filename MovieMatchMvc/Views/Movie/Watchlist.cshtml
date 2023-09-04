@@ -4,15 +4,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<!-- Popper JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<!-- Bootstrap JS CDN -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-	<link rel="stylesheet" href="~/Styles/Styles.css" />"
 
 	<meta charset="utf-8" />
 	<title></title>
@@ -20,7 +11,8 @@
 <body>
 	<h1 align="Center" style="color: antiquewhite;">Your watchlist:</h1>
 	<p>Filter:</p>
-	<input type="text" value="Enter title" />
+	<input type="text" placeholder="Enter title" />
+	@*<input asp-for="Password" class="form-control short-input" placeholder="Password" />*@
 
 	@* <ul>
 
@@ -42,27 +34,34 @@
 			
 		}
 	</ul> *@
-	<ul>
+	
+		<div class="search-container">
 		@foreach (var item in Model)
 		{
-			<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;">
-				<div>
+			@*<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;">*@
+				<div class="search-result">
 					<img style="height: 200px; width: 150px;" src="@item.Poster">
+					<div class="search-card">
+						<div class="top-column">
 					<a style="font-weight: bold" style="color: antiquewhite;" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
 						@item.Title
 					</a>
-					
-				</div>
-				
+						</div>
+					</div>					
 				<div style ="margin-right: 100px;">
 					<form asp-controller="Movie" asp-action="ManageWatchList" method="post">
 						<input type="hidden" name="movieId" value="@item.MovieId" />
+						<div class="bottom-right">
 						<input type="submit" class="btn btn-danger" value="Remove from watchlist">
+						</div>
 					</form>
 				</div>
-			</div> <br/>
+				</div>
+				
+			 <br/>
 		}
-	</ul>
+		</div>
+	
 
 
 </body>

@@ -12,6 +12,11 @@
 
 <h2 style="color: antiquewhite">Common Movies with: @ViewBag.OtherUsername</h2>
 
+<div class="search-container">  
+    <div class="search-result">
+        <div class="search-card">
+            <div>
+                <div>
 @if (Model == null)
 {
     <p>No common movies found.</p>
@@ -21,8 +26,8 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Poster</th>
+                            <th style="color: antiquewhite">Title</th>
+                @*<th>Poster</th>*@
             </tr>
         </thead>
         <tbody>
@@ -36,3 +41,8 @@ else
         </tbody>
     </table>
 }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
