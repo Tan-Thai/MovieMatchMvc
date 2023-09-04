@@ -1,12 +1,12 @@
 ﻿@model List<MovieMatchMvc.Views.Movie.WatchlistVM>
-<h2>Compare Watchlists</h2>
+<h2> Who's Your Friend?</h2>
 
 <form asp-action="MatchWatchListsPost" asp-controller="Movie">
-    <div class="form-group">
+    <div class="form-group form-friendlist">
         <label for="username">Enter username:</label>
         <input type="text" class="form-control" id="username" name="username" required />
-    </div>
     <button type="submit" class="btn btn-primary">Compare</button>
+    </div>
 </form>
 
 
@@ -26,7 +26,7 @@ else
     <table class="table">
         <thead>
             <tr>
-                            <th style="color: antiquewhite">Title</th>
+              <th style="color: antiquewhite">Title</th>
                 @*<th>Poster</th>*@
             </tr>
         </thead>
@@ -34,8 +34,8 @@ else
             @foreach (var movie in Model)
             {
                 <tr>
-                    <td style="color: antiquewhite">@movie.Title</td>
                     <td style="color: antiquewhite"><img src="@movie.Poster" alt="@movie.Title" width="100"></td>
+                                        <td style="color: antiquewhite"><a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">@movie.Title</a></td>
                 </tr>
             }
         </tbody>

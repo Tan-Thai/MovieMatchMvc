@@ -193,5 +193,29 @@ transform: scale(1.1);
     margin-top: 20px;
 }
 
+h1, h2, h3, h4, p  {
+    color: antiquewhite;
+}
 
+a {
+    color: antiquewhite;
+}
 
+.form-friendlist {
+    width: clamp(300px, 50%, 600px);
+    display: flex;
+    flex-direction: row;
+    gap: 10px 10px;
+}
+
+.form-friendlist button {
+    margin-top: 5px;
+   border-radius: 10%;
+}
+
+button:hover, button:active, button:focus,
+.btn:hover, .btn:active, btn:focus, .btn:after, .btn-primary:hover, .btn-primary:active, .btn-primary::after, .btn-primary:focus {
+    border: 1px solid rgb(226, 226, 226);
+    background-color: rgb(5, 91, 22, 0,36);
+    color: rgb(5, 91, 22, 0,36);
+}
