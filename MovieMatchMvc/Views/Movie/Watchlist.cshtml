@@ -2,6 +2,63 @@
 @model MovieMatchMvc.Views.Movie.WatchlistVM[]
 
 <!DOCTYPE html>
+<style>
+.search-bar{
+	background: #fff;
+	width: 90%;
+	max-width: 500px;
+	display: flex;
+	padding: 2px;
+	border-radius: 4px;
+}
+#select{
+	background: rgba(0, 0, 0, 0.85);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: #fff;
+	width: 498px;
+	padding: 25px 20px;
+	cursor: pointer;
+	position: relative;
+	border-radius: 4px;
+}
+
+#select img{
+	width: 15px;
+}
+
+#select ul{
+	position: absolute;
+	top: 120%;
+	left: 0;
+	list-style: none;
+	background: #fff;
+	color: black;
+	width: 100%;
+	border-radius: 4px;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.5s;
+}
+
+#select ul li{
+	padding: 10px 20px;
+	cursor: pointer;
+}
+
+.search-bar input{
+	padding: 10px 25px;
+	width: 100%;
+	border:none;
+	outline: none;
+	font-size: 18px;
+}
+#select ul.open{
+	max-height: 300px;
+}
+
+</style>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
@@ -11,7 +68,18 @@
 <body>
 	<h1 align="Center" style="color: antiquewhite;">Your watchlist:</h1>
 	<p>Filter:</p>
-	<input type="text" placeholder="Enter title" />
+	<div class="search-bar">
+		<div id="select">
+			<p id="selectText">All categories</p>
+			<img src="" />
+			<ul id="list">
+				<li class="options" style="color: black;">All categories</li>
+				<li class="options" style="color: black;">Title</li>
+				<li class="options" style="color: black;">Genre</li>
+			</ul>
+			<input type="text" id="inputfield" placeholder="Search in all categories" />
+		</div>
+	</div>
 	@*<input asp-for="Password" class="form-control short-input" placeholder="Password" />*@
 
 	@* <ul>
@@ -63,6 +131,25 @@
 		</div>
 	
 
+<script>
+	let select = document.getElementById("select")
+	let list = document.getElementById("list")
+	let selectText = document.getElementById("selectText")
+	let inputfield = document.getElementById("inputfield")
 
+	let options = document.getElementsByClassName("options")
+
+	select.onclick = function(){
+		list.classList.toggle("open");
+	}
+
+	for(option of options){
+		option.onclick = function(){
+			selectText.innerHTML = this.innerHTML;
+			inputfield.placeholder = "search for " + selectText.innerHTML;
+		}
+	}
+
+</script>
 </body>
 </html>
