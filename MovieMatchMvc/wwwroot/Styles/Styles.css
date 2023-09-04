@@ -193,7 +193,7 @@ transform: scale(1.1);
     margin-top: 20px;
 }
 
-h1, h2, h3, h4, p, td {
+h1, h2, h3, h4, h5, p, td {
     color: antiquewhite;
 }
 
@@ -207,19 +207,26 @@ a {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 20px;
+
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 
-.form-friendlist {
+.form-buddylist{
     display: flex;
     flex-direction: row;
 }
-.form-friendlist button {
+.form-buddylist button {
     margin-top: 5px;
    border-radius: 10%;
+}
+
+.form-buddylist input {
+    margin-top: 5px;
+    border-radius: 5px;
+    width: 60%;
 }
 
 button:hover, button:active, button:focus,
@@ -228,19 +235,77 @@ button:hover, button:active, button:focus,
     background-color: rgb(5, 91, 22, 0,36);
     color: rgb(5, 91, 22, 0,36);
 }
-/*
+
+
+
 .buddy-search-container {
-    display: flex;
-    overflow-x: scroll;
-    width: 150px;
-    height: 200px;
+ 
+    margin: 0 auto;
+    width: 500px;
+    height: 800px;
+    position: relative;
+    perspective: 2000px;
 }
 
+.buddy-carousel {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
 .buddy-search-card {
-    min-width: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    filter: drop-shadow(0 0 2rem white);
+    display: block;
+    position: absolute;
+    background: #000;
+    width: 250px;
+    height: 300px;
+    line-height: 200px;
+    font-size: 5em;
+    text-align: center;
+    color: #FFF;
+    opacity: 0.95;
+    border-radius: 10px;
+    margin: 30px;
 }
 
+
+.buddy-search-card img {
+    width: clamp(60px, 100%, 300px);
+}
+
+/*.next, .prev {
+    color: #444;
+    position: absolute;
+    top: 100px;
+    padding: 1em 2em;
+    cursor: pointer;
+    background: #CCC;
+    border-radius: 5px;
+    border-top: 1px solid #FFF;
+    box-shadow: 0 5px 0 #999;
+    transition: box-shadow 0.6s, top 0.6s;
+}
 */
+    .next:hover, .prev:hover {
+        color: #000;
+    }
+
+    .next:active, .prev:active {
+        top: 104px;
+        box-shadow: 0 1px 0 #999;
+    }
+
+.next {
+    right: 5em;
+}
+
+.prev {
+    left: 5em;
+}
+
+.detail-link {
+    margin-top: -100px;
+    font-size: 1.2rem;
+}

@@ -1,49 +1,112 @@
 ﻿@model List<MovieMatchMvc.Views.Movie.WatchlistVM>
 
-<form  class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
-<h2> Who's Your Friend?</h2>
-    <div class="form-group form-friendlist">
-        <div style="text-align:left;">
-            <label for="username">Enter username:</label>
-            <input type="text" class="form-control" id="username" name="username" required />
-            <button type="submit" class="btn btn-primary">Compare</button>
-        </div>
+<form class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
+    <h2>Who's Your Friend?</h2>
+    <div class="form-group form-buddylist">
+        <input type="text" class="form-control" id="username" name="username" required />
+        <button type="submit" class="btn btn-primary">Match!</button>
     </div>
 </form>
 
-
-<div class="buddy-search-container">  
-<h2 style="color: antiquewhite">Common Movies with: @ViewBag.OtherUsername</h2>
-    <div class="buddy-search-result">
-        <div class="buddy-search-card">
-            <div>
-                <div>
-@if (Model == null)
-{
-                        <p>No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-              <th style="color: antiquewhite">Title</th>
-                @*<th>Poster</th>*@
-            </tr>
-        </thead>
-        <tbody>
+<h2 style="color: antiquewhite">Matching with @ViewBag.OtherUsername</h2>
+<div class="buddy-search-container">
+    <div class="buddy-carousel">
+        @if (Model == null)
+        {
+            <p>No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
+        }
+        else
+        {
             @foreach (var movie in Model)
             {
-                <tr>
-                    <td style="color: antiquewhite"><img src="@movie.Poster" alt="@movie.Title" width="100"></td>
-                                        <td style="color: antiquewhite"><a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">@movie.Title</a></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+                <div class="buddy-search-card">
+                    <a class="details-link disabled-link" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">
+                        <img src="@movie.Poster" alt="@movie.Title">
+                    </a>
                 </div>
-            </div>
-        </div>
+            }
+        }
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Initially, disable click on links
+            $('a.disabled-link').on('click', function (event) {
+                event.preventDefault();
+            });
+
+            $(".buddy-search-card").on("click", function (e) {
+                var $card = $(this);
+                var offset = $card.offset();
+                var x = e.pageX - offset.left;
+                var degree = parseInt($card.attr("data-degree"), 10) % 360;
+
+                if (degree === 0) {
+                    return; // Let the default action happen (go to details)
+                }
+
+                e.preventDefault();  // Prevent going to details
+                if (x < $card.width() / 2) {
+                    rotate({ data: { d: "p" } }); // rotate to the previous card
+                } else {
+                    rotate({ data: { d: "n" } }); // rotate to the next card
+                }
+            });
+
+            function calculateOpacity(degree) {
+                degree = degree % 360;
+                if (degree < 0) degree += 360;
+                let opacity = Math.abs(degree - 180) / 180;
+                return opacity;
+            }
+
+            var degree = 0;
+            $(".buddy-carousel .buddy-search-card").each(function () {
+                var opacity = calculateOpacity(degree);
+                $(this).attr("data-degree", degree);
+                $(this).css({
+                    "transform": "rotateY(" + degree + "deg) translateZ(300px)",
+                    "opacity": opacity
+                });
+                degree += 60;
+            });
+            setMainCardLink();
+
+            // Function to set main card's link as active or inactive based on its degree
+            function setMainCardLink() {
+                $(".buddy-search-card").each(function () {
+                    var degree = parseInt($(this).attr("data-degree"), 10) % 360;
+                    if (degree === 0) {
+                        $(this).find('a.details-link').off('click').removeClass('disabled-link');
+                    } else {
+                        $(this).find('a.details-link').on('click', function (event) {
+                            event.preventDefault();
+                        }).addClass('disabled-link');
+                    }
+                });
+            }
+
+            setMainCardLink();
+
+            function rotate(e) {
+                $(".buddy-carousel .buddy-search-card").each(function () {
+                    var el = $(this);
+                    var originalDegree = parseInt(el.attr("data-degree"), 10);
+                    var newDegree = (e.data.d === "n") ? originalDegree - 60 : originalDegree + 60;
+                    var newOpacity = calculateOpacity(newDegree);
+
+                    el.css({
+                        "transform": "rotateY(" + newDegree + "deg) translateZ(300px)",
+                        "opacity": newOpacity
+                    });
+
+                    el.attr("data-degree", newDegree);
+                });
+
+                setMainCardLink();
+            }
+        });
+    </script>
+}
