@@ -193,7 +193,7 @@ transform: scale(1.1);
     margin-top: 20px;
 }
 
-h1, h2, h3, h4, p  {
+h1, h2, h3, h4, p, td {
     color: antiquewhite;
 }
 
@@ -201,13 +201,22 @@ a {
     color: antiquewhite;
 }
 
-.form-friendlist {
-    width: clamp(300px, 50%, 600px);
-    display: flex;
-    flex-direction: row;
-    gap: 10px 10px;
+.form-container {
+    width: clamp(300px, 60%, 600px); 
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
+
+.form-friendlist {
+    display: flex;
+    flex-direction: row;
+}
 .form-friendlist button {
     margin-top: 5px;
    border-radius: 10%;
@@ -219,3 +228,19 @@ button:hover, button:active, button:focus,
     background-color: rgb(5, 91, 22, 0,36);
     color: rgb(5, 91, 22, 0,36);
 }
+/*
+.buddy-search-container {
+    display: flex;
+    overflow-x: scroll;
+    width: 150px;
+    height: 200px;
+}
+
+.buddy-search-card {
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+*/
