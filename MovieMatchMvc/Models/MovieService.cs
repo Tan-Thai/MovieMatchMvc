@@ -46,7 +46,7 @@ namespace MovieMatchMvc.Models
 			}
 			return movieList;
 		}
-		public async Task<List<SearchVM>> FetchMovies(string query, string userId)
+		public async Task<List<SearchVM>> FetchMovies(string query, string userId, int pageNumber)
 		{
 
 			List<SearchVM> movieResults = new List<SearchVM>();
@@ -54,15 +54,16 @@ namespace MovieMatchMvc.Models
 
 			using (client)
 			{
-				SearchContainer<SearchMovie> searchResults = await client.SearchMovieAsync(query);
-
-				foreach (SearchMovie m in searchResults.Results.Take(100))
+				SearchContainer<SearchMovie> searchResults = await client.SearchMovieAsync(query,"en", pageNumber, false);
+				
+				foreach (SearchMovie m in searchResults.Results
+					.OrderByDescending(m => m.VoteAverage)
+					.Take(32))
 				{
 					SearchVM movie = CreateSearchVM(m, myWatchlist);
 					movieResults.Add(movie);
 				}
 			}
-
 			foreach (var m in myWatchlist)
 			{
 				foreach (var x in movieResults)

@@ -23,15 +23,16 @@ namespace MovieMatchMvc.Controllers
 		}
 
 		[HttpGet("search")]
-		public async Task<IActionResult> Search(string query)
+		public async Task<IActionResult> Search(string query, int pageNumber = 1)
 		{
 			if (string.IsNullOrEmpty(query))
 			{
 				return View("Index");
 			}
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			List<SearchVM> movies = await _movieService.FetchMovies(query, currentUserId);
+			List<SearchVM> movies = await _movieService.FetchMovies(query, currentUserId, pageNumber);
 			ViewBag.Query = query;
+			ViewBag.PageNumber = pageNumber;
 			return View("Search", movies);
 		}
 
