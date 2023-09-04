@@ -17,7 +17,7 @@
 				<div class="top-column">
 					<h5><a class="detail-link" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
 					<p>@movie.ReleaseDate</p>
-					<p>Average score: @movie.Rating</p>
+					<p>Average score: @Math.Round(movie.Rating, 1)</p>
 				</div>
 				@if (User.Identity.IsAuthenticated)
 				{
