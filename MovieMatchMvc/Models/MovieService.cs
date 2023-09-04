@@ -174,7 +174,9 @@ namespace MovieMatchMvc.Models
 				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
 				ReleaseDate = movie.ReleaseDate,
 				Rating = movie.VoteAverage,
-				Description = movie.Overview
+				Description = movie.Overview,
+				//Actors = movie.Credits.Cast,
+				BackDropPoster = "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.BackdropPath
 			};
 		}
 		private SearchVM CreateSearchVM(Movie movie)
@@ -201,7 +203,7 @@ namespace MovieMatchMvc.Models
 				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
 				ReleaseDate = movie.ReleaseDate,
 				Rating = movie.VoteAverage,
-				Description = movie.Overview
+				Description = movie.Overview,
 			};
 		}
 	}

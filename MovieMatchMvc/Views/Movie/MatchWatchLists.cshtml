@@ -3,8 +3,11 @@
 <form  class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
 <h2> Who's Your Friend?</h2>
     <div class="form-group form-friendlist">
-        <input type="text" class="form-control" id="username" name="username" required />
-    <button type="submit" class="btn btn-primary">Compare</button>
+        <div style="text-align:left;">
+            <label for="username">Enter username:</label>
+            <input type="text" class="form-control" id="username" name="username" required />
+            <button type="submit" class="btn btn-primary">Compare</button>
+        </div>
     </div>
 </form>
 
