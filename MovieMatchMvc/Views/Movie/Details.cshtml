@@ -15,7 +15,7 @@
 						<div class="col-md-4">
 							@if (User.Identity.IsAuthenticated)
 							{
-								<button class="watchlist-button" data-movie-id="@Model.Id">
+								<button class="btn btn-success" data-movie-id="@Model.Id">
 									@(Model.InWatchList ? "Remove from watchlist" : "Add to watchlist")
 								</button>
 							}
@@ -26,7 +26,7 @@
 						</div>
 					</td>
 					<td scope="row">
-						<div>
+						<div class="Description">
 							@Model.Description
 						</div>
 					</td>
@@ -35,6 +35,11 @@
 		</table>
 	</div>
 </main>
+<style>
+	.Description {
+		color: antiquewhite;
+	}
+</style>
 
 
 @section Scripts {
