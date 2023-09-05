@@ -341,7 +341,7 @@ flex-direction: row;
 .details-text  {
     /*border: 1px solid white;*/
     /*background-color: rgba(57, 56, 56, 0.20);*/
-    backdrop-filter : blur(5px);
+    /*backdrop-filter : blur(5px);*/
 }
     .details-text button {
         position: relative;
@@ -349,13 +349,13 @@ flex-direction: row;
         left: 2%;
         background-color: darkslategrey;
         /*background-color: rgb(48, 140, 143);*/
-        background-color: rgb(53, 129, 129);
+        background-color: rgb(74, 108, 87);
 /**/
     }
 
 
 .details-poster {
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
     width: 300px;
     height: 450px;
@@ -371,7 +371,7 @@ flex-direction: row;
     z-index: 0;
     filter: saturate(25%);
     filter: hue-rotate(20deg);
-    width: 95vw;
+    width: 94vw;
     object-fit: cover;
     background-position: right 50%;
     /*height: auto;*/
@@ -387,9 +387,9 @@ flex-direction: row;
 
 .overlay {
   position: absolute;
-width: 95vw;
+width: 94vw;
 
-height: 86vh;
+height: 85.1vh;
 margin-left: -10rem;
 /*background-color: rgba(0, 0, 0, 0.5);*/
 background-image: linear-gradient(to left, rgba(226, 226, 226, 0.6), rgba(0, 0, 0, 0.9));
