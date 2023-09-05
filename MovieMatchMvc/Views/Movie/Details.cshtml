@@ -3,7 +3,7 @@
 
 @* <h2>About @Model.Title:</h2> *@
 <main>
-    <div class="details-container my-5">
+    <div class="details-container">
         @* 	<table class="table" >
         <tbody>
         <tr> *@
@@ -16,7 +16,13 @@
                 <img class="details-poster" src="@Model.Poster" alt="Poster image for @Model.Title" />
                 <div class="details-text">
                  <h5>@Model.Title</h5>
-                <p style="color: antiquewhite">@Model.Description</p>
+                <div class="description-container">
+                    <a class="toggle-description" href="#">
+                    <p class="short-description" style="color: antiquewhite">@Model.Description.Substring(0, 180) ....</p>
+                    <p class="full-description" style="color: antiquewhite; display: none;">@Model.Description</p>
+                    </a>
+                    
+                </div>
                 <p> Runtime: @Model.Runtime minutes</p> 
               
                         
@@ -76,6 +82,20 @@
                         .catch(error => console.log('Error:', error));
                 });
             });
+        });
+        document.querySelector('.toggle-description').addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default link behavior
+
+            const shortDesc = document.querySelector('.short-description');
+            const fullDesc = document.querySelector('.full-description');
+
+            if (fullDesc.style.display === 'none' || fullDesc.style.display === '') {
+                shortDesc.style.display = 'none';
+                fullDesc.style.display = 'block';
+            } else {
+                shortDesc.style.display = 'block';
+                fullDesc.style.display = 'none';
+            }
         });
     </script>
 	}

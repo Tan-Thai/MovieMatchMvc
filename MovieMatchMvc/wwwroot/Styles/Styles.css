@@ -277,10 +277,12 @@ button:hover, button:active, button:focus,
 
 .details-container {
 width: 90vw;
-display: 100vh;
+min-height: 100vh;
+display: flex;
 flex-direction: row;
+margin: 2rem;
 /*margin-right: 50px;*/
-margin: 0 auto;
+/*margin: 0 auto;*/
 
 }
 
@@ -305,8 +307,10 @@ margin: 0 auto;
 
     .details-text button {
         position: relative;
-        top: 25%;
-        left: 2%;
+        /*top: 50%;*/
+    /*    top: 25%;
+        left: 2%;*/
+        /*margin: 5rem;*/
         opacity: 0.9;
 
         /*background-color: darkslategrey;*/
@@ -354,8 +358,8 @@ margin: 0 auto;
     /*border: 1px solid white;*/
     /*background-color: rgba(57, 56, 56, 0.20);*/
     backdrop-filter : blur(1px);
-    width: 50%;
-    margin-top: 5%;
+    /*width: 50%;*/
+    /*margin-top: 5%;*/
     margin-left: 5%;
     line-height: 1.5rem;
 }
@@ -370,7 +374,9 @@ z-index: 2;
 }
 
 
-
+.toggle-description:hover {
+    text-decoration: none;
+}
 
 
 .buddy-search-container {
