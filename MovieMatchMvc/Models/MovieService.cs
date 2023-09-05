@@ -96,7 +96,12 @@ namespace MovieMatchMvc.Models
 			return context.watchLists
 				.Where(w => w.UserId == userId)
 				.OrderBy(p => p.Title)
-				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId })
+				.Select(p => new WatchlistVM  //Needs more props here if we want to show them similar to search.
+				{	
+					Title = p.Title,
+					Poster = p.Poster,
+					MovieId = p.MovieId
+				})
 				.ToArray();
 		}
 		public string GetUserIdByUsername(string username)
@@ -118,8 +123,14 @@ namespace MovieMatchMvc.Models
 		//Adding and removing movies from watchlist.
 		public async Task AddMovieToWatchlistByIdAsync(int movieId, string userId)
 		{
-			var movie = await FetchMovieByIdAsync(movieId);
-			await AddMovieToWatchlistAsync(movie, userId);
+			var myWatchlist = GetWatchlist(userId);
+			var watchListHash = new HashSet<int>(myWatchlist.Select(w => w.MovieId));
+
+			if (!watchListHash.Contains(movieId))
+			{
+				var movie = await FetchMovieByIdAsync(movieId);
+				await AddMovieToWatchlistAsync(movie, userId);
+			}
 		}
 		public async Task<SearchVM> FetchMovieByIdAsync(int movieId)
 		{
@@ -135,7 +146,7 @@ namespace MovieMatchMvc.Models
 		}
 		public async Task AddMovieToWatchlistAsync(SearchVM movie, string userId)
 		{
-			context.watchLists.Add(new WatchList //potentially add more props to fill out watchlist
+			context.watchLists.Add(new WatchList //Add Genre Prop to database to allow us to sort it right away on "getwatchlist"
 			{
 				MovieId = movie.Id,
 				Title = movie.Title,
@@ -240,5 +251,12 @@ namespace MovieMatchMvc.Models
 			};
 		}
 
+		//private HashSet<int> GetWatchListHash(string userId)
+		//{
+		//	var myWatchlist = GetWatchlist(userId);
+		//	var watchListHash = new HashSet<int>(myWatchlist.Select(w => w.MovieId));
+
+		//	return watchListHash;
+		//}
 	}
 }
