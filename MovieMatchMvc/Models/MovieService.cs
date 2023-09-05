@@ -51,6 +51,8 @@ namespace MovieMatchMvc.Models
 
 			List<SearchVM> movieBag = new List<SearchVM>();
 			var myWatchlist = GetWatchlist(userId);
+			var watchListHash = new HashSet<int>(myWatchlist.Select(w => w.MovieId));
+			int resultsPerPage = 20;
 
 			using (client)
 			{
@@ -64,20 +66,18 @@ namespace MovieMatchMvc.Models
 					foreach (SearchMovie m in searchResults.Results)
 					{
 						SearchVM movie = CreateSearchVM(m, myWatchlist);
-						foreach (var w in myWatchlist)
-						{
-							if (w.MovieId == movie.Id)
-								movie.InWatchList = true;
-						}
+						if (watchListHash.Contains(movie.Id))
+							movie.InWatchList = true;
 						movieBag.Add(movie);
 					}
 				}
 			}
 
-			List<SearchVM> movieResult = new List<SearchVM>(movieBag
+			List<SearchVM> movieResult = movieBag
 				.OrderByDescending(m => m.Popularity)
-				.Skip(20 * pageNumber - 20)
-				.Take(20));
+				.Skip((pageNumber - 1) * resultsPerPage)
+				.Take(resultsPerPage)
+				.ToList();
 
 			return movieResult;
 		}
