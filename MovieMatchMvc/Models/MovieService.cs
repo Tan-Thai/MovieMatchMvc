@@ -12,7 +12,7 @@ namespace MovieMatchMvc.Models
 {
 	public class MovieService
 	{
-		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0"); 
+		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
 		ApplicationContext context;
 
 		public MovieService(ApplicationContext context)
@@ -49,33 +49,37 @@ namespace MovieMatchMvc.Models
 		public async Task<List<SearchVM>> FetchMovies(string query, string userId, int pageNumber)
 		{
 
-			List<SearchVM> movieResults = new List<SearchVM>();
+			List<SearchVM> movieBag = new List<SearchVM>();
 			var myWatchlist = GetWatchlist(userId);
 
 			using (client)
 			{
-				SearchContainer<SearchMovie> searchResults = await client.SearchMovieAsync(query,"en", pageNumber, false);
-				
-				foreach (SearchMovie m in searchResults.Results
-					.OrderByDescending(m => m.VoteAverage)
-					.Take(32))
+				SearchContainer<SearchMovie> initialSearchResults = await client.SearchMovieAsync(query,"en", pageNumber, false);
+				int totalPages = initialSearchResults.TotalPages;
+
+				for (int i = 1; i <= totalPages; i++)
 				{
-					SearchVM movie = CreateSearchVM(m, myWatchlist);
-					movieResults.Add(movie);
-				}
-			}
-			foreach (var m in myWatchlist)
-			{
-				foreach (var x in movieResults)
-				{
-					if (m.MovieId == x.Id)
+					SearchContainer<SearchMovie> searchResults = await client.SearchMovieAsync(query, "en", i, false);
+
+					foreach (SearchMovie m in searchResults.Results)
 					{
-						Console.WriteLine(x.Title);
-						x.InWatchList = true;
+						SearchVM movie = CreateSearchVM(m, myWatchlist);
+						foreach (var w in myWatchlist)
+						{
+							if (w.MovieId == movie.Id)
+								movie.InWatchList = true;
+						}
+						movieBag.Add(movie);
 					}
 				}
 			}
-			return movieResults;
+
+			List<SearchVM> movieResult = new List<SearchVM>(movieBag
+				.OrderByDescending(m => m.Popularity)
+				.Skip(20 * pageNumber - 20)
+				.Take(20));
+
+			return movieResult;
 		}
 		public async Task<SearchVM> FetchMovieById(int movieId)
 		{
@@ -203,6 +207,7 @@ namespace MovieMatchMvc.Models
 				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
 				ReleaseDate = movie.ReleaseDate,
 				Rating = movie.VoteAverage,
+				Popularity = movie.Popularity,
 				Description = movie.Overview,
 			};
 		}
