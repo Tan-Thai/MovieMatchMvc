@@ -2,99 +2,111 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h5 class="text-center" style="color: antiquewhite" ;>Welcome @User.Identity.Name</h5>
+	<h5 class="text-center" style="color: antiquewhite" ;>Welcome @User.Identity.Name</h5>
 
 }
-<h1 class="text-center" style="color: antiquewhite";>Top Movies Right now!</h1>
+<h1 class="text-center" style="color: antiquewhite" ;>Top Movies Right now!</h1>
 
-<div style="width:80%; " class="container p-2 mx-auto" >
-   <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            @if (Model != null && Model.Count > 0)
-            {
-                <div class="carousel-box">
-                    <div id="movieCarousel" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            @for (int i = 0; i < Model.Count; i++)
-                            {
-                                <li data-target="#movieCarousel" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
-                            }
-                        </ol>
-                        <div class="carousel-inner">
-                            @for (int i = 0; i < Model.Count; i++)
-                            {
-                                var movie = Model[i];
-                                <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                                <img class="d-block w-100 badge-light shadow" src="@movie.ImageUrl" alt="@movie.Title">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="carousel-caption">
-                                                    <a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId"> <h3>@movie.Title</h3></a>
-                                                <p>@TruncateDescription(movie.Description, 170)</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                        <a class="carousel-control-prev" href="#movieCarousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#movieCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <p>No movies found.</p>
-            }
-        </div>
-    </div>
+<div style="width:80%; " class="container p-2 mx-auto">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				@if (Model != null && Model.Count > 0)
+				{
+					<div class="carousel-box">
+						<div id="movieCarousel" class="carousel slide" data-ride="carousel">
+							<ol class="carousel-indicators">
+								@for (int i = 0; i < Model.Count; i++)
+								{
+									<li data-target="#movieCarousel" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+								}
+							</ol>
+							<div class="carousel-inner">
+								@for (int i = 0; i < Model.Count; i++)
+								{
+									var movie = Model[i];
+									<div class="carousel-item @(i == 0 ? "active" : "")">
+										<div class="row">
+											<div class="col-md-6">
+												<img class="d-block w-100 badge-light shadow" src="@movie.ImageUrl" alt="@movie.Title">
+											</div>
+											<div class="col-md-6">
+												<div class="carousel-caption">
+													<a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId"> <h3>@movie.Title</h3></a>
+													<p>@TruncateDescription(movie.Description, 170)</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								}
+							</div>
+							<a class="carousel-control-prev" href="#movieCarousel" role="button" data-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="carousel-control-next" href="#movieCarousel" role="button" data-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
+						</div>
+					</div>
+				}
+				else
+				{
+					<p>No movies found.</p>
+				}
+			</div>
+		</div>
+	</div>
+
 </div>
 
-    </div>
 
-    <style>
-        .carousel-caption h3, .carousel-caption p {
-            color: antiquewhite;
-        }
-    </style>
-    
-    <style>
-        .col-md-8  {
-            background-color: darkslategrey;
-            padding-bottom: 10px;
-            padding-top: 10px;
-            border-radius: 25px;
-            opasity: 10%;   
-        }
-    </style>
-    <style>
-        .d-block {
-            border-radius: 35px;
-        }
+<style>
+	.carousel-caption h3, .carousel-caption p {
+		color: antiquewhite;
+	}
+</style>
+<style>
 
-    </style>
+	/* Move the left carousel control to the left side */
+	.carousel-control-prev {
+		left: -6%;
+	}
 
-    @functions {
-        string TruncateDescription(string description, int maxLength)
-        {
-            if (description.Length <= maxLength)
-            {
-                return description;
-            }
-            else
-            {
-                return description.Substring(0, maxLength) + "...";
-            }
-        }
+	/* Move the right carousel control to the right side */
+	.carousel-control-next {
+		right: -6%;
+	}
+</style>
+<style>
+	.col-md-8 {
+		background-color: darkslategrey;
+		padding-bottom: 10px;
+		padding-top: 10px;
+		border-radius: 25px;
+		opasity: 10%;
+	}
+</style>
+<style>
+	.d-block {
+		border-radius: 35px;
+	}
+
+</style>
+
+@functions {
+	string TruncateDescription(string description, int maxLength)
+	{
+		if (description.Length <= maxLength)
+		{
+			return description;
+		}
+		else
+		{
+			return description.Substring(0, maxLength) + "...";
+		}
+	}
     }
 
 
