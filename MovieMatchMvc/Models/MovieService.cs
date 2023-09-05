@@ -96,7 +96,12 @@ namespace MovieMatchMvc.Models
 			return context.watchLists
 				.Where(w => w.UserId == userId)
 				.OrderBy(p => p.Title)
-				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId })
+				.Select(p => new WatchlistVM //add more props to enable similar showcase as SearchView
+				{ 
+					Title = p.Title,
+					Poster = p.Poster,
+					MovieId = p.MovieId
+				})
 				.ToArray();
 		}
 		public string GetUserIdByUsername(string username)
@@ -135,7 +140,7 @@ namespace MovieMatchMvc.Models
 		}
 		public async Task AddMovieToWatchlistAsync(SearchVM movie, string userId)
 		{
-			context.watchLists.Add(new WatchList //potentially add more props to fill out watchlist
+			context.watchLists.Add(new WatchList //Add Genres as prop to be able to order by on "GetWatchList"
 			{
 				MovieId = movie.Id,
 				Title = movie.Title,
