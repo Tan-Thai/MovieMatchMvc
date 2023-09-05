@@ -46,7 +46,7 @@ namespace MovieMatchMvc.Models
 			}
 			return movieList;
 		}
-		public async Task<List<SearchVM>> FetchMovies(string query, string userId, int pageNumber)
+		public async Task<List<SearchVM>> SearchMoviesAsync(string query, string userId, int pageNumber)
 		{
 			List<SearchVM> movieBag = new List<SearchVM>();
 			var myWatchlist = GetWatchlist(userId);
@@ -112,10 +112,18 @@ namespace MovieMatchMvc.Models
 		}
 		public string GetUserIdByUsername(string username)
 		{
-			return context.accountUsers
-				.Where(u => u.UserName == username)
-				.Select(u => u.Id)
-				.FirstOrDefault();
+
+			if (context.accountUsers.Any(u => u.UserName == username))
+			{
+				return context.accountUsers
+					.Where(u => u.UserName == username)
+					.Select(u => u.Id)
+					.FirstOrDefault();
+			}
+			else
+			{
+				throw new Exception();
+			}
 		}
 		public async Task AddMovieToWatchlistById(int movieId, string userId)
 		{
@@ -189,8 +197,8 @@ namespace MovieMatchMvc.Models
 				Description = movie.Overview,
 				//Actors = movie.Credits.Cast,
 				Runtime = movie.Runtime,
-				
-				
+
+
 				BackDropPoster = "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.BackdropPath
 			};
 		}
@@ -222,5 +230,6 @@ namespace MovieMatchMvc.Models
 				Description = movie.Overview,
 			};
 		}
+
 	}
 }
