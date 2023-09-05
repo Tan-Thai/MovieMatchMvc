@@ -19,8 +19,10 @@
     <span id="space-filler"></span>
     <nav id="navbar-reset" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+                <a class="nav-link asp-controller="Movie" asp-action="Index">
+                    <img src="/Images/Logo_MM.svg" alt="Logo" class="logo-img" />
+                </a>
             <div class="d-flex justify-content-between w-100">
-                <a class="nav-link asp-controller="Movie" asp-action="Index">Home</a>
                 <form asp-action="Search" asp-controller="Movie" method="get" class="form-inline">
                     <div class="form-group">
                         <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
@@ -71,15 +73,4 @@
     }
 </style>
 
-<style>
-    .colored-button {
-        background-color: #2A5138;
-        padding: 10px 20px;
-        margin: 7px;
-        border-radius: 10px;
-    }
 
-        .colored-button:hover {
-            background-color: #629074;
-        }
-</style>
