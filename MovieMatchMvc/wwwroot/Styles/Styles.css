@@ -280,6 +280,9 @@ button:hover, button:active, button:focus,
     margin-right: 300px;
 }
 
+.logo-img:hover {
+    transform: scale(1.2); 
+}
 /*Layout Buttons*/
 
 .colored-button {

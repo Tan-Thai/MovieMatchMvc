@@ -168,10 +168,10 @@ namespace MovieMatchMvc.Models
 			using (client)
 			{
 				var movie = client.GetMovieAsync(movieId).Result;
-
+				var movieCredits = client.GetMovieCreditsAsync(movieId).Result;
 				if (movie != null)
 				{
-					var movieDetails = CreateDetailsVM(movie);
+					var movieDetails = CreateDetailsVM(movie, movieCredits);
 					foreach (var m in myWatchlist)
 					{
 						if (m.MovieId == movieDetails.Id)
@@ -185,7 +185,7 @@ namespace MovieMatchMvc.Models
 					return null;
 			}
 		}
-		private DetailsVM CreateDetailsVM(Movie movie)
+		private DetailsVM CreateDetailsVM(Movie movie, Credits credits)
 		{
 			return new DetailsVM
 			{
@@ -195,9 +195,10 @@ namespace MovieMatchMvc.Models
 				ReleaseDate = movie.ReleaseDate,
 				Rating = movie.VoteAverage,
 				Description = movie.Overview,
-				//Actors = movie.Credits.Cast,
+				Cast = credits.Cast,
+				Crew = credits.Crew,
 				Runtime = movie.Runtime,
-
+				Genre = movie.Genres,
 
 				BackDropPoster = "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.BackdropPath
 			};
