@@ -272,10 +272,27 @@ button:hover, button:active, button:focus,
     font-size: 1.2rem;
 }
 
+/*LogoHeader*/
 
-/*Details Page*/
+.logo-img {
+    width: 70px; 
+    height: 70px;
+    margin-right: 300px;
+}
 
-.details-container {
+/*Layout Buttons*/
+
+.colored-button {
+    background-color: #047159;
+    padding: 10px 20px;
+    margin: 7px;
+    border-radius: 10px;
+}
+.colored-button:hover {
+        background-color: #629074;
+}
+
+    .details-container {
 width: 90vw;
 display: 100vh;
 flex-direction: row;
