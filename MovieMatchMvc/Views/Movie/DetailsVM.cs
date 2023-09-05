@@ -1,4 +1,5 @@
-﻿using TMDbLib.Objects.Movies;
+﻿using TMDbLib.Objects.General;
+using TMDbLib.Objects.Movies;
 
 namespace MovieMatchMvc.Views.Movie
 {
@@ -13,8 +14,10 @@ namespace MovieMatchMvc.Views.Movie
 		public DateTime? ReleaseDate { get; set; }
 		public bool InWatchList { get; set; }
 		public string BackDropPoster { get;  set; }
-		public List<Cast> Actors { get; set; }
+		public List<Cast> Cast { get; set; }
 
 		public int? Runtime { get; set; }
+		public List<Crew> Crew { get; internal set; }
+		public List<Genre> Genre { get; internal set; }
 	}
 }
