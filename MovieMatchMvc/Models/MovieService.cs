@@ -55,7 +55,7 @@ namespace MovieMatchMvc.Models
 
 			using (client)
 			{
-				SearchContainer<SearchMovie> initialSearchResults = await client.SearchMovieAsync(query, "en", pageNumber, false);
+				SearchContainer<SearchMovie> initialSearchResults = await client.SearchMovieAsync(query, "en-US", pageNumber, false);
 				int totalPages = initialSearchResults.TotalPages;
 
 				var searchTasks = new List<Task<SearchContainer<SearchMovie>>>();
