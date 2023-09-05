@@ -30,7 +30,7 @@ namespace MovieMatchMvc.Controllers
 				return View("Index");
 			}
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			List<SearchVM> movies = await _movieService.FetchMovies(query, currentUserId, pageNumber);
+			List<SearchVM> movies = await _movieService.SearchMoviesAsync(query, currentUserId, pageNumber);
 			ViewBag.Query = query;
 			ViewBag.PageNumber = pageNumber;
 			return View("Search", movies);
