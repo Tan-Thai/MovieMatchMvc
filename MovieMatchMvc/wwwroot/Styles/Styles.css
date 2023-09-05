@@ -237,44 +237,6 @@ button:hover, button:active, button:focus,
 }
 
 
-
-.buddy-search-container {
- 
-    margin: 0 auto;
-    width: 500px;
-    height: 800px;
-    position: relative;
-    perspective: 2000px;
-}
-
-.buddy-carousel {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    transform-style: preserve-3d;
-    transition: transform 1s;
-}
-.buddy-search-card {
-    filter: drop-shadow(0 0 2rem white);
-    display: block;
-    position: absolute;
-    background: #000;
-    width: 250px;
-    height: 300px;
-    line-height: 200px;
-    font-size: 5em;
-    text-align: center;
-    color: #FFF;
-    opacity: 0.95;
-    border-radius: 10px;
-    margin: 30px;
-}
-
-
-.buddy-search-card img {
-    width: clamp(60px, 100%, 300px);
-}
-
 /*.next, .prev {
     color: #444;
     position: absolute;
@@ -314,10 +276,11 @@ button:hover, button:active, button:focus,
 /*Details Page*/
 
 .details-container {
-width: 80%;
-height: auto;
-display: flex;
+width: 90vw;
+display: 100vh;
 flex-direction: row;
+/*margin-right: 50px;*/
+margin: 0 auto;
 
 }
 
@@ -325,6 +288,7 @@ flex-direction: row;
   position: relative;
   width: 100%;
   display: flex;
+  
   /*flex-direction: column;*/
 }
 
@@ -338,16 +302,13 @@ flex-direction: row;
 
 }
 
-.details-text  {
-    /*border: 1px solid white;*/
-    /*background-color: rgba(57, 56, 56, 0.20);*/
-    /*backdrop-filter : blur(5px);*/
-}
+
     .details-text button {
         position: relative;
         top: 25%;
         left: 2%;
         opacity: 0.9;
+
         /*background-color: darkslategrey;*/
         /*background-color: rgb(48, 140, 143);*/
         background-color: rgb(57, 146, 146);
@@ -357,14 +318,15 @@ flex-direction: row;
 
 
 .details-poster {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    width: 300px;
-    height: 450px;
-    margin-left: -5rem;
+    margin: 3rem;
+    /*margin-bottom: 1rem;*/
+    width: 20vw;
+    height: 60vh;
+    left: 5%;
+   /* top: 5%*/;
     position: relative;
     z-index: 10;
-    filter: drop-shadow(0 0 0.25rem White);
+    filter: drop-shadow(0 0 0.25rem black);
     /*border-radius: 5%;*/
     /*border-radius: 85% 85% 0 85% ;*/
 }
@@ -376,26 +338,32 @@ flex-direction: row;
     filter: saturate(25%);
     filter: hue-rotate(20deg);
     width: 94vw;
-    object-fit: cover;
-    background-position: right 50%;
+    height: 80vh;
+    /*object-fit: cover;*/
+    /*background-position: right 50%;*/
     /*height: auto;*/
     /*overflow: hidden;*/
-    margin-left: -10rem;
-    margin-bottom: -2rem;
+    /*margin-left: -10rem;*/
+    /*margin-bottom: -2rem;*/
     border-radius: 5%;
     /*filter: blur(0.05rem);*/
 /*    background-size: cover;
     object-fit: cover;*/
-
-
 }
-
+.details-text {
+    /*border: 1px solid white;*/
+    /*background-color: rgba(57, 56, 56, 0.20);*/
+    backdrop-filter : blur(1px);
+    width: 50%;
+    margin-top: 5%;
+    margin-left: 5%;
+    line-height: 1.5rem;
+}
 .overlay {
   position: absolute;
 width: 94vw;
-
-height: 85.1vh;
-margin-left: -10rem;
+height: 80vh;
+/*margin-left: -10rem;*/
 /*background-color: rgba(0, 0, 0, 0.5);*/
 background-image: linear-gradient(to left, rgba(226, 226, 226, 0.6), rgba(0, 0, 0, 0.9));
 z-index: 2;
@@ -403,3 +371,50 @@ z-index: 2;
 
 
 
+
+
+.buddy-search-container {
+    margin: 0 auto;
+    width: 500px;
+    height: 800px;
+    position: relative;
+    perspective: 2000px;
+}
+
+.buddy-carousel {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    display: flex; 
+    overflow-x: scroll;
+}
+
+.buddy-search-card {
+    filter: drop-shadow(0 0 2rem white);
+    display: block;
+    position: absolute;
+    background: #000;
+    width: 250px;
+    height: 300px;
+    line-height: 200px;
+    font-size: 5em;
+    text-align: center;
+    color: #FFF;
+    opacity: 0.95;
+    border-radius: 10px;
+    margin: 30px;
+}
+
+
+    .buddy-search-card img {
+        width: clamp(60px, 100%, 300px);
+    }
+
+
+/*footer {
+    position: fixed;
+    bottom: 0;
+    margin: 0 auto;
+}*/
