@@ -286,6 +286,10 @@ button:hover, button:active, button:focus,
 }*/
 /*Layout Buttons*/
 
+.text-left{
+    text-align:left;
+}
+
 .colored-button {
     background-color: #047159;
     padding: 10px 20px;
