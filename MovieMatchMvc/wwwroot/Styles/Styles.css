@@ -317,25 +317,29 @@ margin: 2rem;
     padding: 2rem;
     z-index: 11;
     margin: 2rem;
+    width: 50%;
     
 
 }
 
 
     .details-text button {
-        position: relative;
         /*top: 50%;*/
     /*    top: 25%;
         left: 2%;*/
         /*margin: 5rem;*/
+        margin-top: 1rem;
         opacity: 0.9;
-
+        display:flex;
+        justify-content: center;
+        justify-self: flex-end;
         /*background-color: darkslategrey;*/
-        /*background-color: rgb(48, 140, 143);*/
-        background-color: rgb(47, 79, 79);
+        background-color: rgb(48, 140, 143);
+        /*background-color: rgb(47, 79, 79);*/
         filter: drop-shadow(0 0 0.05rem black);
 /**/
     }
+
 
 
 .details-poster {
