@@ -31,77 +31,36 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            // Initially, disable click on links
-            $('a.disabled-link').on('click', function (event) {
-                event.preventDefault();
-            });
+     $(".buddy-search-card").on("click", function (e) {
+    var $card = $(this);
+    var degree = parseInt($card.attr("data-degree"), 10) % 360;
 
-            function calculateOpacity(degree) {
-                degree = degree % 360;
-                if (degree < 0) degree += 360;
-                let opacity = Math.abs(degree - 180) / 180;
-                return opacity;
-            }
+    if (degree === 0) {
+        return; // Let the default action happen (go to details)
+    }
 
-            // Function to set main card's link as active or inactive based on its degree
-            function setMainCardLink() {
-                $(".buddy-search-card").each(function () {
-                    var degree = parseInt($(this).attr("data-degree"), 10) % 360;
-                    if (degree < 0) degree += 360;
+    // Prevent the default action
+    e.preventDefault();
 
-                    if (degree === 0) {
-                        $(this).find('a.details-link').off('click').removeClass('disabled-link');
-                    } else {
-                        $(this).find('a.details-link').on('click', function (event) {
-                            event.preventDefault();
-                        }).addClass('disabled-link');
-                    }
-                });
-            }
+    // Calculate the clicked side of the card
+    var offset = $card.offset();
+    var x = e.pageX - offset.left;
 
-            var degree = 0;
-            $(".buddy-carousel .buddy-search-card").each(function () {
-                var opacity = calculateOpacity(degree);
-                $(this).attr("data-degree", degree);
-                $(this).css({
-                    "transform": "rotateY(" + degree + "deg) translateZ(300px)",
-                    "opacity": opacity
-                });
-                degree += 60;
-            });
-            setMainCardLink();
+    console.log("Card width:", $card.width());
+    console.log("e.pageX:", e.pageX);
+    console.log("Card offset left:", offset.left);
+    console.log("Calculated x:", x);
 
-            $(".buddy-search-card").on("click", function (e) {
-                var $card = $(this);
-                var degree = parseInt($card.attr("data-degree"), 10) % 360;
-
-                if (degree === 0) {
-                    return; // Let the default action happen (go to details)
-                }
-
-                // Prevent the default action
-                e.preventDefault();
-
-                // Calculate the clicked side of the card
-                var offset = $card.offset();
-                var x = e.pageX - offset.left;
-
-                console.log("Card width:", $card.width());
-                console.log("e.pageX:", e.pageX);
-                console.log("Card offset left:", offset.left);
-                console.log("CO right:", offset.right)
-                console.log("Calculated x:", x);
-
-                if (x < $card.width() / 2) {
-                     console.log("Going left"); 
-                    rotate("p"); // rotate to the previous card
-                } else {
-                    console.log("Going right");
-                    rotate("n"); // rotate to the next card
-                }
-            });
-
+    if (x <= 30) {
+        console.log("Going left");
+        rotate("p"); // rotate to the previous card
+    } else if (x >= 400) {
+        console.log("Going right");
+        rotate("n"); // rotate to the next card
+    } else {
+        console.log("Click is within the middle zone. Do nothing.");
+    }
+});
             function rotate(direction) {
                 var rotationAmount = (direction === "n") ? -60 : 60;
 

@@ -12,7 +12,9 @@ namespace MovieMatchMvc.Views.Movie
         public string? Url { get; set; }
 		public DateTime? ReleaseDate { get; set; }
 		public bool InWatchList { get; set; }
-		public string BackDropPoster { get; internal set; }
-		public List<Cast> Actors { get; internal set; }
+		public string BackDropPoster { get;  set; }
+		public List<Cast> Actors { get; set; }
+
+		public int? Runtime { get; set; }
 	}
 }

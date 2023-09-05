@@ -1,69 +1,81 @@
 ﻿@model DetailsVM
 
 
-<h2>About @Model.Title:</h2>
+@* <h2>About @Model.Title:</h2> *@
 <main>
-	<div class="container my-5">
-		<table class="table" >
-			<tbody>
-				<tr>
-					<td scope="row">
-						<div class="col-md-4">
-							<div class="row" style="text-align: center;"></div>
-							<img style="width: 300px; height: auto;" src="@Model.Poster" alt="Poster image for @Model.Title" />
-						</div>
-						<div class="col-md-4">
-							@if (User.Identity.IsAuthenticated)
-							{
-								<button class="btn @((Model.InWatchList ? "btn-danger" : "btn-success")) watchlist-button" data-movie-id="@Model.Id">
-									@(Model.InWatchList ? "Remove from watchlist" : "Add to watchlist")
-								</button>
-							}
-						</div>
-						<div>
-							@Math.Round(Model.Rating, 1) <br />
-							@Model.ReleaseDate
-						</div>
-					</td>
-					<td scope="row">
-						<div>
-							<p style="color: antiquewhite">@Model.Description</p>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+    <div class="details-container my-5">
+        @* 	<table class="table" >
+        <tbody>
+        <tr> *@
+        @* <td scope="row"> *@
+        @* <div class="col-md-4"> *@
+            @* <div class="row" style="text-align: center;"></div> *@
+            <div class="img-container-details">
+                <div class="overlay"></div>
+                <img class="backdrop-poster" src="@Model.BackDropPoster" alt="Backdrop poster for @Model.Title" />
+                <img class="details-poster" src="@Model.Poster" alt="Poster image for @Model.Title" />
+                <div class="details-text">
+                 <h5>@Model.Title</h5>
+                <p style="color: antiquewhite">@Model.Description</p>
+                <p> Runtime: @Model.Runtime minutes</p> 
+              
+                        
+            <p>
+                Rating: @Math.Round(Model.Rating, 1)
+              
+            </p>
+                <p> Release Date: @Model.ReleaseDate.Value.ToShortDateString()</p>
+     
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button class="btn @((Model.InWatchList ? "btn-danger" : "btn-success")) watchlist-button" data-movie-id="@Model.Id">
+                @(Model.InWatchList ? "Remove from watchlist" : "Add to watchlist")
+            </button>
+        }
+        </div>
+            </div>
+        </div>
+        @* <div class="col-md-4">
+            
+         
+      
+        @* </td>
+        <td scope="row">
+
+        </td>
+        </tr>
+        </tbody>
+        </table> *@
 </main>
 
 
 
 @section Scripts {
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			document.querySelectorAll('.watchlist-button').forEach(button => {
-				button.addEventListener('click', function (e) {
-					const movieId = e.target.getAttribute('data-movie-id');
-					const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('.watchlist-button').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    const movieId = e.target.getAttribute('data-movie-id');
+                    const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
 
-					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJsonCall=true`, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({ movieId })
-					})
-						.then(response => response.json())
-						.then(data => {
-							if (data.success) {
-								e.target.classList.toggle('btn-danger');
-								e.target.classList.toggle('btn-success');
-								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
-							}
-						})
-						.catch(error => console.log('Error:', error));
-				});
-			});
-		});
-	</script>
+                    fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJsonCall=true`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ movieId })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                e.target.classList.toggle('btn-danger');
+                                e.target.classList.toggle('btn-success');
+                                e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+                            }
+                        })
+                        .catch(error => console.log('Error:', error));
+                });
+            });
+        });
+    </script>
 	}

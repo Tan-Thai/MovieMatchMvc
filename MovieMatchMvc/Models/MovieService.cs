@@ -176,6 +176,9 @@ namespace MovieMatchMvc.Models
 				Rating = movie.VoteAverage,
 				Description = movie.Overview,
 				//Actors = movie.Credits.Cast,
+				Runtime = movie.Runtime,
+				
+				
 				BackDropPoster = "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.BackdropPath
 			};
 		}
