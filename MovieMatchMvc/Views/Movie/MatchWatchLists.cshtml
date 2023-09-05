@@ -1,5 +1,5 @@
 ﻿@model List<MovieMatchMvc.Views.Movie.WatchlistVM>
-
+<div class="text-center">
 <form class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
     <h2>Who's Your Friend?</h2>
     <div class="form-group form-buddylist">
@@ -7,8 +7,8 @@
         <button type="submit" class="btn btn-primary">Match!</button>
     </div>
 </form>
-
 <h2 style="color: antiquewhite">Matching with @ViewBag.OtherUsername</h2>
+</div>
 <div class="buddy-search-container">
     <div class="buddy-carousel">
         @if (Model == null)
