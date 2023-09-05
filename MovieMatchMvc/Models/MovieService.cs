@@ -12,7 +12,7 @@ namespace MovieMatchMvc.Models
 {
 	public class MovieService
 	{
-		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0"); 
+		TMDbClient client = new TMDbClient("9484edbd5be7b021216db9b56a4f92b0");
 		ApplicationContext context;
 
 		public MovieService(ApplicationContext context)
@@ -48,35 +48,47 @@ namespace MovieMatchMvc.Models
 		}
 		public async Task<List<SearchVM>> FetchMovies(string query, string userId, int pageNumber)
 		{
-
-			List<SearchVM> movieResults = new List<SearchVM>();
+			List<SearchVM> movieBag = new List<SearchVM>();
 			var myWatchlist = GetWatchlist(userId);
+			var watchListHash = new HashSet<int>(myWatchlist.Select(w => w.MovieId));
+			int resultsPerPage = 20;
 
 			using (client)
 			{
-				SearchContainer<SearchMovie> searchResults = await client.SearchMovieAsync(query,"en", pageNumber, false);
-				
-				foreach (SearchMovie m in searchResults.Results
-					.OrderByDescending(m => m.VoteAverage)
-					.Take(32))
+				SearchContainer<SearchMovie> initialSearchResults = await client.SearchMovieAsync(query, "en-US", pageNumber, false);
+				int totalPages = initialSearchResults.TotalPages;
+
+				var searchTasks = new List<Task<SearchContainer<SearchMovie>>>();
+
+				for (int i = 1; i <= totalPages; i++)
 				{
-					SearchVM movie = CreateSearchVM(m, myWatchlist);
-					movieResults.Add(movie);
+					int currentPage = i;
+					searchTasks.Add(client.SearchMovieAsync(query, "en", currentPage, false));
 				}
-			}
-			foreach (var m in myWatchlist)
-			{
-				foreach (var x in movieResults)
+				var searchResults = await Task.WhenAll(searchTasks);
+
+				var processingTasks = searchResults.Select(async searchResult =>
 				{
-					if (m.MovieId == x.Id)
+					foreach (SearchMovie m in searchResult.Results)
 					{
-						Console.WriteLine(x.Title);
-						x.InWatchList = true;
+						SearchVM movie = CreateSearchVM(m, myWatchlist);
+						if (watchListHash.Contains(movie.Id))
+							movie.InWatchList = true;
+						movieBag.Add(movie);
 					}
-				}
+				});
+				await Task.WhenAll(processingTasks);
 			}
-			return movieResults;
+
+			List<SearchVM> movieResult = movieBag
+				.OrderByDescending(m => m.Popularity)
+				.Skip((pageNumber - 1) * resultsPerPage)
+				.Take(resultsPerPage)
+				.ToList();
+
+			return movieResult;
 		}
+
 		public async Task<SearchVM> FetchMovieById(int movieId)
 		{
 			using (client)
@@ -206,6 +218,7 @@ namespace MovieMatchMvc.Models
 				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
 				ReleaseDate = movie.ReleaseDate,
 				Rating = movie.VoteAverage,
+				Popularity = movie.Popularity,
 				Description = movie.Overview,
 			};
 		}
