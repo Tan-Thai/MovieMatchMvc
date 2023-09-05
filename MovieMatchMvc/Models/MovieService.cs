@@ -20,6 +20,7 @@ namespace MovieMatchMvc.Models
 			this.context = context;
 		}
 
+		//Search actions - main page and search.
 		public async Task<List<IndexVM>> FetchTopMovies()
 		{
 			List<IndexVM> movieList = new List<IndexVM>();
@@ -71,7 +72,7 @@ namespace MovieMatchMvc.Models
 				{
 					foreach (SearchMovie m in searchResult.Results)
 					{
-						SearchVM movie = CreateSearchVM(m, myWatchlist);
+						SearchVM movie = CreateSearchVMBySearch(m, myWatchlist);
 						if (watchListHash.Contains(movie.Id))
 							movie.InWatchList = true;
 						movieBag.Add(movie);
@@ -89,7 +90,7 @@ namespace MovieMatchMvc.Models
 			return movieResult;
 		}
 
-
+		//Grabbing watchlist and userID
 		public WatchlistVM[] GetWatchlist(string userId)
 		{
 			return context.watchLists
@@ -114,25 +115,25 @@ namespace MovieMatchMvc.Models
 			}
 		}
 
-
-		public async Task AddMovieToWatchlistById(int movieId, string userId)
+		//Adding and removing movies from watchlist.
+		public async Task AddMovieToWatchlistByIdAsync(int movieId, string userId)
 		{
-			var movie = await FetchMovieById(movieId);
-			await AddMovieToWatchlist(movie, userId);
+			var movie = await FetchMovieByIdAsync(movieId);
+			await AddMovieToWatchlistAsync(movie, userId);
 		}
-		public async Task<SearchVM> FetchMovieById(int movieId)
+		public async Task<SearchVM> FetchMovieByIdAsync(int movieId)
 		{
 			using (client)
 			{
 				var movie = client.GetMovieAsync(movieId).Result;
 
 				if (movie != null)
-					return CreateSearchVM(movie);
+					return CreateSearchVMById(movie);
 				else
 					return null;
 			}
 		}
-		public async Task AddMovieToWatchlist(SearchVM movie, string userId)
+		public async Task AddMovieToWatchlistAsync(SearchVM movie, string userId)
 		{
 			context.watchLists.Add(new WatchList //potentially add more props to fill out watchlist
 			{
@@ -155,7 +156,7 @@ namespace MovieMatchMvc.Models
 			}
 		}
 
-
+		//MatchWatchList -
 		internal object GetMatchedMovies(string? currentUserId, string otherUserId)
 		{
 			var myWatchlist = GetWatchlist(currentUserId);
@@ -165,6 +166,7 @@ namespace MovieMatchMvc.Models
 			return commonMovies;
 		}
 
+		//DetailsVM - Anything related to Details page.
 		public DetailsVM GetMovieDetailsById(int movieId, string currentUserId)
 		{
 			var myWatchlist = GetWatchlist(currentUserId);
@@ -208,8 +210,8 @@ namespace MovieMatchMvc.Models
 			};
 		}
 
-
-		private SearchVM CreateSearchVM(Movie movie)
+		//Misc - Create SearchVM methods used above
+		private SearchVM CreateSearchVMById(Movie movie)
 		{
 			return new SearchVM
 			{
@@ -221,7 +223,7 @@ namespace MovieMatchMvc.Models
 				Description = movie.Overview
 			};
 		}
-		private SearchVM CreateSearchVM(SearchMovie movie, IEnumerable<WatchlistVM> myWatchlist)
+		private SearchVM CreateSearchVMBySearch(SearchMovie movie, IEnumerable<WatchlistVM> myWatchlist)
 		{
 			bool inWatchList = myWatchlist?.Any(m => m.MovieId == movie.Id) ?? false;
 
