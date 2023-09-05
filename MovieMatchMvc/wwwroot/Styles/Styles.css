@@ -347,9 +347,11 @@ flex-direction: row;
         position: relative;
         top: 25%;
         left: 2%;
-        background-color: darkslategrey;
+        opacity: 0.9;
+        /*background-color: darkslategrey;*/
         /*background-color: rgb(48, 140, 143);*/
-        background-color: rgb(53, 129, 129);
+        background-color: rgb(57, 146, 146);
+        filter: drop-shadow(0 0 0.05rem black);
 /**/
     }
 
@@ -362,7 +364,9 @@ flex-direction: row;
     margin-left: -5rem;
     position: relative;
     z-index: 10;
-    filter: drop-shadow(0 0 0.75rem black); 
+    filter: drop-shadow(0 0 0.25rem White);
+    /*border-radius: 5%;*/
+    /*border-radius: 85% 85% 0 85% ;*/
 }
 
 .backdrop-poster {
@@ -378,6 +382,7 @@ flex-direction: row;
     /*overflow: hidden;*/
     margin-left: -10rem;
     margin-bottom: -2rem;
+    border-radius: 5%;
     /*filter: blur(0.05rem);*/
 /*    background-size: cover;
     object-fit: cover;*/
