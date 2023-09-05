@@ -37,29 +37,27 @@
                 event.preventDefault();
             });
 
-            $(".buddy-search-card").on("click", function (e) {
-                var $card = $(this);
-                var offset = $card.offset();
-                var x = e.pageX - offset.left;
-                var degree = parseInt($card.attr("data-degree"), 10) % 360;
-
-                if (degree === 0) {
-                    return; // Let the default action happen (go to details)
-                }
-
-                e.preventDefault();  // Prevent going to details
-                if (x < $card.width() / 2) {
-                    rotate({ data: { d: "p" } }); // rotate to the previous card
-                } else {
-                    rotate({ data: { d: "n" } }); // rotate to the next card
-                }
-            });
-
             function calculateOpacity(degree) {
                 degree = degree % 360;
                 if (degree < 0) degree += 360;
                 let opacity = Math.abs(degree - 180) / 180;
                 return opacity;
+            }
+
+            // Function to set main card's link as active or inactive based on its degree
+            function setMainCardLink() {
+                $(".buddy-search-card").each(function () {
+                    var degree = parseInt($(this).attr("data-degree"), 10) % 360;
+                    if (degree < 0) degree += 360;
+
+                    if (degree === 0) {
+                        $(this).find('a.details-link').off('click').removeClass('disabled-link');
+                    } else {
+                        $(this).find('a.details-link').on('click', function (event) {
+                            event.preventDefault();
+                        }).addClass('disabled-link');
+                    }
+                });
             }
 
             var degree = 0;
@@ -74,28 +72,50 @@
             });
             setMainCardLink();
 
-            // Function to set main card's link as active or inactive based on its degree
-            function setMainCardLink() {
-                $(".buddy-search-card").each(function () {
-                    var degree = parseInt($(this).attr("data-degree"), 10) % 360;
-                    if (degree === 0) {
-                        $(this).find('a.details-link').off('click').removeClass('disabled-link');
-                    } else {
-                        $(this).find('a.details-link').on('click', function (event) {
-                            event.preventDefault();
-                        }).addClass('disabled-link');
-                    }
-                });
-            }
+            $(".buddy-search-card").on("click", function (e) {
+                var $card = $(this);
+                var degree = parseInt($card.attr("data-degree"), 10) % 360;
 
-            setMainCardLink();
+                if (degree === 0) {
+                    return; // Let the default action happen (go to details)
+                }
 
-            function rotate(e) {
+                // Prevent the default action
+                e.preventDefault();
+
+                // Calculate the clicked side of the card
+                var offset = $card.offset();
+                var x = e.pageX - offset.left;
+
+                console.log("Card width:", $card.width());
+                console.log("e.pageX:", e.pageX);
+                console.log("Card offset left:", offset.left);
+                console.log("CO right:", offset.right)
+                console.log("Calculated x:", x);
+
+                if (x < $card.width() / 2) {
+                     console.log("Going left"); 
+                    rotate("p"); // rotate to the previous card
+                } else {
+                    console.log("Going right");
+                    rotate("n"); // rotate to the next card
+                }
+            });
+
+            function rotate(direction) {
+                var rotationAmount = (direction === "n") ? -60 : 60;
+
                 $(".buddy-carousel .buddy-search-card").each(function () {
                     var el = $(this);
                     var originalDegree = parseInt(el.attr("data-degree"), 10);
-                    var newDegree = (e.data.d === "n") ? originalDegree - 60 : originalDegree + 60;
+                    var newDegree = (originalDegree + rotationAmount) % 360;
+
+                    if (newDegree < 0) {
+                        newDegree += 360;
+                    }
+
                     var newOpacity = calculateOpacity(newDegree);
+                    console.log("New degree:", newDegree)
 
                     el.css({
                         "transform": "rotateY(" + newDegree + "deg) translateZ(300px)",
