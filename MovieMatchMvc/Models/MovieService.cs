@@ -63,7 +63,7 @@ namespace MovieMatchMvc.Models
 				for (int i = 1; i <= totalPages; i++)
 				{
 					int currentPage = i;
-					searchTasks.Add(client.SearchMovieAsync(query, "en", currentPage, false));
+					searchTasks.Add(client.SearchMovieAsync(query, "en-US", currentPage, false));
 				}
 				var searchResults = await Task.WhenAll(searchTasks);
 
@@ -89,18 +89,6 @@ namespace MovieMatchMvc.Models
 			return movieResult;
 		}
 
-		public async Task<SearchVM> FetchMovieById(int movieId)
-		{
-			using (client)
-			{
-				var movie = client.GetMovieAsync(movieId).Result;
-
-				if (movie != null)
-					return CreateSearchVM(movie);
-				else
-					return null;
-			}
-		}
 
 		public WatchlistVM[] GetWatchlist(string userId)
 		{
@@ -125,10 +113,24 @@ namespace MovieMatchMvc.Models
 				throw new Exception();
 			}
 		}
+
+
 		public async Task AddMovieToWatchlistById(int movieId, string userId)
 		{
 			var movie = await FetchMovieById(movieId);
 			await AddMovieToWatchlist(movie, userId);
+		}
+		public async Task<SearchVM> FetchMovieById(int movieId)
+		{
+			using (client)
+			{
+				var movie = client.GetMovieAsync(movieId).Result;
+
+				if (movie != null)
+					return CreateSearchVM(movie);
+				else
+					return null;
+			}
 		}
 		public async Task AddMovieToWatchlist(SearchVM movie, string userId)
 		{
@@ -152,6 +154,8 @@ namespace MovieMatchMvc.Models
 				await context.SaveChangesAsync();
 			}
 		}
+
+
 		internal object GetMatchedMovies(string? currentUserId, string otherUserId)
 		{
 			var myWatchlist = GetWatchlist(currentUserId);
@@ -161,7 +165,7 @@ namespace MovieMatchMvc.Models
 			return commonMovies;
 		}
 
-		public DetailsVM GetMovieById(int movieId, string currentUserId)
+		public DetailsVM GetMovieDetailsById(int movieId, string currentUserId)
 		{
 			var myWatchlist = GetWatchlist(currentUserId);
 
@@ -203,6 +207,8 @@ namespace MovieMatchMvc.Models
 				BackDropPoster = "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.BackdropPath
 			};
 		}
+
+
 		private SearchVM CreateSearchVM(Movie movie)
 		{
 			return new SearchVM

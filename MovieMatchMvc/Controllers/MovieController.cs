@@ -95,7 +95,7 @@ namespace MovieMatchMvc.Controllers
 		public IActionResult Details(int id)
 		{
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var movie =  _movieService.GetMovieById(id, currentUserId);
+			var movie =  _movieService.GetMovieDetailsById(id, currentUserId);
 			return View(movie);
 		}
 	}
