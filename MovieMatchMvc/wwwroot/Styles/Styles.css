@@ -125,10 +125,11 @@ nav {
 .nav-link {
    color: black;
 }
-a:hover {
+
+/*a:hover {
 transform: scale(1.1);
 }
-
+*/
 #space-filler {
     background: linear-gradient(to bottom, rgb(0, 0, 0),rgb(226, 226, 226));
     height: 20px;
@@ -280,9 +281,9 @@ button:hover, button:active, button:focus,
     margin-right: 300px;
 }
 
-.logo-img:hover {
+/*.logo-img:hover {
     transform: scale(1.2); 
-}
+}*/
 /*Layout Buttons*/
 
 .colored-button {
