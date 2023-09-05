@@ -17,10 +17,15 @@
                 <div class="details-text">
                  <h5>@Model.Title</h5>
                 <div class="description-container">
+                       @if (Model.Description.Length > 350){
                     <a class="toggle-description" href="#">
-                    <p class="short-description" style="color: antiquewhite">@Model.Description.Substring(0, 180) ....</p>
+                    <p class="short-description" style="color: antiquewhite">@Model.Description.Substring(0, 350) ....</p>
                     <p class="full-description" style="color: antiquewhite; display: none;">@Model.Description</p>
                     </a>
+                       }
+                       else {
+                    <p style="color: antiquewhite;">@Model.Description</p>
+                    }
                     
                 </div>
                 <p> Runtime: @Model.Runtime minutes</p> 
