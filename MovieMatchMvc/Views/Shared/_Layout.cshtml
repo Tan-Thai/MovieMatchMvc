@@ -20,12 +20,12 @@
     <nav id="navbar-reset" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class=" container-fluid">
             <div class="d-flex justify-content-between w-100">
-                  <a  class="nav-link asp-controller="Movie" asp-action="Index">Home</a>
+                <a class="nav-link asp-controller="Movie" asp-action="Index">Home</a>
                 <form asp-action="Search" asp-controller="Movie" method="get" class="form-inline">
                     <div class="form-group">
                         <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
                     </div>
-                    <button type="submit" class="btn btn-primary ml-2">Search</button>
+                    <button type="submit" class="btn btn-primary ml-2 colored-button">Search</button>
                 </form>
                  <span class="d-flex flex-row">
                     @if (User.Identity.IsAuthenticated)
@@ -34,14 +34,14 @@
                             <p>Signed in as: @User.Identity.Name</p>
                         </div> *@
                             
-                            <a asp-controller="Movie" asp-action="Watchlist" class="nav-link">Watch List</a>
-                            <a asp-controller ="Movie" asp-action ="MatchWatchLists" class="nav-link"> Match with friend </a>
-                            <a asp-controller="Account" asp-action="LogOut" class="nav-link">Sign Out @User.Identity.Name</a>
+                            <a asp-controller="Movie" asp-action="Watchlist" class="nav-link colored-button">Watch List</a>
+                            <a asp-controller ="Movie" asp-action ="MatchWatchLists" class="nav-link colored-button"> Match with friend </a>
+                            <a asp-controller="Account" asp-action="LogOut" class="nav-link colored-button">Sign Out @User.Identity.Name</a>
                     }
                     else
                     {
-                            <a asp-controller="Account" asp-action="Register" class="nav-link">Signup</a>
-                            <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                            <a asp-controller="Account" asp-action="Register" class="nav-link colored-button">Signup</a>
+                            <a asp-controller="Account" asp-action="Login" class="nav-link colored-button">Login</a>
                     }
                 </span>
             </div>
@@ -69,4 +69,17 @@
     .container p {
         color: antiquewhite;
     }
+</style>
+
+<style>
+    .colored-button {
+        background-color: #4A6C57;
+        padding: 10px 20px;
+        margin: 7px;
+        border-radius: 10px;
+    }
+
+        .colored-button:hover {
+            background-color: #629074;
+        }
 </style>
