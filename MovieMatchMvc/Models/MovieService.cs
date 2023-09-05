@@ -48,7 +48,6 @@ namespace MovieMatchMvc.Models
 		}
 		public async Task<List<SearchVM>> FetchMovies(string query, string userId, int pageNumber)
 		{
-
 			List<SearchVM> movieBag = new List<SearchVM>();
 			var myWatchlist = GetWatchlist(userId);
 			var watchListHash = new HashSet<int>(myWatchlist.Select(w => w.MovieId));
@@ -56,21 +55,29 @@ namespace MovieMatchMvc.Models
 
 			using (client)
 			{
-				SearchContainer<SearchMovie> initialSearchResults = await client.SearchMovieAsync(query,"en", pageNumber, false);
+				SearchContainer<SearchMovie> initialSearchResults = await client.SearchMovieAsync(query, "en", pageNumber, false);
 				int totalPages = initialSearchResults.TotalPages;
+
+				var searchTasks = new List<Task<SearchContainer<SearchMovie>>>();
 
 				for (int i = 1; i <= totalPages; i++)
 				{
-					SearchContainer<SearchMovie> searchResults = await client.SearchMovieAsync(query, "en", i, false);
+					int currentPage = i;
+					searchTasks.Add(client.SearchMovieAsync(query, "en", currentPage, false));
+				}
+				var searchResults = await Task.WhenAll(searchTasks);
 
-					foreach (SearchMovie m in searchResults.Results)
+				var processingTasks = searchResults.Select(async searchResult =>
+				{
+					foreach (SearchMovie m in searchResult.Results)
 					{
 						SearchVM movie = CreateSearchVM(m, myWatchlist);
 						if (watchListHash.Contains(movie.Id))
 							movie.InWatchList = true;
 						movieBag.Add(movie);
 					}
-				}
+				});
+				await Task.WhenAll(processingTasks);
 			}
 
 			List<SearchVM> movieResult = movieBag
@@ -81,6 +88,7 @@ namespace MovieMatchMvc.Models
 
 			return movieResult;
 		}
+
 		public async Task<SearchVM> FetchMovieById(int movieId)
 		{
 			using (client)
