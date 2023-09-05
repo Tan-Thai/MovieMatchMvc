@@ -125,10 +125,11 @@ nav {
 .nav-link {
    color: black;
 }
-a:hover {
+
+/*a:hover {
 transform: scale(1.1);
 }
-
+*/
 #space-filler {
     background: linear-gradient(to bottom, rgb(0, 0, 0),rgb(226, 226, 226));
     height: 20px;
@@ -280,16 +281,21 @@ button:hover, button:active, button:focus,
     margin-right: 300px;
 }
 
-.logo-img:hover {
+/*.logo-img:hover {
     transform: scale(1.2); 
-}
+}*/
 /*Layout Buttons*/
+
+.text-left{
+    text-align:left;
+}
 
 .colored-button {
     background-color: #047159;
     padding: 10px 20px;
     margin: 7px;
     border-radius: 10px;
+
 }
 .colored-button:hover {
         background-color: #629074;
@@ -320,25 +326,29 @@ margin: 2rem;
     padding: 2rem;
     z-index: 11;
     margin: 2rem;
+    width: 50%;
     
 
 }
 
 
     .details-text button {
-        position: relative;
         /*top: 50%;*/
     /*    top: 25%;
         left: 2%;*/
         /*margin: 5rem;*/
+        margin-top: 1rem;
         opacity: 0.9;
-
+        display:flex;
+        justify-content: center;
+        justify-self: flex-end;
         /*background-color: darkslategrey;*/
-        /*background-color: rgb(48, 140, 143);*/
-        background-color: rgb(47, 79, 79);
+        background-color: rgb(48, 140, 143);
+        /*background-color: rgb(47, 79, 79);*/
         filter: drop-shadow(0 0 0.05rem black);
 /**/
     }
+
 
 
 .details-poster {
@@ -443,4 +453,30 @@ z-index: 2;
     position: fixed;
     bottom: 0;
     margin: 0 auto;
+}*/
+
+.test-button {
+    /*background-color: #047159;*/
+
+}
+
+.nav-span {
+    background-color: #047159b1;
+    border-radius: 5px;
+    padding: 10px 20px;
+   /* margin: 7px;*/
+}
+.test-button:hover {
+    background-color: inherit;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 7px;
+    /*transform: scale(1);*/
+}
+/*
+.colored-button {
+    background-color: #047159;
+    padding: 10px 20px;
+    margin: 7px;
+    border-radius: 10px;
 }*/

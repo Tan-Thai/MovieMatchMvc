@@ -19,7 +19,7 @@
     <span id="space-filler"></span>
     <nav id="navbar-reset" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-                <a class="nav-link asp-controller="Movie" asp-action="Index">
+                <a class="nav-link" asp-controller="Movie" asp-action="Index">
                     <img src="/Images/Logo_MM.svg" alt="Logo" class="logo-img" />
                 </a>
             <div class="d-flex justify-content-between w-100">
@@ -29,21 +29,21 @@
                     </div>
                     <button type="submit" class="btn btn-primary ml-2 colored-button">Search</button>
                 </form>
-                 <span class="d-flex flex-row">
+                 <span class="d-flex flex-row nav-span">
                     @if (User.Identity.IsAuthenticated)
                     {
                        @*  <div class="d-flex align-items-center">
                             <p>Signed in as: @User.Identity.Name</p>
                         </div> *@
-                            
-                            <a asp-controller="Movie" asp-action="Watchlist" class="nav-link colored-button">Watch List</a>
-                            <a asp-controller ="Movie" asp-action ="MatchWatchLists" class="nav-link colored-button"> Match with friend </a>
-                            <a asp-controller="Account" asp-action="LogOut" class="nav-link colored-button">Sign Out @User.Identity.Name</a>
+
+                        <a asp-controller="Movie" asp-action="Watchlist" class="nav-link test-button ">Watch List</a>
+                        <a asp-controller="Movie" asp-action="MatchWatchLists" class="nav-link test-button "> Match with friend </a>
+                            <a asp-controller="Account" asp-action="LogOut" class="nav-link test-button ">Sign Out @User.Identity.Name</a>
                     }
                     else
                     {
-                            <a asp-controller="Account" asp-action="Register" class="nav-link colored-button">Signup</a>
-                            <a asp-controller="Account" asp-action="Login" class="nav-link colored-button">Login</a>
+                            @*<a asp-controller="Account" asp-action="Register" class="nav-link colored-button">Signup</a>*@
+                            <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
                     }
                 </span>
             </div>
