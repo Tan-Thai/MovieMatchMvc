@@ -171,6 +171,7 @@ transform: scale(1.1);
     opacity: 0.8;
     margin-left:1rem;
     margin-top:1rem;
+    margin-bottom:1rem;
 }
 
 .top-column {
@@ -178,8 +179,9 @@ transform: scale(1.1);
     flex-direction: column;
     align-items: flex-start;
     /*gap: 27px 10px;*/
-    margin: 0.5rem;
+    margin: 1rem;
 }
+
 .search-card {
     width: 100%;
     display: flex;
