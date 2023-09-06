@@ -336,14 +336,26 @@ button:hover, button:active, button:focus,
         background-color: #629074;
     }
 
-.details-container {
-    width: 90vw;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: row;
-    margin: 2rem;
-    /*margin-right: 50px;*/
-    /*margin: 0 auto;*/
+.colored-buttonlogin {
+    background-color: #047159;
+    padding: 10px 20px;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.colored-buttonlogin:hover {
+     background-color: #629074;
+}
+
+    .details-container {
+width: 90vw;
+min-height: 100vh;
+display: flex;
+flex-direction: row;
+margin: 2rem;
+/*margin-right: 50px;*/
+/*margin: 0 auto;*/
+
 }
 
 .img-container-details {
