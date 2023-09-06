@@ -153,7 +153,7 @@ namespace MovieMatchMvc.Models
 			}
 			else
 			{
-				throw new Exception();
+				return null;
 			}
 		}
 
