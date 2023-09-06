@@ -7,7 +7,6 @@
         <button id="matchButton"type="submit" class="btn btn-primary">Match!</button>
     </div>
 </form>
-<h2 style="color: antiquewhite">Matching with @ViewBag.OtherUsername</h2>
 </div>
 @if (ViewBag.OtherUsername != null)
 {
@@ -24,9 +23,9 @@
 				@foreach (var movie in Model)
 				{
 					<div class="buddy-search-card">
-						<a class="details-link disabled-link" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">
+						@* <a class="details-link disabled-link" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId"> *@
 							<img src="@movie.Poster" alt="@movie.Title">
-						</a>
+						@* </a> *@
 					</div>
 				}
 			}
