@@ -9,33 +9,36 @@
 </form>
 <h2 style="color: antiquewhite">Matching with @ViewBag.OtherUsername</h2>
 </div>
-<div class="buddy-search-container">
-    <div class="buddy-carousel">
-     @*    <div class="buddy-carousel__prev">
-            <i class="far fa-angle-left"></i>
-        </div>
-        <div class="buddy-carousel__next">
-            <i class="far fa-angle-right"></i>
-        </div *@>
+@if (ViewBag.OtherUsername != null)
+{
 
-        @if (Model == null)
-        {
-            <p>No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
-        }
-        else
-        {
-            @foreach (var movie in Model)
-            {
-                <div class="buddy-search-card">
-                    @* <a asp-action="Details" asp-controller="Movie" asp-action-id="@movie.MovieId"></a> *@
-                    @* <h5 class="poster-title">@movie.Title</h5> *@
-                    <img src="@movie.Poster" alt="@movie.Title"  data-movie-id="@movie.MovieId">
-                    <a class="hidden" asp-action="Details" asp-controller="Movie" asp-action-id="@movie.MovieId">Read More</a>
-                </div>
-            }
-        }
-    </div>
-</div>
+	<h2 style="color: antiquewhite; text-align: center;">Matching with @ViewBag.OtherUsername</h2>
+	<div class="buddy-search-container">
+		<div class="buddy-carousel">
+			@if (Model == null)
+			{
+				<p style="text-align: center;">No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
+			}
+			else
+			{
+				@foreach (var movie in Model)
+				{
+					<div class="buddy-search-card">
+						<a class="details-link disabled-link" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">
+							<img src="@movie.Poster" alt="@movie.Title">
+						</a>
+					</div>
+				}
+			}
+		</div>
+	</div>
+}
+else
+{
+	<div style="text-align: center;">
+		<p style=" color: red;">The user @ViewBag.OtherUsername does not exist! Try again!</p>
+	</div>
+}
 
 
 @section Scripts {

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3508" height="2480" viewBox="0 0 3508 2480">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #047159;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 149.333px;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="Line_1_copy" data-name="Line 1 copy" class="cls-1" d="M1099.11,929.447l1.36-1.362,642.69,644.565-1.36,1.36Zm1311.93-1.364,1.36,1.361L1769.71,1574.01l-1.36-1.36Z"/>
+  <path class="cls-1" d="M600.167,395.182H2907.83V2085.82H600.167V395.182Z"/>
+</svg>
