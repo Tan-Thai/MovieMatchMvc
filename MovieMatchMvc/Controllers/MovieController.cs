@@ -76,7 +76,8 @@ namespace MovieMatchMvc.Controllers
 				string otherUserId = _movieService.GetUserIdByUsername(username);
 				if (string.IsNullOrEmpty(otherUserId))
 				{
-					return View("Error");
+					ViewBag.OtherUsername = null;
+					return View("MatchWatchLists");
 				}
 				var commonMovies = _movieService.GetMatchedMovies(currentUserId, otherUserId);
 				ViewBag.OtherUsername = username;

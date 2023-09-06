@@ -1,91 +1,101 @@
 ﻿@model List<MovieMatchMvc.Views.Movie.WatchlistVM>
 <div class="text-center">
-<form class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
-    <h2>Who's Your Friend?</h2>
-    <div class="form-group form-buddylist">
-        <input type="text" class="form-control" id="username" name="username" required />
-        <button type="submit" class="btn btn-primary">Match!</button>
-    </div>
-</form>
-<h2 style="color: antiquewhite">Matching with @ViewBag.OtherUsername</h2>
+	<form class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
+		<h2>Who's Your Friend?</h2>
+		<div class="form-group form-buddylist">
+			<input type="text" class="form-control" id="username" name="username" required />
+			<button type="submit" class="btn btn-primary">Match!</button>
+		</div>
+	</form>
 </div>
-<div class="buddy-search-container">
-    <div class="buddy-carousel">
-        @if (Model == null)
-        {
-            <p>No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
-        }
-        else
-        {
-            @foreach (var movie in Model)
-            {
-                <div class="buddy-search-card">
-                    <a class="details-link disabled-link" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">
-                        <img src="@movie.Poster" alt="@movie.Title">
-                    </a>
-                </div>
-            }
-        }
-    </div>
-</div>
+@if (ViewBag.OtherUsername != null)
+{
+
+	<h2 style="color: antiquewhite; text-align: center;">Matching with @ViewBag.OtherUsername</h2>
+	<div class="buddy-search-container">
+		<div class="buddy-carousel">
+			@if (Model == null)
+			{
+				<p style="text-align: center;">No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
+			}
+			else
+			{
+				@foreach (var movie in Model)
+				{
+					<div class="buddy-search-card">
+						<a class="details-link disabled-link" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">
+							<img src="@movie.Poster" alt="@movie.Title">
+						</a>
+					</div>
+				}
+			}
+		</div>
+	</div>
+}
+else
+{
+	<div style="text-align: center;">
+		<p style=" color: red;">The user @ViewBag.OtherUsername does not exist! Try again!</p>
+	</div>
+}
 
 @section Scripts {
-    <script>
-     $(".buddy-search-card").on("click", function (e) {
-    var $card = $(this);
-    var degree = parseInt($card.attr("data-degree"), 10) % 360;
+	<script>
+		$(".buddy-search-card").on("click", function (e) {
+			var $card = $(this);
+			var degree = parseInt($card.attr("data-degree"), 10) % 360;
 
-    if (degree === 0) {
-        return; // Let the default action happen (go to details)
-    }
+			if (degree === 0) {
+				return; // Let the default action happen (go to details)
+			}
 
-    // Prevent the default action
-    e.preventDefault();
+			// Prevent the default action
+			e.preventDefault();
 
-    // Calculate the clicked side of the card
-    var offset = $card.offset();
-    var x = e.pageX - offset.left;
+			// Calculate the clicked side of the card
+			var offset = $card.offset();
+			var x = e.pageX - offset.left;
 
-    console.log("Card width:", $card.width());
-    console.log("e.pageX:", e.pageX);
-    console.log("Card offset left:", offset.left);
-    console.log("Calculated x:", x);
+			console.log("Card width:", $card.width());
+			console.log("e.pageX:", e.pageX);
+			console.log("Card offset left:", offset.left);
+			console.log("Calculated x:", x);
 
-    if (x <= 30) {
-        console.log("Going left");
-        rotate("p"); // rotate to the previous card
-    } else if (x >= 400) {
-        console.log("Going right");
-        rotate("n"); // rotate to the next card
-    } else {
-        console.log("Click is within the middle zone. Do nothing.");
-    }
-});
-            function rotate(direction) {
-                var rotationAmount = (direction === "n") ? -60 : 60;
+			if (x <= 30) {
+				console.log("Going left");
+				rotate("p"); // rotate to the previous card
+			} else if (x >= 400) {
+				console.log("Going right");
+				rotate("n"); // rotate to the next card
+			} else {
+				console.log("Click is within the middle zone. Do nothing.");
+			}
+		});
+		function rotate(direction) {
+			var rotationAmount = (direction === "n") ? -60 : 60;
 
-                $(".buddy-carousel .buddy-search-card").each(function () {
-                    var el = $(this);
-                    var originalDegree = parseInt(el.attr("data-degree"), 10);
-                    var newDegree = (originalDegree + rotationAmount) % 360;
+			$(".buddy-carousel .buddy-search-card").each(function () {
+				var el = $(this);
+				var originalDegree = parseInt(el.attr("data-degree"), 10);
+				var newDegree = (originalDegree + rotationAmount) % 360;
 
-                    if (newDegree < 0) {
-                        newDegree += 360;
-                    }
+				if (newDegree < 0) {
+					newDegree += 360;
+				}
 
-                    var newOpacity = calculateOpacity(newDegree);
-                    console.log("New degree:", newDegree)
+				var newOpacity = calculateOpacity(newDegree);
+				console.log("New degree:", newDegree)
 
-                    el.css({
-                        "transform": "rotateY(" + newDegree + "deg) translateZ(300px)",
-                        "opacity": newOpacity
-                    });
+				el.css({
+					"transform": "rotateY(" + newDegree + "deg) translateZ(300px)",
+					"opacity": newOpacity
+				});
 
-                    el.attr("data-degree", newDegree);
-                });
+				el.attr("data-degree", newDegree);
+			});
 
-                setMainCardLink();
-            }
-        });
-    </script>
+			setMainCardLink();
+		}
+								});
+	</script>
 }

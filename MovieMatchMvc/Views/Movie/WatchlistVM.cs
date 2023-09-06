@@ -13,5 +13,7 @@
         public string UserId { get; set; }
         public double? Popularity { get; set; }
 		public DateTime? ReleaseDate { get; set; }
+       
+        public bool userExists { get; set; }
 	}
 }
