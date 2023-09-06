@@ -2,67 +2,7 @@
 @model MovieMatchMvc.Views.Movie.WatchlistVM[]
 
 <!DOCTYPE html>
-<style>
-	.search-bar {
-		background: #fff;
-		width: 90%;
-		max-width: 500px;
-		display: flex;
-		padding: 2px;
-		border-radius: 4px;
-	}
 
-	#select {
-		background: rgba(0, 0, 0, 0.85);
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		color: #fff;
-		width: 498px;
-		padding: 25px 20px;
-		cursor: pointer;
-		position: relative;
-		border-radius: 4px;
-		border: 1px solid;
-		z-index: 1;
-	}
-
-		#select img {
-			width: 15px;
-		}
-
-		#select ul {
-			position: absolute;
-			top: 120%;
-			left: 0;
-			list-style: none;
-			background: #fff;
-			color: black;
-			width: 100%;
-			border-radius: 4px;
-			max-height: 0;
-			overflow: hidden;
-			transition: max-height 0.5s;
-		}
-
-			#select ul li {
-				padding: 10px 20px;
-				cursor: pointer;
-			}
-
-	.search-bar input {
-		padding: 10px 25px;
-		width: 100%;
-		border: none;
-		outline: none;
-		font-size: 18px;
-	}
-
-	#select ul.open {
-		max-height: 300px;
-	}
-
-</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -72,8 +12,8 @@
 </head>
 <body>
 	<h1 align="Center" style="color: antiquewhite;">Your watchlist:</h1>
-	<p>Filter:</p>
-	<div class="search-bar">
+	@*<p style="margin-left:12rem;">Filter:</p>*@
+	<div class="search-bar" style="margin-left:10.5rem;">
 		<div id="select">
 			<p id="selectText">All categories</p>
 			<img src="" />
@@ -91,16 +31,15 @@
 				</li>
 				<li class="options" style="color: black;" data-argument="Id">Release Date</li>
 			</ul>
-			<input type="text" id="inputfield" placeholder="Search in all categories" />
+			<input type="text" class="form-control "id="inputfield" placeholder="Search in all categories" />
 		</div>
 	</div>
 
 	<div class="search-container">
 		@foreach (var item in Model)
 		{
-			@*<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;">*@
 			<div class="search-result">
-				<img style="height: 200px; width: 150px;" src="@item.Poster">
+				<img src="@item.Poster">
 				<div class="search-card">
 					<div class="top-column">
 						<a style="font-weight: bold" style="color: antiquewhite;" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
