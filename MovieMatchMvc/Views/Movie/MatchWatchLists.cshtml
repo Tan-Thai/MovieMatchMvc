@@ -4,7 +4,7 @@
     <h2>Who's Your Friend?</h2>
     <div class="form-group form-buddylist">
         <input type="text" class="form-control" id="username" name="username" required />
-        <button type="submit" class="btn btn-primary">Match!</button>
+        <button id="matchButton"type="submit" class="btn btn-primary">Match!</button>
     </div>
 </form>
 <h2 style="color: antiquewhite">Matching with @ViewBag.OtherUsername</h2>
@@ -29,17 +29,26 @@
                 <div class="buddy-search-card">
                     @* <a asp-action="Details" asp-controller="Movie" asp-action-id="@movie.MovieId"></a> *@
                     @* <h5 class="poster-title">@movie.Title</h5> *@
-                    <img src="@movie.Poster" alt="@movie.Title"  data-movie-id="@movie.MovieId">>
+                    <img src="@movie.Poster" alt="@movie.Title"  data-movie-id="@movie.MovieId">
+                    <a class="hidden" asp-action="Details" asp-controller="Movie" asp-action-id="@movie.MovieId">Read More</a>
                 </div>
             }
         }
     </div>
 </div>
-<div class="buddy-carousel__prev"><i class="icon-left">left</i></div>
-<div class="buddy-carousel__next"><i class="icon-right">right</i></div>
+
 
 @section Scripts {
     <script>
+
+        function scrollToCarousel() {
+            // Delay the scroll because we're submitting the form
+            setTimeout(function () {
+                // Scroll to the element with ID "carousel-section"
+                const carousel = document.getElementById('buddy-section');
+                carousel.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        }
         (function () {
             "use strict";
 
@@ -47,15 +56,26 @@
                 slider = document.querySelectorAll('.buddy-search-card'),
                 currIndex = 0;
 
-            function updateActiveItem() {
-                for (let i = 0; i < slider.length; i++) {
-                    let item = slider[i];
-                    if (i === currIndex) {
-                        item.classList.add('active');
-                        item.classList.remove('greyscale'); // Remove greyscale from the main item
-                    } else {
-                        item.classList.remove('active');
-                        item.classList.add('greyscale'); // Add greyscale to non-main items
+                   function updateActiveItem() {
+                // Check if the number of items is 1 or 2
+                if (slider.length === 1 || slider.length === 2) {
+                    for (let i = 0; i < slider.length; i++) {
+                        let item = slider[i];
+                        item.classList.add('two-active');
+                        item.classList.remove('greyscale');
+                    }
+                } else {
+                    for (let i = 0; i < slider.length; i++) {
+                        let item = slider[i];
+                        if (i === currIndex) {
+                            item.classList.add('active');
+                            item.classList.remove('hidden');
+                            item.classList.remove('greyscale'); // Remove greyscale from the main item
+                        } else {
+                            item.classList.remove('active');
+
+                            item.classList.add('greyscale'); // Add greyscale to non-main items
+                        }
                     }
                 }
             }

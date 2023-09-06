@@ -89,6 +89,12 @@ namespace MovieMatchMvc.Controllers
 		public IActionResult MatchWatchListsPost(string username)
 		{
 			TempData["LastSearchedUsername"] = username;
+			if (username == null)
+			{
+				Console.WriteLine("username is null");
+                return RedirectToAction("MatchWatchLists");
+            }
+
 			return RedirectToAction("MatchWatchLists", new { username });
 		}
 

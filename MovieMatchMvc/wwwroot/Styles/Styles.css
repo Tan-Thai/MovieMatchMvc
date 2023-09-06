@@ -615,3 +615,69 @@ z-index: 2;
 #select ul.open {
     max-height: 300px;
 }
+
+
+.buddy-search-container {
+    margin: 0 auto;
+    max-width: 60vw;
+    height: 70vh;
+    position: relative;
+    overflow-x: hidden;
+    overflow: clip;
+}
+
+.buddy-carousel {
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transition: transform 1s ease-in-out;
+    flex-wrap: nowrap;
+}
+
+.buddy-search-card {
+    flex: 1; /* Take up equal space within the container */
+    position: relative;
+    display: flex;
+    /*flex-direction: column;*/
+    min-height: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+    min-width: calc(33.333% - 10px); /* At least a third of parent minus margin */
+}
+
+    .buddy-search-card img {
+        width: 100%;
+        height: 100%;
+        /*object-fit: scale-down;*/
+    }
+
+.greyscale {
+    filter: grayscale(100%);
+    opacity: 0.8;
+    transform: scale(0.8);
+}
+
+.buddy-search-card.active {
+    filter: drop-shadow(0 0 0.25rem white);
+    position: relative;
+    filter: hue-rotate(10deg);
+    filter: saturate(110%);
+    z-index: 1; /* Ensures the larger item appears above all the others */
+    /*border: 2px solid black;*/
+}
+
+.buddy-search-card.two-active{
+    width: 10%;
+    height: 80vh;
+    object-fit: contain;
+}
+
+.poster-title {
+    text-align: center;
+    height: 50px;
+}
+
+.hidden {
+    display: none;
+}
