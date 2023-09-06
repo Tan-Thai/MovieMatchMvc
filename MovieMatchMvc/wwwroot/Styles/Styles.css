@@ -48,7 +48,7 @@ nav {
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
-    padding-bottom: 10px;
+    /*padding-bottom: 10px;*/
 }
 
 
@@ -373,6 +373,7 @@ margin: 2rem;
     position: relative;
     width: 100%;
     display: flex;
+   
     /*flex-direction: column;*/
 }
 
@@ -383,6 +384,8 @@ margin: 2rem;
     z-index: 11;
     margin: 2rem;
     width: 50%;
+    border-top: 1px solid black;
+    /*filter: drop-shadow(0 0 0.1rem black);*/
 }
 
 .detail-link {
@@ -413,15 +416,15 @@ margin: 2rem;
 
 
 .details-poster {
-    margin: 4rem;
+    margin: 2rem;
     /*margin-bottom: 1rem;*/
     width: 20vw;
-    height: 60vh;
+    height: 70vh;
     left: 5%;
     /* top: 5%*/;
     position: relative;
     z-index: 10;
-    filter: drop-shadow(0 0 0.25rem black);
+    filter: drop-shadow(0 0 1rem black);
     /*border-radius: 5%;*/
     /*border-radius: 85% 85% 0 85% ;*/
 }
@@ -759,7 +762,6 @@ scroll-snap-type: x mandatory;
     margin-left: -2rem;
     color: antiquewhite;
 }
-}
 
 .genre-container {
     display: flex;
@@ -767,4 +769,9 @@ scroll-snap-type: x mandatory;
     /*justify-content: space-evenly;*/
     justify-content: flex-start;
     
+}
+
+
+.carousel-caption {
+    border-top: 1px solid black;
 }
