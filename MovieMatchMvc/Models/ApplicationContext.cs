@@ -14,6 +14,7 @@ namespace MovieMatchMvc.Models
 
         public DbSet<AccountUser> accountUsers { get; set; }
         public DbSet<WatchList> watchLists { get; set; }
+        public DbSet<MovieGenres> movieGenres { get; set; }
 
     }
 
