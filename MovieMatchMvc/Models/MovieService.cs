@@ -173,7 +173,12 @@ namespace MovieMatchMvc.Models
 				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
 				ReleaseDate = movie.ReleaseDate,
 				Popularity = movie.Popularity,
-				
+				Genres = movie.Genres.Select(g => new MovieGenres()
+				{
+					Name = g.Name,
+					TmdbId = g.Id
+				}).ToList()
+
 			});
 			await context.SaveChangesAsync();
 		}
