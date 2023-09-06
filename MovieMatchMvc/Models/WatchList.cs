@@ -8,7 +8,9 @@
         public string? Url { get; set;}
         public AccountUser? AccountUser { get; set; }
 
-        public string? UserId { get; set;}
+        public string? UserId { get; set; }
         public int MovieId { get; set; }
-    }
+        public double? Popularity { get; set; }
+		public DateTime? ReleaseDate { get; set; }
+	}
 }

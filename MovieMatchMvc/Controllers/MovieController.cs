@@ -102,31 +102,3 @@ namespace MovieMatchMvc.Controllers
 	}
 }
 
-//[HttpPost]
-//[Route("AddMovieToList")]
-//public async Task<IActionResult> AddMovieToList(int movieId)
-//{
-//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-//	await _movieService.AddMovieToWatchlistById(movieId, userId);
-//	return Json(new { success = true });
-//}
-//------------
-//[HttpPost]
-//[Route("RemoveFromWatchListSearch")]
-//public async Task<IActionResult> RemoveFromWatchListSearch(int movieId)
-//{
-//	Console.WriteLine($"Received Movie ID: {movieId} to be removed");
-//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-//	await _movieService.RemoveFromWatchListAsync(movieId, userId);
-//	return Json(new { success = true });
-//}
-//------
-//[HttpPost]
-//[Route("RemoveFromWatchList")]
-//public async Task<IActionResult> RemoveFromWatchList(int movieId)
-//{
-//	Console.WriteLine($"Received Movie ID: {movieId} to be removed");
-//	string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-//	await _movieService.RemoveFromWatchListAsync(movieId, userId);
-//	return RedirectToAction(nameof(Watchlist));
-//}
