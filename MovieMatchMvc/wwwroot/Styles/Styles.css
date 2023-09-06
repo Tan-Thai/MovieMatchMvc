@@ -347,6 +347,17 @@ button:hover, button:active, button:focus,
      background-color: #629074;
 }
 
+.colored-buttonlogin {
+    background-color: #047159;
+    padding: 10px 20px;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.colored-buttonlogin:hover {
+     background-color: #629074;
+}
+
     .details-container {
 width: 90vw;
 min-height: 100vh;
