@@ -16,7 +16,17 @@ namespace MovieMatchMvc.Models
         public DbSet<WatchList> watchLists { get; set; }
         public DbSet<MovieGenres> movieGenres { get; set; }
 
-    }
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<WatchList>()
+				.HasMany(w => w.Genres)
+				.WithOne()
+				.OnDelete(DeleteBehavior.Cascade);
 
-    
+			base.OnModelCreating(modelBuilder);
+		}
+
+	}
+
+
 }
