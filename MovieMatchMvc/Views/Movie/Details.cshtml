@@ -28,6 +28,17 @@
                     }
                     
                 </div>
+                <div class="genre-container">
+                
+                    <p>Genre: 
+                        @foreach(var genre in Model.Genre)
+                        {
+                            <span style="color: antiquewhite; margin:5px;"> @genre.Name </span>
+                        }
+                    </p>
+                    
+                </div>
+
                 <p> Runtime: @Model.Runtime minutes</p> 
               
                         
