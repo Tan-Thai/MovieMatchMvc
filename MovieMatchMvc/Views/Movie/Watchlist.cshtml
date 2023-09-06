@@ -13,10 +13,10 @@
 <body>
 	<h4 align="Center"  style="color: antiquewhite; margin-right:46.5rem; margin-top:1rem;">My watchlist</h4>
 	@*<p style="margin-left:12rem;">Filter:</p>*@
-	<div class="search-bar" style="margin-left:10.5rem;">
+	<div class="search-bar" style="margin-left:9rem;">
 		<div id="select">
-			<p id="selectText">All categories</p>
-			<img src="" />
+			<p id="selectText"></p>
+			<img src="/Images/arrow.svg" alt="arrow" style= "width: 70px !important; height: 70px !important;"/>
 			<ul id="list">
 				<li class="options" style="color: black;" data-argument="Popularity">Popularity</li>
 				<li class="options" style="color: black;" data-argument="ReleaseDate">Release Date</li>
@@ -39,7 +39,7 @@
 	<div class="search-container">
 		@foreach (var item in Model)
 		{
-			<div class="search-result">
+			<div class="search-resultwatchlist">
 				<img src="@item.Poster">
 				<div class="search-card">
 					<div class="top-column">
