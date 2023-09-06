@@ -65,7 +65,6 @@ namespace MovieMatchMvc.Controllers
 				return RedirectToAction(nameof(Watchlist));
 			}
 		}
-
 		[HttpGet("MatchWatchLists")]
 		public IActionResult MatchWatchLists(string username)
 		{
@@ -75,8 +74,9 @@ namespace MovieMatchMvc.Controllers
 				string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 				string otherUserId = _movieService.GetUserIdByUsername(username);
 				if (string.IsNullOrEmpty(otherUserId))
-				{
-					ViewBag.OtherUsername = null;
+                {
+                    TempData["IsFormSubmitted"] = true;
+                    ViewBag.OtherUsername = null;
 					return View("MatchWatchLists");
 				}
 				var commonMovies = _movieService.GetMatchedMovies(currentUserId, otherUserId);

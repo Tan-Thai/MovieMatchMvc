@@ -1,17 +1,9 @@
 ﻿@model List<MovieMatchMvc.Views.Movie.WatchlistVM>
-<div class="text-center">
-<form class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
-    <h2>Who's Your Friend?</h2>
-    <div class="form-group form-buddylist">
-        <input type="text" class="form-control" placeholder="Search" id="username" name="username" required />
-        <button id="matchButton" type="submit" class="btn btn-primary">Match!</button>
-    </div>
-</form>
-</div>
+
 @if (ViewBag.OtherUsername != null)
 {
 
-	<h2 style="color: antiquewhite; text-align: center;">Matching with @ViewBag.OtherUsername</h2>
+	<h3 class="buddy-title" >Movie Matches with @ViewBag.OtherUsername</h3>
 	<div class="buddy-search-container">
 		<div class="buddy-carousel">
 			@if (Model == null)
@@ -22,35 +14,36 @@
 			{
 				@foreach (var movie in Model)
 				{
-					<div class="buddy-search-card">
-						@* <a class="details-link disabled-link" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId"> *@
-							<img src="@movie.Poster" alt="@movie.Title">
-						@* </a> *@
+                    <div class="buddy-search-card" data-movie-id="@movie.MovieId">
+						 <a class="details-link disabled-link" href="#"> 
+							<img href="#"src="@movie.Poster" alt="@movie.Title">
+						</a> 
 					</div>
 				}
 			}
 		</div>
 	</div>
 }
-else
+else if (ViewBag.OtherUsername == null && TempData["IsFormSubmitted"] as bool? == true)
 {
-	<div style="text-align: center;">
-		<p style=" color: red;">The user @ViewBag.OtherUsername does not exist! Try again!</p>
-	</div>
+    <div style="text-align: center;">
+        <p style="color: red;">The user does not exist! Try again!</p>
+    </div>
 }
 
+
+<form class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
+    <h2>Who's Your Friend?</h2>
+    <div class="form-group form-buddylist">
+        <input type="text" class="form-control" placeholder="Search" id="username" name="username" required />
+        <button id="matchButton" type="submit" class="btn btn-primary">Match!</button>
+    </div>
+</form>
 
 @section Scripts {
     <script>
 
-        function scrollToCarousel() {
-            // Delay the scroll because we're submitting the form
-            setTimeout(function () {
-                // Scroll to the element with ID "carousel-section"
-                const carousel = document.getElementById('buddy-section');
-                carousel.scrollIntoView({ behavior: 'smooth' });
-            }, 500);
-        }
+
         (function () {
             "use strict";
 
@@ -58,7 +51,13 @@ else
                 slider = document.querySelectorAll('.buddy-search-card'),
                 currIndex = 0;
 
-                   function updateActiveItem() {
+            function updateActiveItem() {
+                // Reset all items to have href="#"
+                for (let i = 0; i < slider.length; i++) {
+                    let link = slider[i].querySelector('.details-link');
+                    link.href = "#";
+                }
+
                 // Check if the number of items is 1 or 2
                 if (slider.length === 1 || slider.length === 2) {
                     for (let i = 0; i < slider.length; i++) {
@@ -73,9 +72,13 @@ else
                             item.classList.add('active');
                             item.classList.remove('hidden');
                             item.classList.remove('greyscale'); // Remove greyscale from the main item
+
+                            // Update href to point to the movie details
+                            let movieId = item.getAttribute('data-movie-id');
+                            let link = item.querySelector('.details-link');
+                            link.href = "/Details/" + movieId;
                         } else {
                             item.classList.remove('active');
-
                             item.classList.add('greyscale'); // Add greyscale to non-main items
                         }
                     }
@@ -100,8 +103,18 @@ else
             }
 
             function navigateToCard(event) {
+                event.preventDefault();
                 const clickedCard = event.currentTarget;
+                let prevIndex = currIndex;
                 currIndex = Array.from(slider).indexOf(clickedCard);
+
+                // If the clicked card was already in the middle (active)
+                if (prevIndex === currIndex) {
+                    let movieId = clickedCard.getAttribute('data-movie-id');
+                    window.location.href = '/Details/' + movieId;
+                    return;
+                }
+
                 move();
             }
 
@@ -111,8 +124,10 @@ else
                 }
             }
 
-            move();
-            bindEvents();
+            move(); // Initialize the carousel
+            bindEvents(); // Bind the events
+
         })();
+
     </script>
 }
