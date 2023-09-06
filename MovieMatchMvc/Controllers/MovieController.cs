@@ -41,7 +41,7 @@ namespace MovieMatchMvc.Controllers
 		public IActionResult Watchlist()
 		{
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var model = _movieService.GetWatchlist(userId);
+			var model = _movieService.GetWatchlist(userId, null);
 			return View("Watchlist", model);
 		}
 		[HttpPost]

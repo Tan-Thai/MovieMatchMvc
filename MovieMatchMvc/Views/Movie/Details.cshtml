@@ -35,7 +35,10 @@
                 Rating: @Math.Round(Model.Rating, 1)
               
             </p>
-                <p> Release Date: @Model.ReleaseDate.Value.ToShortDateString()</p>
+                @if (Model.ReleaseDate != null)
+                {
+                  <p> Release Date: @Model.ReleaseDate.Value.ToShortDateString()</p>  
+                }
      
         @if (User.Identity.IsAuthenticated)
         {
