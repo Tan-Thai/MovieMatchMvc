@@ -417,52 +417,100 @@ z-index: 2;
 }
 
 
-.buddy-search-container {
+/*.buddy-search-container {
     margin: 0 auto;
     width: 80vw;
-    height: 800px;
+    height: 800px;*/
     /*position: relative;*/
-    display: flex;
+    /*display: flex;
     perspective: 2000px;
 }
 
 .buddy-carousel {
     height: 100%;
     width: 100%;
-    /*position: absolute;*/
+    position: relative;
     transform-style: preserve-3d;
-    transition: transform 1s;
-    display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
+    transition: transform 1s;*/
+    /*display: flex;*/
+    /*flex-direction: row;
+    overflow-x: scroll;*/
    /* display: flex; 
     overflow-x: scroll;*/
-}
+/*}
 
-.buddy-search-card {
-    /*filter: drop-shadow(0 0 2rem white);*/
-    display: flex;
-    flex-direction: column;
-    /*position: absolute;*/
-    flex: 0 0 auto;
-    width: 250px;
-    /*background: #000;*/
-    /*height: 300px;*/
-    /*line-height: 200px;*/
-    /*font-size: 5em;*/
-    /*text-align: center;*/
-    color: #FFF;
-    opacity: 0.95;
-    border-radius: 10px;
-    margin: 15px;
-}
 
 
     .buddy-search-card img {
-        width: clamp(60px, 100%, 300px);
+        width: 300px;
+        padding: 30px;
     }
+.buddy-search-container {
+    margin: 0 auto;
+    width: 80vw;
+    height: 800px;
+    display: flex;
+    perspective: 2000px;
+}
+
+.buddy-carousel {
+    /*height: 70vh;
+    width: 100vw;*/
+    /*position: relative;*/
+    /*transition: transform 1s;*/
+    display: flex;
+    /*justify-content: center;*/
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+}
+
+/*.buddy-search-card {
+    flex: 0 0 auto;
+    width: 100px;
+    color: #FFF;
+    opacity: 0.95;
+    border-radius: 10px;
+    margin: 15px;*/
+    /*flex: 0 0 auto;*/
+    /*scroll-snap-align: center;*/
+    /*display: none;*/ /* Initially set to none, we'll toggle visibility using JavaScript */
+/*}*/
 
 
+
+/*.buddy-search-container {
+    margin: 0 auto;
+    width: 90vw;
+    height: 70vh;
+    position: relative;
+    perspective: 1000px;*/ /* Important for 3D */
+/*}
+.buddy-carousel {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+
+
+.buddy-search-card img {
+    width: 300px;
+    padding: 30px;
+}
+.buddy-search-card {
+    display: block;
+    position: absolute;
+    background: #000;
+    width: 150px;
+    height: 400px;
+    line-height: 200px;
+    text-align: center;
+    color: #FFF;
+    opacity: 0.95;
+    border-radius: 10px;*/
+    /* transform removed, it will be set dynamically */
+/*}*/
 /*footer {
     position: fixed;
     bottom: 0;
@@ -493,4 +541,69 @@ z-index: 2;
     margin: 7px;
     border-radius: 10px;
 }*/
+/* Root variables */
+/*:root {
+    --crsl-bg: transparent;
+    --box-bg: #1e272e;
+    --box-shadow: #0000001c;
+    --box-border: #fff;
+}*/
 
+/* Existing container styles */
+/* Existing container styles */
+.buddy-search-container {
+    margin: 0 auto;
+    width: 60vw;
+    height: 90vh;
+    position: relative;
+    overflow-x: hidden;
+    overflow: clip;
+}
+
+.buddy-carousel {
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transition: transform 1s ease-in-out;
+    flex-wrap: nowrap;
+}
+
+.buddy-search-card {
+    flex: 1; /* Take up equal space within the container */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+    min-width: calc(33.333% - 10px); /* At least a third of parent minus margin */
+}
+
+    .buddy-search-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: scale-down;
+    }
+.greyscale {
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+.buddy-search-card.active {
+    filter: drop-shadow(0 0 1rem black);
+    position: relative;
+    filter: hue-rotate(10deg);
+    filter: saturate(110%);
+    transform: scale(1.2); /* Makes the item 20% larger */
+    z-index: 1; /* Ensures the larger item appears above all the others */
+    /*border: 2px solid black;*/
+}
+.poster-title {
+    text-align: center;
+    height: 50px;
+    
+}
+
+.hidden {
+    display: none;
+}

@@ -11,6 +11,13 @@
 </div>
 <div class="buddy-search-container">
     <div class="buddy-carousel">
+     @*    <div class="buddy-carousel__prev">
+            <i class="far fa-angle-left"></i>
+        </div>
+        <div class="buddy-carousel__next">
+            <i class="far fa-angle-right"></i>
+        </div *@>
+
         @if (Model == null)
         {
             <p>No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
@@ -20,18 +27,70 @@
             @foreach (var movie in Model)
             {
                 <div class="buddy-search-card">
-                    @* <a class="reset-a-tag" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId">  *@
-                        <img src="@movie.Poster" alt="@movie.Title">
-                        <p> <a class="reset-a-tag detail-link" asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId"> @movie.Title </a> </p>
-                    @* </a>  *@
+                    @* <a asp-action="Details" asp-controller="Movie" asp-action-id="@movie.MovieId"></a> *@
+                    @* <h5 class="poster-title">@movie.Title</h5> *@
+                    <img src="@movie.Poster" alt="@movie.Title"  data-movie-id="@movie.MovieId">>
                 </div>
             }
         }
     </div>
 </div>
+<div class="buddy-carousel__prev"><i class="icon-left">left</i></div>
+<div class="buddy-carousel__next"><i class="icon-right">right</i></div>
 
 @section Scripts {
     <script>
+        (function () {
+            "use strict";
 
+            var carousel = document.querySelector('.buddy-carousel'),
+                slider = document.querySelectorAll('.buddy-search-card'),
+                currIndex = 0;
+
+            function updateActiveItem() {
+                for (let i = 0; i < slider.length; i++) {
+                    let item = slider[i];
+                    if (i === currIndex) {
+                        item.classList.add('active');
+                        item.classList.remove('greyscale'); // Remove greyscale from the main item
+                    } else {
+                        item.classList.remove('active');
+                        item.classList.add('greyscale'); // Add greyscale to non-main items
+                    }
+                }
+            }
+
+            function move() {
+                let prevIndex = (currIndex === 0) ? slider.length - 1 : currIndex - 1;
+                let nextIndex = (currIndex === slider.length - 1) ? 0 : currIndex + 1;
+
+                slider[prevIndex].style.order = 1;
+                slider[currIndex].style.order = 2;
+                slider[nextIndex].style.order = 3;
+
+                for (let i = 0; i < slider.length; i++) {
+                    if (i !== prevIndex && i !== currIndex && i !== nextIndex) {
+                        slider[i].style.order = 4;
+                    }
+                }
+
+                updateActiveItem();
+            }
+
+            function navigateToCard(event) {
+                const clickedCard = event.currentTarget;
+                currIndex = Array.from(slider).indexOf(clickedCard);
+                move();
+            }
+
+            function bindEvents() {
+                for (let i = 0; i < slider.length; i++) {
+                    slider[i].addEventListener('click', navigateToCard);
+                }
+            }
+
+            move();
+            bindEvents();
+        })();
     </script>
 }
