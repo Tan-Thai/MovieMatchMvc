@@ -115,7 +115,8 @@ namespace MovieMatchMvc.Models
 				{
 					Title = p.Title,
 					Poster = p.Poster,
-					MovieId = p.MovieId
+					MovieId = p.MovieId,
+					
 				});
 
 			switch (orderby) //orderby switch that would basically allow us to sort by date added/release year etc.
@@ -123,6 +124,12 @@ namespace MovieMatchMvc.Models
 				case null:
 					watchListQuery = watchListQuery.OrderBy(p => p.Title);
 					break;
+
+				case "Id":
+					watchListQuery = watchListQuery.OrderBy(p => p.MovieId);
+					break;
+
+
 			}
 			return watchListQuery.ToArray();
 		}
