@@ -20,6 +20,7 @@ namespace MovieMatchMvc.Models
 			this.context = context;
 		}
 
+		//Search actions - main page and search.
 		public async Task<List<IndexVM>> FetchTopMovies()
 		{
 			List<IndexVM> movieList = new List<IndexVM>();
@@ -63,7 +64,7 @@ namespace MovieMatchMvc.Models
 				for (int i = 1; i <= totalPages; i++)
 				{
 					int currentPage = i;
-					searchTasks.Add(client.SearchMovieAsync(query, "en", currentPage, false));
+					searchTasks.Add(client.SearchMovieAsync(query, "en-US", currentPage, false));
 				}
 				var searchResults = await Task.WhenAll(searchTasks);
 
@@ -71,7 +72,7 @@ namespace MovieMatchMvc.Models
 				{
 					foreach (SearchMovie m in searchResult.Results)
 					{
-						SearchVM movie = CreateSearchVM(m, myWatchlist);
+						SearchVM movie = CreateSearchVMBySearch(m, myWatchlist);
 						if (watchListHash.Contains(movie.Id))
 							movie.InWatchList = true;
 						movieBag.Add(movie);
@@ -89,25 +90,18 @@ namespace MovieMatchMvc.Models
 			return movieResult;
 		}
 
-		public async Task<SearchVM> FetchMovieById(int movieId)
-		{
-			using (client)
-			{
-				var movie = client.GetMovieAsync(movieId).Result;
-
-				if (movie != null)
-					return CreateSearchVM(movie);
-				else
-					return null;
-			}
-		}
-
+		//Grabbing watchlist and userID
 		public WatchlistVM[] GetWatchlist(string userId)
 		{
 			return context.watchLists
 				.Where(w => w.UserId == userId)
 				.OrderBy(p => p.Title)
-				.Select(p => new WatchlistVM { Title = p.Title, Poster = p.Poster, MovieId = p.MovieId })
+				.Select(p => new WatchlistVM //add more props to enable similar showcase as SearchView
+				{ 
+					Title = p.Title,
+					Poster = p.Poster,
+					MovieId = p.MovieId
+				})
 				.ToArray();
 		}
 		public string GetUserIdByUsername(string username)
@@ -125,14 +119,28 @@ namespace MovieMatchMvc.Models
 				throw new Exception();
 			}
 		}
-		public async Task AddMovieToWatchlistById(int movieId, string userId)
+
+		//Adding and removing movies from watchlist.
+		public async Task AddMovieToWatchlistByIdAsync(int movieId, string userId)
 		{
-			var movie = await FetchMovieById(movieId);
-			await AddMovieToWatchlist(movie, userId);
+			var movie = await FetchMovieByIdAsync(movieId);
+			await AddMovieToWatchlistAsync(movie, userId);
 		}
-		public async Task AddMovieToWatchlist(SearchVM movie, string userId)
+		public async Task<SearchVM> FetchMovieByIdAsync(int movieId)
 		{
-			context.watchLists.Add(new WatchList //potentially add more props to fill out watchlist
+			using (client)
+			{
+				var movie = client.GetMovieAsync(movieId).Result;
+
+				if (movie != null)
+					return CreateSearchVMById(movie);
+				else
+					return null;
+			}
+		}
+		public async Task AddMovieToWatchlistAsync(SearchVM movie, string userId)
+		{
+			context.watchLists.Add(new WatchList //Add Genres as prop to be able to order by on "GetWatchList"
 			{
 				MovieId = movie.Id,
 				Title = movie.Title,
@@ -152,6 +160,8 @@ namespace MovieMatchMvc.Models
 				await context.SaveChangesAsync();
 			}
 		}
+
+		//MatchWatchList -
 		internal object GetMatchedMovies(string? currentUserId, string otherUserId)
 		{
 			var myWatchlist = GetWatchlist(currentUserId);
@@ -161,7 +171,8 @@ namespace MovieMatchMvc.Models
 			return commonMovies;
 		}
 
-		public DetailsVM GetMovieById(int movieId, string currentUserId)
+		//DetailsVM - Anything related to Details page.
+		public DetailsVM GetMovieDetailsById(int movieId, string currentUserId)
 		{
 			var myWatchlist = GetWatchlist(currentUserId);
 
@@ -203,7 +214,9 @@ namespace MovieMatchMvc.Models
 				BackDropPoster = "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.BackdropPath
 			};
 		}
-		private SearchVM CreateSearchVM(Movie movie)
+
+		//Misc - Create SearchVM methods used above
+		private SearchVM CreateSearchVMById(Movie movie)
 		{
 			return new SearchVM
 			{
@@ -215,7 +228,7 @@ namespace MovieMatchMvc.Models
 				Description = movie.Overview
 			};
 		}
-		private SearchVM CreateSearchVM(SearchMovie movie, IEnumerable<WatchlistVM> myWatchlist)
+		private SearchVM CreateSearchVMBySearch(SearchMovie movie, IEnumerable<WatchlistVM> myWatchlist)
 		{
 			bool inWatchList = myWatchlist?.Any(m => m.MovieId == movie.Id) ?? false;
 

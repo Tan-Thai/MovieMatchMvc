@@ -53,7 +53,7 @@ namespace MovieMatchMvc.Controllers
 			if (remove)
 				await _movieService.RemoveFromWatchListAsync(movieId, userId);
 			else
-				await _movieService.AddMovieToWatchlistById(movieId, userId);
+				await _movieService.AddMovieToWatchlistByIdAsync(movieId, userId);
 
 			if (isJsonCall) //look to send a parameter rather than request.
 			{
@@ -95,7 +95,7 @@ namespace MovieMatchMvc.Controllers
 		public IActionResult Details(int id)
 		{
 			string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var movie =  _movieService.GetMovieById(id, currentUserId);
+			var movie =  _movieService.GetMovieDetailsById(id, currentUserId);
 			return View(movie);
 		}
 	}
