@@ -18,18 +18,19 @@
 			<p id="selectText"></p>
 			<img src="/Images/arrow.svg" alt="arrow" style= "width: 70px !important; height: 70px !important;"/>
 			<ul id="list">
-				<li class="options" style="color: black;" data-argument="Popularity">Popularity</li>
-				<li class="options" style="color: black;" data-argument="ReleaseDate">Release Date</li>
-				<li class="options" style="color: black;" data-argument="">All categories</li>
-				<li class="options" style="color: black;" data-argument="Title">Title</li>
-				<li class="options" style="color: black;">
-					Genre
-					<ul id="GenreList" > 
+				<li class="options"  data-argument="Popularity">Popularity</li>
+				<li class="options"  data-argument="ReleaseDate">Release Date</li>
+				<li class="options"  data-argument="">All categories</li>
+				<li class="options"  data-argument="Title">Title</li>
+				<li id="genreOption" class="options" >
+					Genre >
+					<ol id="GenreList" class="nested-dropdown">@* <ul id="GenreList" class="nested-dropdown">  *@
 						<li>Action</li>
 						<li>Adventure</li>
 						<li>Sci-Fi</li>
 						<li>Drama</li>
-					</ul>
+					@* </ul> *@
+					</ol>
 				</li>
 			</ul>
 			<input type="text" class="form-control "id="inputfield" placeholder="Search in all categories" />
@@ -64,47 +65,61 @@
 
 
 	<script>
-		let select = document.getElementById("select")
-		let list = document.getElementById("list")
-		let selectText = document.getElementById("selectText")
-		let inputfield = document.getElementById("inputfield")
-
-		let options = document.getElementsByClassName("options")
-
-		select.onclick = function () {
-			list.classList.toggle("open");
-		}
-
-		for (option of options) {
-			option.onclick = function () {
-				selectText.innerHTML = this.innerHTML;
-				inputfield.placeholder = "Search for " + selectText.innerHTML;
-
-				// if (selectText.innerHTML === "Genre") {
-				// 	openGenresMenu();
-				// }
-			}
-		}
-
-		// option.addEventListener("mouseenter", function () {
-		// 	if (this.innerHTML === "Genre") {
-		// 		openGenresMenu();
-		// 	}
-		// });
-
-		// function openGenresMenu() {
-		// 	const genreSubMenu = document.getElementById("GenreList");
-		// 	if (genresSubMenu) {
-		// 		genresSubMenu.style.display = "block";
-		// 	}
-		// }
 		$(document).ready(function () {
-			$(".options").click(function () {
-				var argument = $(this).data("argument");
-				var url = "/Watchlist?argument=" + argument;
+			let select = $("#select");
+			let list = $("#list");
+			let selectText = $("#selectText");
+			let inputfield = $("#inputfield");
+			let genreList = $("#GenreList");
+
+			select.click(function () {
+				list.toggleClass("open");
+				if (list.hasClass("open")) {
+					list.css("overflow", "visible");
+				} else {
+					list.css("overflow", "hidden");
+				}
+			});
+
+			$(".options").click(function (event) {
+				let argument = $(this).data("argument");
+
+				if (this.id === 'genreOption') {
+					console.log("genreOption clicked");
+					event.stopPropagation();
+					genreList.toggle();
+					return;
+				}
+
+				selectText.html(this.innerHTML);
+				inputfield.attr("placeholder", "Search for " + selectText.html());
+
+				let url = "/Watchlist?argument=" + argument;
 				window.location.href = url;
 			});
+
+			$("#genreOption").mouseleave(function () {
+				genreList.hide();
+			});
 		});
+
+
+
+				// if (selectText.innerHTML === "Genre") {
+						// 	openGenresMenu();
+						// }
+					// option.addEventListener("mouseenter", function () {
+				// 	if (this.innerHTML === "Genre") {
+				// 		openGenresMenu();
+				// 	}
+				// });
+
+				// function openGenresMenu() {
+				// 	const genreSubMenu = document.getElementById("GenreList");
+				// 	if (genresSubMenu) {
+				// 		genresSubMenu.style.display = "block";
+				// 	}
+				// }
 	</script>
 </body>
 </html>

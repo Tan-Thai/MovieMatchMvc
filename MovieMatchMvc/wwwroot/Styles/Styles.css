@@ -590,7 +590,7 @@ z-index: 2;
     align-items: center;
     justify-content: space-between;
     color: #fff; 
-    width: 342px;
+    min-width: 342px;
     padding: 25px 20px;
     cursor: pointer;
     position: relative;
@@ -609,19 +609,22 @@ z-index: 2;
         top: 120%;
         left: 0;
         list-style: none;
-        background: #fff;
-        color: black;
+        background-color: rgb(27, 27, 27);
+        color: antiquewhite;
         width: 60%;
-        opacity: 65%;
+        /*opacity: 65%;*/
         /*border-radius: 4px;*/
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.5s;
+        /*z-index: 30;*/
+        filter: drop-shadow(0 0 0.5rem black);
     }
 
         #select ul li {
             padding: 10px 20px;
             cursor: pointer;
+            /*color: antiquewhite;*/ 
         }
 
 .search-bar input {
@@ -633,14 +636,14 @@ z-index: 2;
 }
 
 #select ul.open {
-    max-height: 300px;
+    max-height: 100vh;
 }
 
 
 .buddy-search-container {
     margin: 0 auto;
     max-width: 60vw;
-    height: 70vh;
+    max-height: 70vh;
     position: relative;
     overflow-x: hidden;
     overflow: clip;
@@ -651,7 +654,7 @@ z-index: 2;
     position: relative;
     height: 100%;
     width: 100%;
-    transition: transform 1s ease-in-out;
+    
     flex-wrap: nowrap;
 }
 
@@ -664,12 +667,15 @@ z-index: 2;
     margin-left: 5px;
     margin-right: 5px;
     min-width: calc(33.333% - 10px); /* At least a third of parent minus margin */
+    transition: transform 1s ease-in-out;
+    border-radius: 25px;
 }
 
     .buddy-search-card img {
         width: 100%;
         height: 100%;
-        /*object-fit: scale-down;*/
+        object-fit: scale-down;
+        box-sizing:content-box;
     }
 
 .greyscale {
@@ -679,10 +685,10 @@ z-index: 2;
 }
 
 .buddy-search-card.active {
-    filter: drop-shadow(0 0 0.25rem white);
     position: relative;
     filter: hue-rotate(10deg);
     filter: saturate(110%);
+    transform: scale(1);
     z-index: 1; /* Ensures the larger item appears above all the others */
     /*border: 2px solid black;*/
 }
@@ -700,4 +706,30 @@ z-index: 2;
 
 .hidden {
     display: none;
+}
+
+
+/*#list li {
+    position: relative;
+}*/
+#genreOption {
+    position: relative;
+}
+
+#GenreList {
+    list-style-type: none;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 30;
+    color: white;
+    background-color: rgb(27, 27, 27);
+    /*border: 1px solid black;*/
+    filter: drop-shadow(0 0 0.1rem black);
+    max-height: 300px;  
+}
+
+.nested-dropdown li {
+    border: 1px solid #ccc;
 }
