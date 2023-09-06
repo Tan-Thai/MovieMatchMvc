@@ -93,16 +93,45 @@ namespace MovieMatchMvc.Models
 		//Grabbing watchlist and userID
 		public WatchlistVM[] GetWatchlist(string userId)
 		{
+			//.OrderBy(p => p.Title) //make this into switch statement and make it based on what input (might brick)
 			return context.watchLists
 				.Where(w => w.UserId == userId)
 				.OrderBy(p => p.Title)
 				.Select(p => new WatchlistVM //add more props to enable similar showcase as SearchView
-				{ 
+				{
 					Title = p.Title,
 					Poster = p.Poster,
 					MovieId = p.MovieId
 				})
 				.ToArray();
+
+		}
+		public WatchlistVM[] GetWatchlist(string userId, string? orderby)
+		{
+			//.OrderBy(p => p.Title) //make this into switch statement and make it based on what input (might brick)
+			IQueryable<WatchlistVM> watchListQuery = context.watchLists
+				.Where(w => w.UserId == userId)
+				.Select(p => new WatchlistVM //add more props to enable similar showcase as SearchView
+				{
+					Title = p.Title,
+					Poster = p.Poster,
+					MovieId = p.MovieId,
+					
+				});
+
+			switch (orderby) //orderby switch that would basically allow us to sort by date added/release year etc.
+			{
+				case null:
+					watchListQuery = watchListQuery.OrderBy(p => p.Title);
+					break;
+
+				case "Id":
+					watchListQuery = watchListQuery.OrderBy(p => p.MovieId);
+					break;
+
+
+			}
+			return watchListQuery.ToArray();
 		}
 		public string GetUserIdByUsername(string username)
 		{

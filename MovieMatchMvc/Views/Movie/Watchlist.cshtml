@@ -3,64 +3,67 @@
 
 <!DOCTYPE html>
 <style>
-.search-bar{
-	background: #fff;
-	width: 90%;
-	max-width: 500px;
-	display: flex;
-	padding: 2px;
-	border-radius: 4px;
-}
-#select{
-	background: rgba(0, 0, 0, 0.85);
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	color: #fff;
-	width: 498px;
-	padding: 25px 20px;
-	cursor: pointer;
-	position: relative;
-	border-radius: 4px;
-	border: 1px solid;
-	z-index: 1;
-}
+	.search-bar {
+		background: #fff;
+		width: 90%;
+		max-width: 500px;
+		display: flex;
+		padding: 2px;
+		border-radius: 4px;
+	}
 
-#select img{
-	width: 15px;
-}
+	#select {
+		background: rgba(0, 0, 0, 0.85);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: #fff;
+		width: 498px;
+		padding: 25px 20px;
+		cursor: pointer;
+		position: relative;
+		border-radius: 4px;
+		border: 1px solid;
+		z-index: 1;
+	}
 
-#select ul{
-	position: absolute;
-	top: 120%;
-	left: 0;
-	list-style: none;
-	background: #fff;
-	color: black;
-	width: 100%;
-	border-radius: 4px;
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 0.5s;
-}
+		#select img {
+			width: 15px;
+		}
 
-#select ul li{
-	padding: 10px 20px;
-	cursor: pointer;
-}
+		#select ul {
+			position: absolute;
+			top: 120%;
+			left: 0;
+			list-style: none;
+			background: #fff;
+			color: black;
+			width: 100%;
+			border-radius: 4px;
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.5s;
+		}
 
-.search-bar input{
-	padding: 10px 25px;
-	width: 100%;
-	border:none;
-	outline: none;
-	font-size: 18px;
-}
-#select ul.open{
-	max-height: 300px;
-}
+			#select ul li {
+				padding: 10px 20px;
+				cursor: pointer;
+			}
+
+	.search-bar input {
+		padding: 10px 25px;
+		width: 100%;
+		border: none;
+		outline: none;
+		font-size: 18px;
+	}
+
+	#select ul.open {
+		max-height: 300px;
+	}
 
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
@@ -75,83 +78,117 @@
 			<p id="selectText">All categories</p>
 			<img src="" />
 			<ul id="list">
-				<li class="options" style="color: black;">All categories</li>
-				<li class="options" style="color: black;">Title</li>
-				<li class="options" style="color: black;">Genre</li>
+				<li class="options" style="color: black;" data-argument="">All categories</li>
+				<li class="options" style="color: black;" data-argument="Title">Title</li>
+				<li class="options" style="color: black;">
+					Genre
+					<ul id="GenreList" > 
+						<li>Action</li>
+						<li>Adventure</li>
+						<li>Sci-Fi</li>
+						<li>Drama</li>
+					</ul>
+				</li>
+				<li class="options" style="color: black;" data-argument="Id">Release Date</li>
 			</ul>
 			<input type="text" id="inputfield" placeholder="Search in all categories" />
 		</div>
 	</div>
-	@*<input asp-for="Password" class="form-control short-input" placeholder="Password" />*@
 
-	@* <ul>
-
-		@foreach (var item in Model)
-		{
-			<div >
-				<img style="height:100px;" width="100:px;" src="@item.Poster"> @item.Title 
-				<p>
-				@item.MovieId
-				</p>
-			
-			</div>
-			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
-					<input type="hidden" name="movieId" value="@item.MovieId" />
-					<input type="submit" class="btn btn-danger" class="align-middle" value="Remove from watchlist">
-				</form>
-			</div>
-			
-		}
-	</ul> *@
-	
-		<div class="search-container">
+	<div class="search-container">
 		@foreach (var item in Model)
 		{
 			@*<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px;">*@
-				<div class="search-result">
-					<img style="height: 200px; width: 150px;" src="@item.Poster">
-					<div class="search-card">
-						<div class="top-column">
-					<a style="font-weight: bold" style="color: antiquewhite;" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
-						@item.Title
-					</a>
-						</div>
-					</div>					
-				<div style ="margin-right: 100px;">
+			<div class="search-result">
+				<img style="height: 200px; width: 150px;" src="@item.Poster">
+				<div class="search-card">
+					<div class="top-column">
+						<a style="font-weight: bold" style="color: antiquewhite;" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
+							@item.Title
+						</a>
+					</div>
+				</div>
+				<div style="margin-right: 100px;">
 					<form asp-controller="Movie" asp-action="ManageWatchList" method="post">
 						<input type="hidden" name="movieId" value="@item.MovieId" />
 						<div class="bottom-right">
-						<input type="submit" class="btn btn-danger" value="Remove from watchlist">
+							<input type="submit" class="btn btn-danger" value="Remove from watchlist">
 						</div>
 					</form>
 				</div>
-				</div>
-				
-			 <br/>
+			</div>
+
+			<br />
 		}
-		</div>
-	
+	</div>
 
-<script>
-	let select = document.getElementById("select")
-	let list = document.getElementById("list")
-	let selectText = document.getElementById("selectText")
-	let inputfield = document.getElementById("inputfield")
 
-	let options = document.getElementsByClassName("options")
+	<script>
+		let select = document.getElementById("select")
+		let list = document.getElementById("list")
+		let selectText = document.getElementById("selectText")
+		let inputfield = document.getElementById("inputfield")
 
-	select.onclick = function(){
-		list.classList.toggle("open");
-	}
+		let options = document.getElementsByClassName("options")
 
-	for(option of options){
-		option.onclick = function(){
-			selectText.innerHTML = this.innerHTML;
-			inputfield.placeholder = "Search for " + selectText.innerHTML;
+		select.onclick = function () {
+			list.classList.toggle("open");
 		}
-	}
 
-</script>
+		for (option of options) {
+			option.onclick = function () {
+				selectText.innerHTML = this.innerHTML;
+				inputfield.placeholder = "Search for " + selectText.innerHTML;
+
+				// if (selectText.innerHTML === "Genre") {
+				// 	openGenresMenu();
+				// }
+			}
+		}
+
+		// option.addEventListener("mouseenter", function () {
+		// 	if (this.innerHTML === "Genre") {
+		// 		openGenresMenu();
+		// 	}
+		// });
+
+		// function openGenresMenu() {
+		// 	const genreSubMenu = document.getElementById("GenreList");
+		// 	if (genresSubMenu) {
+		// 		genresSubMenu.style.display = "block";
+		// 	}
+		// }
+		$(document).ready(function () {
+			$(".options").click(function () {
+				var argument = $(this).data("argument");
+				var url = "/Watchlist?argument=" + argument;
+				window.location.href = url;
+			});
+		});
+	</script>
 </body>
 </html>
+
+
+@*<input asp-for="Password" class="form-control short-input" placeholder="Password" />*@
+
+@* <ul>
+
+	@foreach (var item in Model)
+	{
+	<div >
+	<img style="height:100px;" width="100:px;" src="@item.Poster"> @item.Title
+	<p>
+	@item.MovieId
+	</p>
+
+	</div>
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+	<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
+	<input type="hidden" name="movieId" value="@item.MovieId" />
+	<input type="submit" class="btn btn-danger" class="align-middle" value="Remove from watchlist">
+	</form>
+	</div>
+
+	}
+	</ul> *@
