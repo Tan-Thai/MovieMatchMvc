@@ -4,33 +4,38 @@
 
 @model List<MovieMatchMvc.Views.Movie.SearchVM>
 
-<h1>Search "@ViewBag.Query"</h1>
-<h2>Titles</h2>
 
-<div class="search-container">
-	@foreach (var movie in Model)
-	{
-		@* <div style="display: flex;flex-direction: column; justify-content: space-between; align-items: flex-start;"> *@
-		<div class="search-result">
-			<img src="@movie.Poster" alt="..." />
-			<div class="search-card">
-				<div class="top-column">
-					<h5><a class="detail-link" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
-					<p>@movie.ReleaseDate</p>
-					<p>Average score: @Math.Round(movie.Rating, 1)</p>
-				</div>
-				@if (User.Identity.IsAuthenticated)
-				{
-					<div class="bottom-right">
-						<button class="watchlist-button btn-primary btn" data-movie-id="@movie.Id">
-							@(movie.InWatchList ? "Remove from watchlist" : "Add to watchlist")
-						</button>
-					</div>
-				}
-			</div>
+@*<div style="display: flex; justify-content: center;">*@
+	<div class="search-container">
+		<div class="search-heading" style="margin-left: 12rem;">
+			<h2>Search result "@ViewBag.Query"</h2>
 		</div>
-	}
-	<div class="pagination">
+
+		@foreach (var movie in Model)
+		{		
+			<div class="search-result">
+				<img src="@movie.Poster" alt="..." />
+				<div class="search-card">
+					<div class="top-column">
+						<h5><a class="detail-link" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+						<p> Release Date: @movie.ReleaseDate.Value.ToShortDateString()</p>
+						<p>Average score: @Math.Round(movie.Rating, 1)</p>
+					</div>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<div class="bottom-right">
+							<button class="watchlist-button btn-primary btn" data-movie-id="@movie.Id">
+								@(movie.InWatchList ? "Remove from watchlist" : "Add to watchlist")
+							</button>
+						</div>
+					}
+				</div>
+			</div>		
+		}
+	</div>
+@*</div>*@
+
+	<div class="pagination" style="margin-left:11.8rem;">
 		@if (ViewBag.PageNumber > 1)
 		{
 			<a href="?query=@ViewBag.Query&PageNumber=@(ViewBag.PageNumber - 1)" class="btn btn-primary">Previous Page</a>
