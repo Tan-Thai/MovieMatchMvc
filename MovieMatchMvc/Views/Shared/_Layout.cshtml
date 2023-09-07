@@ -31,23 +31,21 @@
                 </form>
             </div>
             <div class="d-flex" style=" display:flex; justify-content: flex-end; width: 40%">
-                <span class="d-flex flex-row nav-span" style="min-width: 460px;">
                     @if (User.Identity.IsAuthenticated)
                     {
-                       @*  <div class="d-flex align-items-center">
-                            <p>Signed in as: @User.Identity.Name</p>
-                        </div> *@
-
+                    <span class="d-flex flex-row nav-span" style="min-width: 460px;justify-content: space-between;">
                         <a asp-controller="Movie" asp-action="Watchlist" class="nav-link test-button ">Watchlist</a>
                         <a asp-controller="Movie" asp-action="MatchWatchLists" class="nav-link test-button "> Match with friend </a>
-                            <a asp-controller="Account" asp-action="LogOut" class="nav-link test-button ">Sign Out @User.Identity.Name</a>
+                        <a asp-controller="Account" asp-action="LogOut" class="nav-link test-button ">Sign Out @User.Identity.Name</a>
+                        </span>
                     }
                     else
                     {
+                        <span class="d-flex flex-row nav-span" style="min-width: 100px;">
                             @*<a asp-controller="Account" asp-action="Register" class="nav-link colored-button">Signup</a>*@
                             <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                        </span>
                     }
-                </span>
             </div>
         </div>
     </nav>
