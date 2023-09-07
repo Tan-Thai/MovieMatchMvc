@@ -11,9 +11,10 @@
 	<title></title>
 </head>
 <body>
-	<h4 align="Center"  style="color: antiquewhite; margin-right:46.5rem; margin-top:1rem;">My watchlist</h4>
+	<div class="search-bar-container">
+	<h3  class="search-bar-title" style="color: antiquewhite; ">My watchlist</h3>
 	@*<p style="margin-left:12rem;">Filter:</p>*@
-	<div class="search-bar" style="margin-left:9rem;">
+	<div class="search-bar">
 		<div id="select">
 			<p id="selectText"></p>
 			<img src="/Images/arrow.svg" alt="arrow" style= "width: 70px !important; height: 70px !important;"/>
@@ -36,7 +37,7 @@
 			<input type="text" class="form-control "id="inputfield" placeholder="Search in all categories" />
 		</div>
 	</div>
-
+	</div>
 	<div class="search-container">
 		@foreach (var item in Model)
 		{

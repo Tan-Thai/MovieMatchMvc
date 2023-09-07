@@ -498,11 +498,12 @@ margin: 2rem;
 
 .search-bar {
     background: rgb(38, 38, 38);
-    width: 90%;
+    /*width: 90%;*/
     max-width: 500px;
     display: flex;
     padding: 2px;
     border-radius: 4px;
+    
 }
 
 #select {
@@ -555,6 +556,22 @@ margin: 2rem;
     font-size: 18px;
 }
 
+.search-bar-container {
+    margin: 0 auto;
+    width: 74%;
+}
+.search-bar-title{
+color: antiquewhite;
+/*width: 10vw;*/
+margin-left: 8rem;
+margin-top: 2rem;
+/*margin-bottom*/
+
+    /*margin: 0 auto;*/
+    /*margin-left: 3rem;*/
+    /*font-weight: 400;*/
+    /*filter: drop-shadow(0 0 0.5rem white);*/
+}
 #select ul.open {
     max-height: 100vh;
 }
@@ -673,7 +690,21 @@ margin: 2rem;
     
 }
 
-
+.carousel-caption h3{
+    /*border-left: 1px solid black;*/
+    /*border-left: 1px solid rgba(0, 0, 0, 0.4);*/
+    /*filter: drop-shadow(0 0 6rem black);*/
+}
 .carousel-caption {
-    border-top: 1px solid black;
+    border-top: 3px solid rgba(0, 0, 0, 0.4);
+    /*border-bottom: 3px solid rgba(0, 0, 0, 0.4);*/
+    /*border-left: 2px solid rgba(0, 0, 0, 0.4);*/
+    /*border-right: 0.5px solid rgba(0, 0, 0, 0.4);*/
+    border-radius: 20px;
+}
+
+
+
+.carousel-item img {
+    box-shadow: 0 0 5rem black;
 }
