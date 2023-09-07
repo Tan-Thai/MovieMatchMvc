@@ -16,6 +16,7 @@ namespace MovieMatchMvc.Views.Movie
         public double? Popularity { get; set; }
 		public DateTime? ReleaseDate { get; set; }
 		public List<MovieGenres> Genres { get; set; }
-		public bool userExists { get; set; }
+        public bool userExists { get; set; }
+		public int? Runtime { get; set; }
 	}
 }
