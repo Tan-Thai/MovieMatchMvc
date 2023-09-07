@@ -7,7 +7,8 @@
 
 @*<div style="display: flex; justify-content: center;">*@
 	<div class="search-container">
-		<div class="search-heading" style="margin-left: 12rem;">
+		@* <div class="search-heading" style="margin-left: 12rem;"> *@
+		<div style="width: 70%; margin: 10px; display: flex;">
 			<h2>Search result "@ViewBag.Query"</h2>
 		</div>
 
@@ -35,7 +36,7 @@
 	</div>
 @*</div>*@
 
-	<div class="pagination" style="margin-left:11.8rem;">
+<div class="pagination" style="justify-content: center;">
 		@if (ViewBag.PageNumber > 1)
 		{
 			<a href="?query=@ViewBag.Query&PageNumber=@(ViewBag.PageNumber - 1)" class="btn btn-primary">Previous Page</a>

@@ -55,7 +55,7 @@ namespace MovieMatchMvc.Models
 			int resultsPerPage = 20;
 
 			using (client)
-			{
+			{	
 				SearchContainer<SearchMovie> initialSearchResults = await client.SearchMovieAsync(query, "en-US", pageNumber, false);
 				int totalPages = initialSearchResults.TotalPages;
 
