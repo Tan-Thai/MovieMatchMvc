@@ -129,7 +129,7 @@ nav {
     border: none;
 }
 
-    .btn-primary:hover {
+    .btn-primary:hover, .btn-primary:active, .btn-primary:visited,  {
         background-color: rgba(0, 0, 0, 0.2);
     }
 
@@ -209,6 +209,7 @@ transform: scale(1.1);
     /*gap: 27px 10px;*/
     margin: 1rem;
 }
+
 
 .search-card {
     width: 100%;
@@ -498,11 +499,12 @@ margin: 2rem;
 
 .search-bar {
     background: rgb(38, 38, 38);
-    width: 90%;
+    /*width: 90%;*/
     max-width: 500px;
     display: flex;
     padding: 2px;
     border-radius: 4px;
+    
 }
 
 #select {
@@ -555,6 +557,22 @@ margin: 2rem;
     font-size: 18px;
 }
 
+.search-bar-container {
+    margin: 0 auto;
+    width: 74%;
+}
+.search-bar-title{
+color: antiquewhite;
+/*width: 10vw;*/
+margin-left: 8rem;
+margin-top: 2rem;
+/*margin-bottom*/
+
+    /*margin: 0 auto;*/
+    /*margin-left: 3rem;*/
+    /*font-weight: 400;*/
+    /*filter: drop-shadow(0 0 0.5rem white);*/
+}
 #select ul.open {
     max-height: 100vh;
 }
@@ -673,7 +691,54 @@ margin: 2rem;
     
 }
 
-
-.carousel-caption {
-    border-top: 1px solid black;
+.carousel-caption h3{
+    /*border-left: 1px solid black;*/
+    /*border-left: 1px solid rgba(0, 0, 0, 0.4);*/
+    /*filter: drop-shadow(0 0 6rem black);*/
 }
+.carousel-caption {
+    border-top: 3px solid rgba(0, 0, 0, 0.4);
+    /*border-bottom: 3px solid rgba(0, 0, 0, 0.4);*/
+    /*border-left: 2px solid rgba(0, 0, 0, 0.4);*/
+    /*border-right: 0.5px solid rgba(0, 0, 0, 0.4);*/
+    border-radius: 20px;
+}
+
+
+
+.carousel-item img {
+    box-shadow: 0 0 5rem black;
+}
+
+.top-column a {
+    color: antiquewhite;
+    font-weight: 600;
+}
+.top-column a:hover {
+    /*transform: scale(1.1);*/
+    color: white;
+}
+
+.shadow {
+border: 0.5px solid black;
+/*filter: drop-shadow(0 0 0.2rem black);*/
+}
+
+footer {
+    margin-top: 5rem;
+    border-top: 1px solid rgba(226, 226, 226, 0.2);
+    /*filter: drop-shadow(0 0 1rem black);*/
+} 
+
+#matchButton {
+    margin-top: 1rem;
+    width: 30%;
+
+    border-radius: 10px;
+}
+
+    #matchButton:active, #matchButton:visited {
+        color: rgb(72, 121, 121);
+        background-color: rgb(72, 121, 121);
+        border: 1px solid rgb(72, 121, 121);
+    }

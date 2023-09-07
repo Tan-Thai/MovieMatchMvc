@@ -42,7 +42,7 @@
 <div class="pagination" style="justify-content: center;">
 		@if (ViewBag.PageNumber > 1)
 		{
-			<a href="?query=@ViewBag.Query&PageNumber=@(ViewBag.PageNumber - 1)" class="btn btn-primary">Previous Page</a>
+			<a href="?query=@ViewBag.Query&PageNumber=@(ViewBag.PageNumber - 1)" class="btn btn-primary mr-2">Previous Page</a>
 		}
 
 		@if (ViewBag.PageNumber < 50)
@@ -58,7 +58,7 @@
 			document.querySelectorAll('.watchlist-button').forEach(button => {
 				button.addEventListener('click', function (e) {
 					const movieId = e.target.getAttribute('data-movie-id');
-					const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
+					const isInWatchlist = e.target.textContent.trim() === 'Remove from Watchlist';
 					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJsonCall=true`, {
 						method: 'POST',
 						headers: {
@@ -69,7 +69,7 @@
 						.then(response => response.json())
 						.then(data => {
 							if (data.success) {
-								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from Watchlist';
 							}
 						})
 						.catch(error => console.log('Error:', error));
