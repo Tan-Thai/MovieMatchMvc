@@ -11,6 +11,7 @@
         public int MovieId { get; set; }
         public double? Popularity { get; set; }
 		public DateTime? ReleaseDate { get; set; }
-        public List<MovieGenres> Genres { get; set; }
+		public int? Runtime { get; set; }
+		public List<MovieGenres> Genres { get; set; }
 	}
 }

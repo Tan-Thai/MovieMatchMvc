@@ -1,9 +1,9 @@
-﻿@model List<MovieMatchMvc.Views.Movie.WatchlistVM>
+﻿@model MovieMatchMvc.Views.Movie.WatchlistVM[]
 
 @if (ViewBag.OtherUsername != null)
 {
-    <h5 class="buddy-name-title">Matching with @ViewBag.OtherUsername</h5>
-	<h3 class="buddy-title" ></h3>
+	<h5 class="buddy-name-title">Matching with @ViewBag.OtherUsername</h5>
+	<h3 class="buddy-title"></h3>
 	<div class="buddy-search-container">
 		<div class="buddy-carousel">
 			@if (Model == null)
@@ -14,127 +14,137 @@
 			{
 				@foreach (var movie in Model)
 				{
-                    <div class="buddy-search-card" data-movie-id="@movie.MovieId">
-						 <a class="details-link disabled-link" href="#"> 
-							<img href="#"src="@movie.Poster" alt="@movie.Title">
-						</a> 
+					<div class="buddy-search-card" data-movie-id="@movie.MovieId">
+						<a class="details-link disabled-link" href="#">
+							<img href="#" src="@movie.Poster" alt="@movie.Title">
+						</a>
 					</div>
 				}
 			}
 		</div>
 	</div>
+	@if (Model.Length > 1)
+	{	
+		<div class="random-box">
+			<h4>Can't decide?</h4>
+		<a class="btn btn-primary btn-random" asp-controller="Movie" asp-action="Details"
+		   asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
+	   </div>
+	}
 }
+
+
 else if (ViewBag.OtherUsername == null && TempData["IsFormSubmitted"] as bool? == true)
 {
-    <div style="text-align: center;">
-        <p style="color: red;">The user does not exist! Try again!</p>
-    </div>
+	<div style="text-align: center;">
+		<p style="color: red;">The user does not exist! Try again!</p>
+	</div>
 }
 
 
 <form class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
-    <h2 style="display: flex;flex-wrap: wrap;justify-content: center;">Who's Your Friend?</h2>
-    <div class="form-group form-buddylist">
-        <input type="text" class="form-control" placeholder="Search" id="username" name="username" required />
-        <button id="matchButton" type="submit" class="btn btn-primary">Match!</button>
-    </div>
+	<h2 style="display: flex;flex-wrap: wrap;justify-content: center;">Who's Your Friend?</h2>
+	<div class="form-group form-buddylist">
+		<input type="text" class="form-control" placeholder="Search" id="username" name="username" required />
+		<button id="matchButton" type="submit" class="btn btn-primary">Match!</button>
+	</div>
 </form>
 
 @section Scripts {
-    <script>
+	<script>
 
 
-        (function () {
-            "use strict";
+		(function () {
+			"use strict";
 
-            var carousel = document.querySelector('.buddy-carousel'),
-                slider = document.querySelectorAll('.buddy-search-card'),
-                currIndex = 0;
+			var carousel = document.querySelector('.buddy-carousel'),
+				slider = document.querySelectorAll('.buddy-search-card'),
+				currIndex = 0;
 
-            function updateActiveItem() {
-                // Reset all items to have href="#"
-                for (let i = 0; i < slider.length; i++) {
-                    let link = slider[i].querySelector('.details-link');
-                    link.href = "#";
-                }
+			function updateActiveItem() {
+				// Reset all items to have href="#"
+				for (let i = 0; i < slider.length; i++) {
+					let link = slider[i].querySelector('.details-link');
+					link.href = "#";
+				}
 
-                // Check if the number of items is 1 or 2
-                if (slider.length === 1 || slider.length === 2) {
-                    for (let i = 0; i < slider.length; i++) {
-                        let item = slider[i];
-                        item.classList.add('two-active');
-                        item.classList.remove('greyscale');
-                    }
-                } else {
-                    for (let i = 0; i < slider.length; i++) {
-                        let item = slider[i];
-                        if (i === currIndex) {
-                            item.classList.add('active');
-                            item.classList.remove('hidden');
-                            item.classList.remove('greyscale'); // Remove greyscale from the main item
+				// Check if the number of items is 1 or 2
+				if (slider.length === 1 || slider.length === 2) {
+					for (let i = 0; i < slider.length; i++) {
+						let item = slider[i];
+						item.classList.add('two-active');
+						item.classList.remove('greyscale');
+					}
+				} else {
+					for (let i = 0; i < slider.length; i++) {
+						let item = slider[i];
+						if (i === currIndex) {
+							item.classList.add('active');
+							item.classList.remove('hidden');
+							item.classList.remove('greyscale'); // Remove greyscale from the main item
 
-                            // Update href to point to the movie details
-                            let movieId = item.getAttribute('data-movie-id');
-                            let link = item.querySelector('.details-link');
-                            link.href = "/Details/" + movieId;
-                        } else {
-                            item.classList.remove('active');
-                            item.classList.add('greyscale'); // Add greyscale to non-main items
-                        }
-                    }
-                }
+							// Update href to point to the movie details
+							let movieId = item.getAttribute('data-movie-id');
+							let link = item.querySelector('.details-link');
+							link.href = "/Details/" + movieId;
+						} else {
+							item.classList.remove('active');
+							item.classList.add('greyscale'); // Add greyscale to non-main items
+						}
+					}
+				}
 
-                // New code to update the buddy-title
-                if (slider[currIndex]) {
-                    let activeMovieTitle = slider[currIndex].querySelector('img').alt;
-                    let buddyTitle = document.querySelector('.buddy-title');
-                    buddyTitle.textContent = `${activeMovieTitle}`;
-                }
-            }
+				// New code to update the buddy-title
+				if (slider[currIndex]) {
+					let activeMovieTitle = slider[currIndex].querySelector('img').alt;
+					let buddyTitle = document.querySelector('.buddy-title');
+					buddyTitle.textContent = `${activeMovieTitle}`;
+				}
+			}
 
-            function move() {
-                let prevIndex = (currIndex === 0) ? slider.length - 1 : currIndex - 1;
-                let nextIndex = (currIndex === slider.length - 1) ? 0 : currIndex + 1;
+			function move() {
+				let prevIndex = (currIndex === 0) ? slider.length - 1 : currIndex - 1;
+				let nextIndex = (currIndex === slider.length - 1) ? 0 : currIndex + 1;
 
-                slider[prevIndex].style.order = 1;
-                slider[currIndex].style.order = 2;
-                slider[nextIndex].style.order = 3;
+				slider[prevIndex].style.order = 1;
+				slider[currIndex].style.order = 2;
+				slider[nextIndex].style.order = 3;
 
-                for (let i = 0; i < slider.length; i++) {
-                    if (i !== prevIndex && i !== currIndex && i !== nextIndex) {
-                        slider[i].style.order = 4;
-                    }
-                }
+				for (let i = 0; i < slider.length; i++) {
+					if (i !== prevIndex && i !== currIndex && i !== nextIndex) {
+						slider[i].style.order = 4;
+					}
+				}
 
-                updateActiveItem();
-            }
+				updateActiveItem();
+			}
 
-            function navigateToCard(event) {
-                event.preventDefault();
-                const clickedCard = event.currentTarget;
-                let prevIndex = currIndex;
-                currIndex = Array.from(slider).indexOf(clickedCard);
+			function navigateToCard(event) {
+				event.preventDefault();
+				const clickedCard = event.currentTarget;
+				let prevIndex = currIndex;
+				currIndex = Array.from(slider).indexOf(clickedCard);
 
-                // If the clicked card was already in the middle (active)
-                if (prevIndex === currIndex) {
-                    let movieId = clickedCard.getAttribute('data-movie-id');
-                    window.location.href = '/Details/' + movieId;
-                    return;
-                }
+				// If the clicked card was already in the middle (active)
+				if (prevIndex === currIndex) {
+					let movieId = clickedCard.getAttribute('data-movie-id');
+					window.location.href = '/Details/' + movieId;
+					return;
+				}
 
-                move();
-            }
+				move();
+			}
 
-            function bindEvents() {
-                for (let i = 0; i < slider.length; i++) {
-                    slider[i].addEventListener('click', navigateToCard);
-                }
-            }
+			function bindEvents() {
+				for (let i = 0; i < slider.length; i++) {
+					slider[i].addEventListener('click', navigateToCard);
+				}
+			}
 
-            move(); // Initialize the carousel
-            bindEvents(); // Bind the events
+			move(); // Initialize the carousel
+			bindEvents(); // Bind the events
 
-        })();
+		})();
 
-    </script>
+	</script>
 }

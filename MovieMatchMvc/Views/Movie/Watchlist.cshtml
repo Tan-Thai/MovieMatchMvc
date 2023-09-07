@@ -13,7 +13,7 @@
 <body>
 	<div class="search-bar-container">
 		<h3 class="search-bar-title" style="color: antiquewhite; ">My watchlist</h3>
-		
+
 		@*<p style="margin-left:12rem;">Filter:</p>*@
 		<div class="search-bar">
 			<div id="select">
@@ -38,7 +38,7 @@
 					</li>
 				</ul>
 				<input type="text" class="form-control " id="inputfield" placeholder="Search in all categories" />
-				
+
 			</div>
 		</div>
 	</div>
@@ -49,10 +49,16 @@
 				<img src="@item.Poster">
 				<div class="search-card">
 					<div class="top-column">
-						<h5><a asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
-							@item.Title
+						<h5>
+							<a asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
+								@item.Title
 							</a>
 						</h5>
+						@if (item.ReleaseDate != null)
+						{
+							<p> Release Date: @item.ReleaseDate.Value.ToShortDateString()</p>
+						}
+						<p> Runtime: @item.Runtime minutes</p>
 					</div>
 				</div>
 				<div style="margin-right: 100px;">
@@ -68,11 +74,15 @@
 			<br />
 		}
 	</div>
-	<div class="random-box">
-	<h4>Can't decide?</h4>
-	<a class="btn btn-primary btn-random" asp-controller="Movie" asp-action="Details"
-	   asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
-	</div>
+	@if (Model.Length > 1)
+	{
+		<div class="random-box">
+
+			<h4>Can't decide?</h4>
+			<a class="btn btn-primary btn-random" asp-controller="Movie" asp-action="Details"
+			   asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
+		</div>
+	}
 	<script>
 		$(document).ready(function () {
 			let select = $("#select-click");

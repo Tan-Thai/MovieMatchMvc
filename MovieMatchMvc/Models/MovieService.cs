@@ -105,6 +105,7 @@ namespace MovieMatchMvc.Models
 					MovieId = p.MovieId,
 					ReleaseDate = p.ReleaseDate,
 					Popularity = p.Popularity,
+					Runtime = p.Runtime,
 				})
 				.ToArray();
 
@@ -122,6 +123,7 @@ namespace MovieMatchMvc.Models
 					MovieId = p.MovieId,
 					ReleaseDate = p.ReleaseDate,
 					Popularity = p.Popularity,
+					Runtime = p.Runtime,
 					Genres = p.Genres,
 				});
 
@@ -195,6 +197,7 @@ namespace MovieMatchMvc.Models
 				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
 				ReleaseDate = movie.ReleaseDate,
 				Popularity = movie.Popularity,
+				Runtime = movie.Runtime,
 				Genres = movie.Genres.Select(g => new MovieGenres()
 				{
 					Name = g.Name,
@@ -221,8 +224,8 @@ namespace MovieMatchMvc.Models
 		{
 			var myWatchlist = GetWatchlist(currentUserId);
 			var searchedWatchlist = GetWatchlist(otherUserId);
-			var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(searchedWatchlist.Select(m => m.MovieId)).ToList();
-			var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToList();
+			var commonMovieIds = myWatchlist.Select(m => m.MovieId).Intersect(searchedWatchlist.Select(m => m.MovieId)).ToArray();
+			var commonMovies = myWatchlist.Where(m => commonMovieIds.Contains(m.MovieId)).ToArray();
 			return commonMovies;
 		}
 
