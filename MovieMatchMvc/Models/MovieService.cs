@@ -155,7 +155,7 @@ namespace MovieMatchMvc.Models
 					case "ReleaseDate":
 						watchListQuery = watchListQuery.OrderByDescending(p => p.ReleaseDate);
 						break;
-					
+
 					case "Title":
 						watchListQuery = watchListQuery.OrderByDescending(p => p.ReleaseDate);
 						break;
@@ -189,23 +189,28 @@ namespace MovieMatchMvc.Models
 		}
 		public async Task AddMovieToWatchlistAsync(Movie movie, string userId)
 		{
-			context.watchLists.Add(new WatchList //Add Genres as prop to be able to order by on "GetWatchList"
+			var myWatchlist = GetWatchlist(userId);
+			var watchListHash = new HashSet<int>(myWatchlist.Select(w => w.MovieId));
+			if (!watchListHash.Contains(movie.Id))
 			{
-				MovieId = movie.Id,
-				Title = movie.Title,
-				UserId = userId,
-				Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
-				ReleaseDate = movie.ReleaseDate,
-				Popularity = movie.Popularity,
-				Runtime = movie.Runtime,
-				Genres = movie.Genres.Select(g => new MovieGenres()
+				context.watchLists.Add(new WatchList //Add Genres as prop to be able to order by on "GetWatchList"
 				{
-					Name = g.Name,
-					TmdbId = g.Id
-				}).ToList()
+					MovieId = movie.Id,
+					Title = movie.Title,
+					UserId = userId,
+					Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
+					ReleaseDate = movie.ReleaseDate,
+					Popularity = movie.Popularity,
+					Runtime = movie.Runtime,
+					Genres = movie.Genres.Select(g => new MovieGenres()
+					{
+						Name = g.Name,
+						TmdbId = g.Id
+					}).ToList()
 
-			});
-			await context.SaveChangesAsync();
+				});
+				await context.SaveChangesAsync();
+			}
 		}
 		public async Task RemoveFromWatchListAsync(int movieId, string userId)
 		{
