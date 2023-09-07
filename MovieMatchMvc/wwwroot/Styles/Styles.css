@@ -156,6 +156,7 @@ transform: scale(1.1);
     width: 100%;
     margin: 0 auto;
     margin-top: 10px;
+
 }
 
 .search-heading {
@@ -248,7 +249,7 @@ a {
 .form-container {
     width: clamp(30vw, 60%, 30vw);
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 6rem;
     margin-bottom: 20px;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.4);
@@ -587,7 +588,7 @@ margin-top: 2rem;
     position: relative;
     overflow-x: hidden;
     overflow: clip;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
 }
 
 .buddy-carousel {
@@ -734,7 +735,8 @@ border-right: 5px solid black;
 }
 
 footer {
-    margin-top: 5rem;
+    
+    margin-top: 30rem;
     border-top: 1px solid rgba(226, 226, 226, 0.2);
     /*filter: drop-shadow(0 0 1rem black);*/
 } 
