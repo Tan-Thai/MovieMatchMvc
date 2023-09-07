@@ -587,6 +587,7 @@ margin-top: 2rem;
     position: relative;
     overflow-x: hidden;
     overflow: clip;
+    margin-bottom: 5rem;
 }
 
 .buddy-carousel {
