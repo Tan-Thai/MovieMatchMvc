@@ -55,7 +55,7 @@
 			document.querySelectorAll('.watchlist-button').forEach(button => {
 				button.addEventListener('click', function (e) {
 					const movieId = e.target.getAttribute('data-movie-id');
-					const isInWatchlist = e.target.textContent.trim() === 'Remove from watchlist';
+					const isInWatchlist = e.target.textContent.trim() === 'Remove from Watchlist';
 					fetch(`/ManageWatchList?movieId=${movieId}&remove=${isInWatchlist}&isJsonCall=true`, {
 						method: 'POST',
 						headers: {
@@ -66,7 +66,7 @@
 						.then(response => response.json())
 						.then(data => {
 							if (data.success) {
-								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from watchlist';
+								e.target.textContent = isInWatchlist ? 'Add to watchlist' : 'Remove from Watchlist';
 							}
 						})
 						.catch(error => console.log('Error:', error));
