@@ -6,9 +6,9 @@
 	<h3 class="buddy-title"></h3>
 	<div class="buddy-search-container">
 		<div class="buddy-carousel">
-			@if (Model == null)
+			@if (Model.Length < 1)
 			{
-				<p style="text-align: center;">No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
+				<p style="text-align: center; justify-content: center; margin: 0 auto;">No common movies found. Consider adding more films to your list or stepping out of your comfort zone</p>
 			}
 			else
 			{
