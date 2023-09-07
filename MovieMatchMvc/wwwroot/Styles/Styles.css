@@ -601,9 +601,11 @@ margin-top: 2rem;
 .buddy-title {
     color: antiquewhite;
     text-align: center;
-    margin-top: 2rem;
+    font-size: 1.8rem;
+
+    /*margin-top: 2rem;*/
     /*font-weight: 400;*/
-    /*filter: drop-shadow(0 0 0.5rem white);*/
+    filter: drop-shadow(0 0 0.5rem black);
 }
 .buddy-search-card {
     flex: 1; /* Take up equal space within the container */
@@ -626,7 +628,7 @@ margin-top: 2rem;
     }
 
 .greyscale {
-    filter: grayscale(100%);
+    filter: grayscale(80%);
     opacity: 0.8;
     transform: scale(0.8);
 }
@@ -636,7 +638,9 @@ margin-top: 2rem;
     filter: hue-rotate(10deg);
     filter: saturate(110%);
     transform: scale(1);
-    z-index: 1; /* Ensures the larger item appears above all the others */
+    z-index: 1;
+    box-shadow: 0 0 1rem black;
+    /* Ensures the larger item appears above all the others */
     /*border: 2px solid black;*/
 }
 
@@ -721,10 +725,10 @@ margin-top: 2rem;
 }
 
 .shadow {
-/*border: 0.5px solid black;*/
+border: 0.5px solid black;
 border-left: 5px solid black;
 border-bottom: 8px solid black;
-/*border-right: 5px solid black;*/
+border-right: 5px solid black;
 /*filter: drop-shadow(0 0 0.2rem black);*/
 }
 
@@ -746,3 +750,11 @@ footer {
         background-color: rgb(72, 121, 121);
         border: 1px solid rgb(72, 121, 121);
     }
+
+.buddy-name-title {
+    color: antiquewhite;
+    text-align: center;    
+    margin-top: 2rem;
+    font-size: 1rem;
+    opacity: 0.9;
+}
