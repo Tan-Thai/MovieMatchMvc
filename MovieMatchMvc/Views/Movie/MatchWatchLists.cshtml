@@ -33,7 +33,7 @@ else if (ViewBag.OtherUsername == null && TempData["IsFormSubmitted"] as bool? =
 
 
 <form class="form-container" asp-action="MatchWatchListsPost" asp-controller="Movie">
-    <h2>Who's Your Friend?</h2>
+    <h2 style="display: flex;flex-wrap: wrap;justify-content: center;">Who's Your Friend?</h2>
     <div class="form-group form-buddylist">
         <input type="text" class="form-control" placeholder="Search" id="username" name="username" required />
         <button id="matchButton" type="submit" class="btn btn-primary">Match!</button>
