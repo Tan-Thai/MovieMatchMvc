@@ -12,33 +12,35 @@
 </head>
 <body>
 	<div class="search-bar-container">
-	<h3  class="search-bar-title" style="color: antiquewhite; ">My watchlist</h3>
-	@*<p style="margin-left:12rem;">Filter:</p>*@
-	<div class="search-bar">
-		<div id="select">
-			<p id="selectText"></p>
-			<img src="/Images/arrow.svg" alt="arrow" style="width: 70px !important; height: 70px !important;" />
-			<ul id="list">
-				<li class="options" data-argument="">All categories</li>
-				<li class="options" data-argument="Title">Title</li>
-				<li class="options" data-argument="Popularity">Popularity</li>
-				<li class="options" data-argument="ReleaseDate">Release Date</li>
-				<li id="genreOption" class="options">
-					Genre >
-					<ol id="GenreList" class="nested-dropdown">
-						@foreach (var movie in Model)
-						{
-							foreach (var genre in movie.Genres)
+		<h3 class="search-bar-title" style="color: antiquewhite; ">My watchlist</h3>
+		@*<p style="margin-left:12rem;">Filter:</p>*@
+		<div class="search-bar">
+			<div id="select">
+				<p id="selectText"></p>
+				<img src="/Images/arrow.svg" alt="arrow" style="width: 70px !important; height: 70px !important;" />
+				<ul id="list">
+					<li class="options" data-argument="">All categories</li>
+					<li class="options" data-argument="Title">Title</li>
+					<li class="options" data-argument="Popularity">Popularity</li>
+					<li class="options" data-argument="ReleaseDate">Release Date</li>
+					<li id="genreOption" class="options">
+						Genre >
+						<ol id="GenreList" class="nested-dropdown">
+							@foreach (var movie in Model)
 							{
-								<li class="options genreselect" data-genreselected="@genre.Name">@genre.Name</li>
+								foreach (var genre in movie.Genres)
+								{
+									<li class="options genreselect" data-genreselected="@genre.Name">@genre.Name</li>
+								}
 							}
-						}
-					</ol>
-				</li>
-			</ul>
-			<input type="text" class="form-control " id="inputfield" placeholder="Search in all categories" />
+						</ol>
+					</li>
+				</ul>
+				<input type="text" class="form-control " id="inputfield" placeholder="Search in all categories" />
+				<a class="btn btn-primary" asp-controller="Movie" asp-action="Details" 
+				asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
+			</div>
 		</div>
-	</div>
 	</div>
 	<div class="search-container">
 		@foreach (var item in Model)
@@ -113,6 +115,8 @@
 			$("#genreOption").mouseleave(function () {
 				genreList.hide();
 			});
+
+
 		});
 
 		const genreList = document.getElementById('GenreList');
