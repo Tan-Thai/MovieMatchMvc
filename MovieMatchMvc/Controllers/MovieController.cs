@@ -42,7 +42,7 @@ namespace MovieMatchMvc.Controllers
 		{
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			string orderby = Request.Query["argument"];
-			string genre = Request.Query["genre"];
+			string genre = Request.Query["genreselected"];
 			var model = _movieService.GetWatchlist(userId, orderby, genre);
 			return View("Watchlist", model);
 		}

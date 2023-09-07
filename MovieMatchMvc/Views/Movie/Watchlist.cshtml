@@ -18,10 +18,10 @@
 			<p id="selectText"></p>
 			<img src="/Images/arrow.svg" alt="arrow" style="width: 70px !important; height: 70px !important;" />
 			<ul id="list">
-				<li class="options" data-argument="Popularity">Popularity</li>
-				<li class="options" data-argument="ReleaseDate">Release Date</li>
 				<li class="options" data-argument="">All categories</li>
 				<li class="options" data-argument="Title">Title</li>
+				<li class="options" data-argument="Popularity">Popularity</li>
+				<li class="options" data-argument="ReleaseDate">Release Date</li>
 				<li id="genreOption" class="options">
 					Genre >
 					<ol id="GenreList" class="nested-dropdown">
@@ -29,7 +29,7 @@
 						{
 							foreach (var genre in movie.Genres)
 							{
-								<li class="options" data-genre="@genre.Name">@genre.Name</li>
+								<li class="options genreselect" data-genreselected="@genre.Name">@genre.Name</li>
 							}
 						}
 					</ol>
@@ -85,8 +85,10 @@
 
 			$(".options").click(function (event) {
 				let argument = $(this).data("argument");
-				let genre = $(this).data("genre");
-				console.log(genre)
+				let genreselected = $(this).data("genreselected");
+				console.log(argument)
+				console.log(genreselected)
+
 				if (this.id === 'genreOption') {
 					console.log("genreOption clicked");
 					event.stopPropagation();
@@ -97,8 +99,8 @@
 				selectText.html(this.innerHTML);
 				inputfield.attr("placeholder", "Search for " + selectText.html());
 
-				if (argument !== "") { 
-					let url = "/Watchlist?genre=" + genre;
+				if (argument === null || argument === undefined) {
+					let url = "/Watchlist?genreselected=" + genreselected;
 					window.location.href = url;
 				}
 				else {
