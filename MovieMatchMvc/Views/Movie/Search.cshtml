@@ -11,7 +11,7 @@
 		<div style="width: 70%; margin: 10px; display: flex;">
 			<h2>Search result "@ViewBag.Query"</h2>
 		</div>
-
+		
 		@foreach (var movie in Model)
 		{		
 			<div class="search-result">
@@ -19,7 +19,10 @@
 				<div class="search-card">
 					<div class="top-column">
 						<h5><a class="detail-link" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
-						<p> Release Date: @movie.ReleaseDate.Value.ToShortDateString()</p>
+					@if (movie.ReleaseDate != null)
+					{
+					<p> Release Date: @movie.ReleaseDate.Value.ToShortDateString()</p>			
+					}
 						<p>Average score: @Math.Round(movie.Rating, 1)</p>
 					</div>
 					@if (User.Identity.IsAuthenticated)

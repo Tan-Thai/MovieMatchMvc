@@ -120,6 +120,7 @@ namespace MovieMatchMvc.Models
 					MovieId = p.MovieId,
 					ReleaseDate = p.ReleaseDate,
 					Popularity = p.Popularity,
+					Genres = p.Genres,
 				});
 
 			switch (orderby) //orderby switch that would basically allow us to sort by date added/release year etc.
@@ -136,6 +137,8 @@ namespace MovieMatchMvc.Models
 					watchListQuery = watchListQuery.OrderByDescending(p => p.ReleaseDate);
 					break;
 
+				default:
+					break;
 			}
 
 

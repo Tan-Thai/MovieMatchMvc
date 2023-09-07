@@ -11,29 +11,31 @@
 	<title></title>
 </head>
 <body>
-	<h4 align="Center"  style="color: antiquewhite; margin-right:46.5rem; margin-top:1rem;">My watchlist</h4>
+	<h4 align="Center" style="color: antiquewhite; margin-right:46.5rem; margin-top:1rem;">My watchlist</h4>
 	@*<p style="margin-left:12rem;">Filter:</p>*@
 	<div class="search-bar" style="margin-left:9rem;">
 		<div id="select">
 			<p id="selectText"></p>
-			<img src="/Images/arrow.svg" alt="arrow" style= "width: 70px !important; height: 70px !important;"/>
+			<img src="/Images/arrow.svg" alt="arrow" style="width: 70px !important; height: 70px !important;" />
 			<ul id="list">
-				<li class="options"  data-argument="Popularity">Popularity</li>
-				<li class="options"  data-argument="ReleaseDate">Release Date</li>
-				<li class="options"  data-argument="">All categories</li>
-				<li class="options"  data-argument="Title">Title</li>
-				<li id="genreOption" class="options" >
+				<li class="options" data-argument="Popularity">Popularity</li>
+				<li class="options" data-argument="ReleaseDate">Release Date</li>
+				<li class="options" data-argument="">All categories</li>
+				<li class="options" data-argument="Title">Title</li>
+				<li id="genreOption" class="options">
 					Genre >
-					<ol id="GenreList" class="nested-dropdown">@* <ul id="GenreList" class="nested-dropdown">  *@
-						<li>Action</li>
-						<li>Adventure</li>
-						<li>Sci-Fi</li>
-						<li>Drama</li>
-					@* </ul> *@
+					<ol id="GenreList" class="nested-dropdown">
+						@foreach (var movie in Model)
+						{
+							foreach (var genre in movie.Genres)
+							{
+								<li class="options" data-argument="@genre.Name">@genre.Name</li>
+							}
+						}
 					</ol>
 				</li>
 			</ul>
-			<input type="text" class="form-control "id="inputfield" placeholder="Search in all categories" />
+			<input type="text" class="form-control " id="inputfield" placeholder="Search in all categories" />
 		</div>
 	</div>
 
@@ -103,23 +105,34 @@
 			});
 		});
 
+		const genreList = document.getElementById('GenreList');
+		const genres = Array.from(genreList.getElementsByClassName('options'));
 
+		const uniqueGenres = new Set();
+		genres.forEach(genre => {
+			const genreName = genre.textContent.trim();
+			if (!uniqueGenres.has(genreName)) {
+				uniqueGenres.add(genreName);
+			} else {
+				genre.remove();
+			}
+		});
 
-				// if (selectText.innerHTML === "Genre") {
-						// 	openGenresMenu();
-						// }
-					// option.addEventListener("mouseenter", function () {
-				// 	if (this.innerHTML === "Genre") {
-				// 		openGenresMenu();
-				// 	}
-				// });
+										// if (selectText.innerHTML === "Genre") {
+												// 	openGenresMenu();
+												// }
+											// option.addEventListener("mouseenter", function () {
+										// 	if (this.innerHTML === "Genre") {
+										// 		openGenresMenu();
+										// 	}
+										// });
 
-				// function openGenresMenu() {
-				// 	const genreSubMenu = document.getElementById("GenreList");
-				// 	if (genresSubMenu) {
-				// 		genresSubMenu.style.display = "block";
-				// 	}
-				// }
+										// function openGenresMenu() {
+										// 	const genreSubMenu = document.getElementById("GenreList");
+										// 	if (genresSubMenu) {
+										// 		genresSubMenu.style.display = "block";
+										// 	}
+										// }
 	</script>
 </body>
 </html>
