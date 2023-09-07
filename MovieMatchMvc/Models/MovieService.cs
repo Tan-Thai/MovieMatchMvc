@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieMatchMvc.Views.Movie;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
@@ -108,7 +109,7 @@ namespace MovieMatchMvc.Models
 				.ToArray();
 
 		}
-		public WatchlistVM[] GetWatchlist(string userId, string? orderby)
+		public WatchlistVM[] GetWatchlist(string userId, string? orderby, string? genre)
 		{
 			//.OrderBy(p => p.Title) //make this into switch statement and make it based on what input (might brick)
 			IQueryable<WatchlistVM> watchListQuery = context.watchLists
@@ -122,6 +123,22 @@ namespace MovieMatchMvc.Models
 					Popularity = p.Popularity,
 					Genres = p.Genres,
 				});
+
+			if (!string.IsNullOrEmpty(genre))
+			{
+
+				var filteredMovies = new List<WatchlistVM>();
+
+				foreach (var movie in watchListQuery)
+				{
+					if (movie.Genres.Any(g => g.Name == genre))
+					{
+						filteredMovies.Add(movie);
+					}
+				}
+
+				watchListQuery = filteredMovies.AsQueryable();
+			}
 
 			switch (orderby) //orderby switch that would basically allow us to sort by date added/release year etc.
 			{
