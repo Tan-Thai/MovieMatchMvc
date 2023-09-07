@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieMatchMvc.Views.Movie;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
@@ -55,7 +56,7 @@ namespace MovieMatchMvc.Models
 			int resultsPerPage = 20;
 
 			using (client)
-			{	
+			{
 				SearchContainer<SearchMovie> initialSearchResults = await client.SearchMovieAsync(query, "en-US", pageNumber, false);
 				int totalPages = initialSearchResults.TotalPages;
 
@@ -108,11 +109,12 @@ namespace MovieMatchMvc.Models
 				.ToArray();
 
 		}
-		public WatchlistVM[] GetWatchlist(string userId, string? orderby)
+		public WatchlistVM[] GetWatchlist(string userId, string? orderby, string? genre)
 		{
 			//.OrderBy(p => p.Title) //make this into switch statement and make it based on what input (might brick)
 			IQueryable<WatchlistVM> watchListQuery = context.watchLists
 				.Where(w => w.UserId == userId)
+				.OrderBy(p => p.Title)
 				.Select(p => new WatchlistVM //add more props to enable similar showcase as SearchView
 				{
 					Title = p.Title,
@@ -120,22 +122,42 @@ namespace MovieMatchMvc.Models
 					MovieId = p.MovieId,
 					ReleaseDate = p.ReleaseDate,
 					Popularity = p.Popularity,
+					Genres = p.Genres,
 				});
 
-			switch (orderby) //orderby switch that would basically allow us to sort by date added/release year etc.
+			if (genre != null)
 			{
-				case null:
-					watchListQuery = watchListQuery.OrderBy(p => p.Title);
-					break;
 
-				case "Popularity":
-					watchListQuery = watchListQuery.OrderByDescending(p => p.Popularity);
-					break;
+				var filteredMovies = new List<WatchlistVM>();
 
-				case "ReleaseDate":
-					watchListQuery = watchListQuery.OrderByDescending(p => p.ReleaseDate);
-					break;
+				foreach (var movie in watchListQuery)
+				{
+					if (movie.Genres.Any(g => g.Name == genre))
+					{
+						filteredMovies.Add(movie);
+					}
+				}
 
+				watchListQuery = filteredMovies.AsQueryable();
+			}
+
+			if (!string.IsNullOrEmpty(orderby))
+			{
+				switch (orderby) //orderby switch that would basically allow us to sort by date added/release year etc.
+				{
+
+					case "Popularity":
+						watchListQuery = watchListQuery.OrderByDescending(p => p.Popularity);
+						break;
+
+					case "ReleaseDate":
+						watchListQuery = watchListQuery.OrderByDescending(p => p.ReleaseDate);
+						break;
+					
+					case "Title":
+						watchListQuery = watchListQuery.OrderByDescending(p => p.ReleaseDate);
+						break;
+				}
 			}
 
 
@@ -269,28 +291,28 @@ namespace MovieMatchMvc.Models
 	}
 }
 
-		//private SearchVM CreateSearchVMById(Movie movie)
-		//{
-		//	return new SearchVM
-		//	{
-		//		Id = movie.Id,
-		//		Title = movie.Title,
-		//		Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
-		//		ReleaseDate = movie.ReleaseDate,
-		//		Rating = movie.VoteAverage,
-		//		Description = movie.Overview,
-		//		Popularity = movie.Popularity
-		//	};
-		//}
-		//public async Task<SearchVM> FetchMovieByIdAsync(int movieId)
-		//{
-		//	using (client)
-		//	{
-		//		var movie = client.GetMovieAsync(movieId).Result;
+//private SearchVM CreateSearchVMById(Movie movie)
+//{
+//	return new SearchVM
+//	{
+//		Id = movie.Id,
+//		Title = movie.Title,
+//		Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
+//		ReleaseDate = movie.ReleaseDate,
+//		Rating = movie.VoteAverage,
+//		Description = movie.Overview,
+//		Popularity = movie.Popularity
+//	};
+//}
+//public async Task<SearchVM> FetchMovieByIdAsync(int movieId)
+//{
+//	using (client)
+//	{
+//		var movie = client.GetMovieAsync(movieId).Result;
 
-		//		if (movie != null)
-		//			return CreateSearchVMById(movie);
-		//		else
-		//			return null;
-		//	}
-		//}
+//		if (movie != null)
+//			return CreateSearchVMById(movie);
+//		else
+//			return null;
+//	}
+//}

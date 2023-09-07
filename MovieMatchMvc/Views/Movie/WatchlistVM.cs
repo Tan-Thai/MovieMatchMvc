@@ -1,4 +1,6 @@
-﻿namespace MovieMatchMvc.Views.Movie
+﻿using MovieMatchMvc.Models;
+
+namespace MovieMatchMvc.Views.Movie
 {
     public class WatchlistVM
     {
@@ -13,7 +15,7 @@
         public string UserId { get; set; }
         public double? Popularity { get; set; }
 		public DateTime? ReleaseDate { get; set; }
-       
-        public bool userExists { get; set; }
+		public List<MovieGenres> Genres { get; set; }
+		public bool userExists { get; set; }
 	}
 }

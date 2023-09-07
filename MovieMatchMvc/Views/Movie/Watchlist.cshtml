@@ -17,24 +17,26 @@
 	<div class="search-bar">
 		<div id="select">
 			<p id="selectText"></p>
-			<img src="/Images/arrow.svg" alt="arrow" style= "width: 70px !important; height: 70px !important;"/>
+			<img src="/Images/arrow.svg" alt="arrow" style="width: 70px !important; height: 70px !important;" />
 			<ul id="list">
-				<li class="options"  data-argument="Popularity">Popularity</li>
-				<li class="options"  data-argument="ReleaseDate">Release Date</li>
-				<li class="options"  data-argument="">All categories</li>
-				<li class="options"  data-argument="Title">Title</li>
-				<li id="genreOption" class="options" >
+				<li class="options" data-argument="">All categories</li>
+				<li class="options" data-argument="Title">Title</li>
+				<li class="options" data-argument="Popularity">Popularity</li>
+				<li class="options" data-argument="ReleaseDate">Release Date</li>
+				<li id="genreOption" class="options">
 					Genre >
-					<ol id="GenreList" class="nested-dropdown">@* <ul id="GenreList" class="nested-dropdown">  *@
-						<li>Action</li>
-						<li>Adventure</li>
-						<li>Sci-Fi</li>
-						<li>Drama</li>
-					@* </ul> *@
+					<ol id="GenreList" class="nested-dropdown">
+						@foreach (var movie in Model)
+						{
+							foreach (var genre in movie.Genres)
+							{
+								<li class="options genreselect" data-genreselected="@genre.Name">@genre.Name</li>
+							}
+						}
 					</ol>
 				</li>
 			</ul>
-			<input type="text" class="form-control "id="inputfield" placeholder="Search in all categories" />
+			<input type="text" class="form-control " id="inputfield" placeholder="Search in all categories" />
 		</div>
 	</div>
 	</div>
@@ -84,6 +86,9 @@
 
 			$(".options").click(function (event) {
 				let argument = $(this).data("argument");
+				let genreselected = $(this).data("genreselected");
+				console.log(argument)
+				console.log(genreselected)
 
 				if (this.id === 'genreOption') {
 					console.log("genreOption clicked");
@@ -95,8 +100,14 @@
 				selectText.html(this.innerHTML);
 				inputfield.attr("placeholder", "Search for " + selectText.html());
 
-				let url = "/Watchlist?argument=" + argument;
-				window.location.href = url;
+				if (argument === null || argument === undefined) {
+					let url = "/Watchlist?genreselected=" + genreselected;
+					window.location.href = url;
+				}
+				else {
+					let url = "/Watchlist?argument=" + argument;
+					window.location.href = url;
+				}
 			});
 
 			$("#genreOption").mouseleave(function () {
@@ -104,47 +115,19 @@
 			});
 		});
 
+		const genreList = document.getElementById('GenreList');
+		const genres = Array.from(genreList.getElementsByClassName('options'));
 
+		const uniqueGenres = new Set();
+		genres.forEach(genre => {
+			const genreName = genre.textContent.trim();
+			if (!uniqueGenres.has(genreName)) {
+				uniqueGenres.add(genreName);
+			} else {
+				genre.remove();
+			}
+		});
 
-				// if (selectText.innerHTML === "Genre") {
-						// 	openGenresMenu();
-						// }
-					// option.addEventListener("mouseenter", function () {
-				// 	if (this.innerHTML === "Genre") {
-				// 		openGenresMenu();
-				// 	}
-				// });
-
-				// function openGenresMenu() {
-				// 	const genreSubMenu = document.getElementById("GenreList");
-				// 	if (genresSubMenu) {
-				// 		genresSubMenu.style.display = "block";
-				// 	}
-				// }
 	</script>
 </body>
 </html>
-
-
-@*<input asp-for="Password" class="form-control short-input" placeholder="Password" />*@
-
-@* <ul>
-
-	@foreach (var item in Model)
-	{
-	<div >
-	<img style="height:100px;" width="100:px;" src="@item.Poster"> @item.Title
-	<p>
-	@item.MovieId
-	</p>
-
-	</div>
-	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-	<form asp-controller="Movie" asp-action="RemoveFromWatchList" method="post">
-	<input type="hidden" name="movieId" value="@item.MovieId" />
-	<input type="submit" class="btn btn-danger" class="align-middle" value="Remove from watchlist">
-	</form>
-	</div>
-
-	}
-	</ul> *@
