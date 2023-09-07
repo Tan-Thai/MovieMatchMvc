@@ -13,11 +13,12 @@
 <body>
 	<div class="search-bar-container">
 		<h3 class="search-bar-title" style="color: antiquewhite; ">My watchlist</h3>
+		
 		@*<p style="margin-left:12rem;">Filter:</p>*@
 		<div class="search-bar">
 			<div id="select">
 				<p id="selectText"></p>
-				<img src="/Images/arrow.svg" alt="arrow" style="width: 70px !important; height: 70px !important;" />
+				<img id="select-click" src="/Images/arrow.svg" alt="arrow" style="width: 70px !important; height: 70px !important;" />
 				<ul id="list">
 					<li class="options" data-argument="">All categories</li>
 					<li class="options" data-argument="Title">Title</li>
@@ -37,8 +38,7 @@
 					</li>
 				</ul>
 				<input type="text" class="form-control " id="inputfield" placeholder="Search in all categories" />
-				<a class="btn btn-primary" asp-controller="Movie" asp-action="Details" 
-				asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
+				
 			</div>
 		</div>
 	</div>
@@ -67,11 +67,14 @@
 			<br />
 		}
 	</div>
-
-
+	<div class="random-box">
+	<h4>Can't decide?</h4>
+	<a class="btn btn-primary btn-random" asp-controller="Movie" asp-action="Details"
+	   asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
+	</div>
 	<script>
 		$(document).ready(function () {
-			let select = $("#select");
+			let select = $("#select-click");
 			let list = $("#list");
 			let selectText = $("#selectText");
 			let inputfield = $("#inputfield");
