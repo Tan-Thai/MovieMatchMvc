@@ -2,8 +2,8 @@
 
 @if (ViewBag.OtherUsername != null)
 {
-
-	<h3 class="buddy-title" >Movie Matches with @ViewBag.OtherUsername</h3>
+    <h5 class="buddy-name-title">Matching with @ViewBag.OtherUsername</h5>
+	<h3 class="buddy-title" ></h3>
 	<div class="buddy-search-container">
 		<div class="buddy-carousel">
 			@if (Model == null)
@@ -82,6 +82,13 @@ else if (ViewBag.OtherUsername == null && TempData["IsFormSubmitted"] as bool? =
                             item.classList.add('greyscale'); // Add greyscale to non-main items
                         }
                     }
+                }
+
+                // New code to update the buddy-title
+                if (slider[currIndex]) {
+                    let activeMovieTitle = slider[currIndex].querySelector('img').alt;
+                    let buddyTitle = document.querySelector('.buddy-title');
+                    buddyTitle.textContent = `${activeMovieTitle}`;
                 }
             }
 
