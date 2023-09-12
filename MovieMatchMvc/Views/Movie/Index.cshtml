@@ -7,21 +7,17 @@
 }
 <h1 class="text-center" style="color: antiquewhite" ;>Top Movies Right now!</h1>
 
-<div style="width:80%; " class="container p-2 mx-auto">
+<div style="" class="container p-2 mx-auto">
 	<div class="container offset-margin">
+
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="home-page-overlay"></div>
 				@if (Model != null && Model.Count > 0)
 				{	
 					<div class="carousel-box">
-						<div id="movieCarousel" class="carousel slide" data-ride="carousel" >
-							<ol class="carousel-indicators">
-								@for (int i = 0; i < Model.Count; i++)
-								{
-									<li data-target="#movieCarousel" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
-								}
-							</ol>
+						<div id="movieCarousel" class="carousel slide" data-ride="carousel" data-interval="false" >
+							
 							<div class="carousel-inner">
 								@for (int i = 0; i < Model.Count; i++)
 								{
@@ -51,6 +47,12 @@
 							</a>
 						</div>
 					</div>
+					<ol class="carousel-indicators">
+						@for (int i = 0; i < Model.Count; i++)
+						{
+							<li data-target="#movieCarousel" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+						}
+					</ol>
 				}
 				else
 				{
@@ -61,7 +63,18 @@
 	</div>
 
 </div>
-
+<div class="about-us-container">
+	<h2></h2>
+	@* <h2 class="ingress">What's Movie Match?</h2>
+	<p class="ingress"> Did you know that we spend an average of 100 days of our lifetime just to decide movie? And that 49% of that time we simply just give up and don't watch a movie at all?</p>
+	<p class="ingress">We know. And we care. That's why our mission is to reduce time wasted on endless movie discussion. At Movie Match you compare your movies with your friends and you can also let us pick a movie for you.</p> *@
+	<div class="about-us-icons">
+	@* <h4><i class="fas fa-search"></i> Search</h4> *@
+	<h4 class="icons-box"><i class="fas fa-handshake"></i> Match</h4>
+		<h4 class="icons-box"><i class="fas fa-eye"></i> Watch</h4>
+	<h4 class="icons-box"><i class="fas fa-redo"></i> Repeat</h4>
+	</div>
+</div>
 
 <style>
 	.carousel-caption h3, .carousel-caption p {
@@ -81,13 +94,7 @@
 	}
 </style>
 <style>
-	.col-md-8 {
-		background-color: darkslategrey;
-		padding-bottom: 10px;
-		padding-top: 10px;
-		border-radius: 25px;
-		opasity: 10%;
-	}
+	
 </style>
 <style>
 	.d-block {

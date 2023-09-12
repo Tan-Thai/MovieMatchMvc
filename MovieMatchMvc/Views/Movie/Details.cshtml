@@ -10,27 +10,25 @@
         @* <td scope="row"> *@
         @* <div class="col-md-4"> *@
             @* <div class="row" style="text-align: center;"></div> *@
-            <div class="img-container-details">
                 <div class="overlay"></div>
                 <img class="backdrop-poster" src="@Model.BackDropPoster" alt="Backdrop poster for @Model.Title" />
+                <div class="img-container-details"> 
                 <img class="details-poster" src="@Model.Poster" alt="Poster image for @Model.Title" />
                 <div class="details-text">
-                 <h5>@Model.Title</h5>
+                 <h3 class="highlight">@Model.Title</h3>
                 <div class="description-container">
                        @if (Model.Description.Length > 350){
                     <a class="toggle-description" href="#">
-                    <p class="short-description" style="color: antiquewhite">@Model.Description.Substring(0, 350) ....</p>
-                    <p class="full-description" style="color: antiquewhite; display: none;">@Model.Description</p>
+                    <p class="short-description " >@Model.Description.Substring(0, 350) ....</p>
+                    <p class="full-description"  display: none;">@Model.Description</p>
                     </a>
                        }
                        else {
                     <p style="color: antiquewhite;">@Model.Description</p>
                     }
-                    
-                </div>
                 <div class="genre-container">
                 
-                    <p>Genre: 
+                    <p class="highlight">Genre: 
                         @foreach(var genre in Model.Genre)
                         {
                             <span style="color: antiquewhite; margin:5px;"> @genre.Name </span>
@@ -38,17 +36,23 @@
                     </p>
                     
                 </div>
+                    
+                </div>
 
-                <p> Runtime: @Model.Runtime minutes</p> 
-              
-                        
-            <p>
-                Rating: @Math.Round(Model.Rating, 1)
-              
+                <p class="highlight"> Runtime: <span class="highlight-reset">@Model.Runtime minutes</span></p>
+
+
+                <p class="highlight">
+                Rating: <span class="highlight-reset"> @Math.Round(Model.Rating, 1)
+                    </span>
             </p>
                 @if (Model.ReleaseDate != null)
                 {
-                  <p> Release Date: @Model.ReleaseDate.Value.ToShortDateString()</p>  
+                    <p class="highlight"> Release Date: <span class="highlight-reset">
+
+                    @Model.ReleaseDate.Value.ToShortDateString()
+                        </span>
+                    </p>
                 }
      
         @if (User.Identity.IsAuthenticated)
