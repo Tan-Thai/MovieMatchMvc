@@ -7,12 +7,12 @@
 }
 <h1 class="text-center" style="color: antiquewhite" ;>Top Movies Right now!</h1>
 
-<div style="" class="container p-2 mx-auto">
-	<div class="container offset-margin">
+<div style="" class="container">
+	<div class="">
 
 		<div class="row justify-content-center">
 			<div class="col-md-8">
-				<div class="home-page-overlay"></div>
+				<div class=""></div>
 				@if (Model != null && Model.Count > 0)
 				{	
 					<div class="carousel-box">
@@ -27,7 +27,7 @@
 											<div class="col-md-6">
 												<img class="d-block w-100 badge-light shadow" src="@movie.ImageUrl" alt="@movie.Title">
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-6 carousel-shit">
 												<div class="carousel-caption">
 													<a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId"> <h3>@movie.Title</h3></a>
 													<p>@TruncateDescription(movie.Description, 170)</p>
