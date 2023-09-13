@@ -60,14 +60,14 @@
 						}
 						<p> Runtime: @item.Runtime minutes</p>
 					</div>
-				</div>
-				<div style="margin-right: 100px;">
+				<div>
 					<form asp-controller="Movie" asp-action="ManageWatchList" method="post">
 						<input type="hidden" name="movieId" value="@item.MovieId" />
 						<div class="bottom-right">
 							<input type="submit" class="btn btn-danger " value="Remove from watchlist">
 						</div>
 					</form>
+				</div>
 				</div>
 			</div>
 

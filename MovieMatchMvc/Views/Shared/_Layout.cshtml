@@ -22,10 +22,10 @@
     <span id="space-filler"></span>
     <nav id="navbar-reset" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid" style="display:flex">
-                <a class="nav-link mx-2" asp-controller="Movie" asp-action="Index">
+                <a class="nav-link" asp-controller="Movie" asp-action="Index">
                     <img src="/Images/Logo_MM.svg" alt="Logo" class="logo-img" />
                 </a>
-            <div class="d-flex w-100" style="justify-content: center;">
+            <div class="d-flex row" style="justify-content: center;">
                 <form asp-action="Search" asp-controller="Movie" method="get" class="form-inline">
                     <div class="form-group">
                         <input type="text" name="query" class="form-control" placeholder="Search for a movie" />
@@ -33,7 +33,7 @@
                     <button type="submit" class="btn btn-primary ml-2 colored-button">Search</button>
                 </form>
             </div>
-            <div class="d-flex" style=" display:flex; justify-content: flex-end; width: 40%">
+            <div class="d-flex" style=" display:flex; justify-content: flex-end;">
                     @if (User.Identity.IsAuthenticated)
                     {
                     <span class="d-flex flex-row nav-span" style="min-width: 460px;justify-content: space-between;">
@@ -59,10 +59,11 @@
     </div>
     <footer>
             <div class="container">
+           
                 <div class="row">
                  <div class="col-md-12">
                     <hr />
-                    <p class="text-center">© 2020 - MovieApp. <br /> Data fetched from <a href="https://www.themoviedb.org/">TMDB</a></p>
+                    <p class="text-center">© 2020 - MovieMatch. <br /> Data fetched from <a href="https://www.themoviedb.org/">TMDB</a></p>
                 </div>
             </div>
             </div>
