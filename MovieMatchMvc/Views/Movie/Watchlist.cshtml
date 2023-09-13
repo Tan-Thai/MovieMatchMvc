@@ -42,34 +42,36 @@
 			</div>
 		</div>
 	</div>
-	<div class="search-container">
+	<div class="watchlist-container">
 		@foreach (var item in Model)
 		{
 			<div class="search-resultwatchlist">
 				<img src="@item.Poster">
 				<div class="search-card">
-					<div class="top-column">
-						<h5>
-							<a asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
-								@item.Title
-							</a>
-						</h5>
+				<div class="top-column">
+					<a class="highlight" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
+						@item.Title
+					</a>
+
+				</div>
+					
+			
+
+
+				<form asp-controller="Movie" asp-action="ManageWatchList" method="post">
+					<input type="hidden" name="movieId" value="@item.MovieId" />
+					<div class="bottom-right">
+						<p class="highlight"> Runtime: <span class="highlight-reset">@item.Runtime minutes</span></p>
 						@if (item.ReleaseDate != null)
 						{
-							<p> Release Date: @item.ReleaseDate.Value.ToShortDateString()</p>
+							<p class="highlight"> Release Date: <span class="highlight-reset">@item.ReleaseDate.Value.ToShortDateString()</span></p>
 						}
-						<p> Runtime: @item.Runtime minutes</p>
+						<input type="submit" class="btn btn-danger " value="Remove from watchlist">
+
 					</div>
-				<div>
-					<form asp-controller="Movie" asp-action="ManageWatchList" method="post">
-						<input type="hidden" name="movieId" value="@item.MovieId" />
-						<div class="bottom-right">
-							<input type="submit" class="btn btn-danger " value="Remove from watchlist">
-						</div>
-					</form>
-				</div>
-				</div>
+				</form>
 			</div>
+				</div>
 
 			<br />
 		}
