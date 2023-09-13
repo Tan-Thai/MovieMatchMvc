@@ -194,6 +194,8 @@ transform: scale(1.1);
     /*background: rgba(9, 84, 68, 0.3);*/
     /*padding: 10px;*/
     /*align-items: flex-start;*/
+    /*filter: drop-shadow(0 0 5px #51838381);*/
+    border-bottom: 6px solid #51838381;
 }
 
 .filter-arrow {
