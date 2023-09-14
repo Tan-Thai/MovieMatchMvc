@@ -13,26 +13,28 @@
 		</div>
 		
 		@foreach (var movie in Model)
-		{		
+		{	
 			<div class="search-result">
-				<img src="@movie.Poster" alt="..." />
-				<div class="search-card">
-					<div class="top-column">
-						<h5><a class="detail-link" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+			<img src="@movie.Poster" alt="background poster image of @movie.Title" class="background-search-img">
+				<img class="search-img" src="@movie.Poster" alt="Poster image of @movie.Title" />
+			<div class="search-card">
+					<div class="searchcard-top-column">
+						<h5><a class="detail-link highlight" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+			
+					</div>
+						<div class="searchcard-bottom-right">
+					<p>Average score: @Math.Round(movie.Rating, 1)</p>
 					@if (movie.ReleaseDate != null)
 					{
-					<p> Release Date: @movie.ReleaseDate.Value.ToShortDateString()</p>			
+						<p> Release Date: @movie.ReleaseDate.Value.ToShortDateString()</p>
 					}
-						<p>Average score: @Math.Round(movie.Rating, 1)</p>
-					</div>
 					@if (User.Identity.IsAuthenticated)
 					{
-						<div class="bottom-right">
 							<button class="watchlist-button btn-primary btn" data-movie-id="@movie.Id">
 								@(movie.InWatchList ? "Remove from Watchlist" : "Add to Watchlist")
 							</button>
-						</div>
 					}
+						</div>
 				</div>
 			</div>		
 		}

@@ -11,10 +11,13 @@
 	<title></title>
 </head>
 <body>
+	<div class="col-sm-12">
 	<div class="search-bar-container">
 		<h3 class="search-bar-title" style="color: antiquewhite; ">My watchlist</h3>
 
+
 		@*<p style="margin-left:12rem;">Filter:</p>*@
+		<div class="search-bar-row">
 		<div class="search-bar">
 			<div id="select">
 				<p id="selectText"></p>
@@ -41,26 +44,37 @@
 
 			</div>
 		</div>
+		@if (Model.Length > 1)
+		{
+			<div class="random-box-watchlist">
+				<i class=>far fa-question</i>
+				<h4>Can't decide?</h4>
+				<a class="btn btn-primary btn-random" asp-controller="Movie" asp-action="Details"
+				   asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
+			</div>
+		}
+		</div>
+	</div>
 	</div>
 	<div class="watchlist-container">
 		@foreach (var item in Model)
 		{
 			<div class="search-resultwatchlist">
 				<img src="@item.Poster">
-				<div class="search-card">
+				<div class="watchlist-card">
 				<div class="top-column">
 					<a class="highlight" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
 						@item.Title
 					</a>
 
 				</div>
-					
+				
 			
 
 
 				<form asp-controller="Movie" asp-action="ManageWatchList" method="post">
 					<input type="hidden" name="movieId" value="@item.MovieId" />
-					<div class="bottom-right">
+					<div class="listcard-bottom-right">
 						<p class="highlight"> Runtime: <span class="highlight-reset">@item.Runtime minutes</span></p>
 						@if (item.ReleaseDate != null)
 						{
@@ -76,15 +90,7 @@
 			<br />
 		}
 	</div>
-	@if (Model.Length > 1)
-	{
-		<div class="random-box">
-
-			<h4>Can't decide?</h4>
-			<a class="btn btn-primary btn-random" asp-controller="Movie" asp-action="Details"
-			   asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
-		</div>
-	}
+	
 	<script>
 		$(document).ready(function () {
 			let select = $("#select-click");
