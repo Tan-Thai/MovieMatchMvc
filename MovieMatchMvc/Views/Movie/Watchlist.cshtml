@@ -28,8 +28,9 @@
 					<li class="options" data-argument="Popularity">Popularity</li>
 					<li class="options" data-argument="ReleaseDate">Release Date</li>
 					<li id="genreOption" class="options">
-						Genre >
-						<ol id="GenreList" class="nested-dropdown">
+						Genre <span class="dropdown-icon"> &#9660;</span>
+							
+							<ol id="GenreList" class="nested-dropdown">
 							@foreach (var movie in Model)
 							{
 								foreach (var genre in movie.Genres)
@@ -44,21 +45,17 @@
 
 			</div>
 		</div>
-		@if (Model.Length > 1)
-		{
-			<div class="random-box-watchlist">
-				<i class=>far fa-question</i>
-				<h4>Can't decide?</h4>
-				<a class="btn btn-primary btn-random" asp-controller="Movie" asp-action="Details"
-				   asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
-			</div>
-		}
+		
 		</div>
 	</div>
 	</div>
 	<div class="watchlist-container">
+		
+		@{int counter = 0;}
+
 		@foreach (var item in Model)
 		{
+			counter++;
 			<div class="search-resultwatchlist">
 				<img src="@item.Poster">
 				<div class="watchlist-card">
@@ -86,7 +83,14 @@
 				</form>
 			</div>
 				</div>
-
+			@if (Model.Length > 1 && counter % 3 == 0 )
+			{
+				<div class="random-box-watchlist">
+					<h4>Can't decide?</h4>
+					<a class="btn btn-primary btn-random" asp-controller="Movie" asp-action="Details"
+					   asp-route-id="@Model[Random.Shared.Next(Model.Length)].MovieId">Pick for me!</a>
+				</div>
+			}
 			<br />
 		}
 	</div>
