@@ -39,7 +39,8 @@ namespace MovieMatchMvc.Models
 							MovieId = m.Id,
 							Title = m.Title,
 							Description = m.Overview,
-							ImageUrl = "https://image.tmdb.org/t/p/w500" + m.PosterPath
+							ImageUrl = "https://image.tmdb.org/t/p/w500" + m.PosterPath,
+							
 						};
 
 						movieList.Add(movie);
@@ -106,6 +107,7 @@ namespace MovieMatchMvc.Models
 					ReleaseDate = p.ReleaseDate,
 					Popularity = p.Popularity,
 					Runtime = p.Runtime,
+					
 				})
 				.ToArray();
 

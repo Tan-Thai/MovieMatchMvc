@@ -3,10 +3,16 @@
 @if (User.Identity.IsAuthenticated)
 {
 	<h5 class="text-center" style="color: antiquewhite; margin-top:1rem;" ;>Welcome @User.Identity.Name</h5>
+	<h1 class="text-center carousel-header" style="padding-top: 0.25rem; color: antiquewhite" ;>What Your Friends are Watching:</h1>
+}
+else
+{
+	<h5 class="text-center" style="padding: 0.75rem; background-color: rgba(55, 55, 55, 0.5);">Welcome to Movie Match! <a style="text-decoration: underline; padding-left: 0.5rem;" asp-action="Register" asp-controller="Account">Create your account</a> and start exploring.</h5>
+	<h1 class="text-center carousel-header" style="padding-top: 0.25rem; margin-top: 1rem; color: antiquewhite" ;>What our Users are Watching:</h1>
 
 }
 
-<h1 class="text-center carousel-header" style="color: antiquewhite" ;>Top Movies Right now!</h1>
+
 
 <div style="" class="container">
 	<div class="">
@@ -65,18 +71,27 @@
 
 </div>
 
-<div class="about-us-icons">
-	<h4 class="icons-box"><i class="fas fa-search"></i> Search</h4>
-	<h4 class="icons-box"><i class="fas fa-handshake"></i> Match</h4>
-	<h4 class="icons-box"><i class="fas fa-eye"></i> Watch</h4>
-	<h4 class="icons-box"><i class="fas fa-redo"></i> Repeat</h4>
-</div>
+
 <div class="about-us-container">
-	<h2></h2>
+	<div class="flex-column">
 	<h2 class="ingress">What's Movie Match?</h2>
-	<p class="ingress"> Did you know that we spend an average of 100 days of our lifetime just to decide movie? And that 49% of that time we simply just give up and don't watch a movie at all?</p>
-	<p class="ingress">We know. And we care. That's why our mission is to reduce time wasted on endless movie discussions. At Movie Match you compare your movies with your friends and you can also let us pick a movie for you.</p>
+	<div class="about-us-icons">
+		@* <h4 class="icons-box"><i class="fas fa-search"></i> Search</h4> *@
+		<h4 class="icons-box"><i class="fas fa-handshake"></i> Match</h4>
+		<h4 class="icons-box"><i class="fas fa-eye"></i> Watch</h4>
+		<h4 class="icons-box"><i class="fas fa-redo"></i> Repeat</h4>
+	</div>
+	</div>
+	<div class="about-us-text">
+		<p class="ingress"> Did you know that we spend an average of 100 days of our lifetime just to decide movie? And that 49% of that time we simply just give up and don't watch a movie at all?</p>
 	
+		<p class="ingress">We know. And we care. That's why our mission is to reduce time wasted on endless movie discussions. At Movie Match you compare your movies with your friends and you can also let us pick a movie for you.</p>
+		
+</div>
+	
+
+
+
 </div>
 
 <style>
