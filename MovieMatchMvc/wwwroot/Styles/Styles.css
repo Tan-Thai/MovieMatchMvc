@@ -979,7 +979,8 @@ margin-top: 2rem;
     position: relative;
     /*overflow: visible;*/
     /*border: 1px solid white;*/
-    filter: drop-shadow(0 0 3rem rgba(42, 146, 164, 0.8));
+    margin-top: 7vh;
+    filter: drop-shadow(0 0 3rem rgba(42, 146, 164, 0.1));
 }
 
 .col-md-6 {
